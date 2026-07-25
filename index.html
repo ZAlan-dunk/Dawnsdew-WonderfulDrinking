@@ -12,6 +12,12 @@
   <div class="ambient ambient-one"></div>
   <div class="ambient ambient-two"></div>
 
+  <aside class="runtime-notice" id="runtimeNotice" role="alert">
+    <strong>交互功能正在启动 / Starting interactive mode…</strong>
+    <span>若此提示持续显示且按钮无响应，请先下载文件，再明确选择 Safari、Chrome、Edge 或 Firefox 打开；不要停留在文件预览器或聊天软件预览页。</span>
+    <small>If buttons do not respond, download the file and open it in a full browser instead of an in-app document preview.</small>
+  </aside>
+
   <header class="topbar">
     <button class="brand" type="button" data-nav="home" aria-label="Home">
       <span class="brand-mark" aria-hidden="true">
@@ -143,6 +149,7 @@
   </div>
   <div class="toast-region" id="toastRegion" aria-live="polite"></div>
 
+  <script src="assets/js/compat.js"></script>
   <script src="assets/data/ingredients.js"></script>
   <script src="assets/data/personal-recipes.js"></script>
   <script src="assets/data/classic-recipes.js"></script>

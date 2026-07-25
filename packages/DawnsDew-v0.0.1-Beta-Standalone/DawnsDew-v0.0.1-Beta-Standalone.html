@@ -43,6 +43,18 @@ button { color: inherit; }
 button, select, input[type="checkbox"], .file-button { cursor: pointer; }
 a { color: var(--gold-light); }
 .hidden { display: none !important; }
+.runtime-notice {
+  position: fixed; z-index: 190; top: calc(var(--topbar) + 12px); left: 50%; width: min(680px, calc(100% - 28px));
+  padding: 13px 16px; border: 1px solid rgba(216,178,110,.42); border-radius: 14px; color: var(--text);
+  background: rgba(22,19,20,.97); box-shadow: var(--shadow); transform: translateX(-50%); visibility: hidden; opacity: 0;
+  pointer-events: none; animation: runtimeNoticeReveal 0s 1.4s forwards;
+}
+.runtime-notice strong, .runtime-notice span, .runtime-notice small { display: block; }
+.runtime-notice strong { color: var(--gold-light); font-size: .8rem; }
+.runtime-notice span { margin-top: 5px; color: #ded7cc; font-size: .72rem; line-height: 1.55; }
+.runtime-notice small { margin-top: 4px; color: var(--muted); font-size: .63rem; line-height: 1.45; }
+.runtime-notice-error { visibility: visible; opacity: 1; animation: none; border-color: rgba(216,116,95,.62); }
+@keyframes runtimeNoticeReveal { to { visibility: visible; opacity: 1; } }
 
 body::before {
   content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -3;
@@ -353,6 +365,12 @@ textarea { resize: vertical; line-height: 1.6; }
   <div class="ambient ambient-one"></div>
   <div class="ambient ambient-two"></div>
 
+  <aside class="runtime-notice" id="runtimeNotice" role="alert">
+    <strong>交互功能正在启动 / Starting interactive mode…</strong>
+    <span>若此提示持续显示且按钮无响应，请先下载文件，再明确选择 Safari、Chrome、Edge 或 Firefox 打开；不要停留在文件预览器或聊天软件预览页。</span>
+    <small>If buttons do not respond, download the file and open it in a full browser instead of an in-app document preview.</small>
+  </aside>
+
   <header class="topbar">
     <button class="brand" type="button" data-nav="home" aria-label="Home">
       <span class="brand-mark" aria-hidden="true">
@@ -484,6 +502,97 @@ textarea { resize: vertical; line-height: 1.6; }
   </div>
   <div class="toast-region" id="toastRegion" aria-live="polite"></div>
 
+  <script>
+/* Embedded from assets/js/compat.js */
+(function () {
+  "use strict";
+
+  function define(target, name, value) {
+    if (!target[name]) Object.defineProperty(target, name, { configurable: true, writable: true, value: value });
+  }
+
+  define(Array, "from", function (value) {
+    return Array.prototype.slice.call(value);
+  });
+
+  define(Object, "assign", function (target) {
+    if (target === null || target === undefined) throw new TypeError("Cannot convert undefined or null to object");
+    var output = Object(target);
+    for (var sourceIndex = 1; sourceIndex < arguments.length; sourceIndex += 1) {
+      var source = arguments[sourceIndex];
+      if (source === null || source === undefined) continue;
+      Object.keys(Object(source)).forEach(function (key) { output[key] = source[key]; });
+    }
+    return output;
+  });
+
+  define(Object, "values", function (object) {
+    return Object.keys(Object(object)).map(function (key) { return object[key]; });
+  });
+
+  define(Object, "fromEntries", function (entries) {
+    var result = {};
+    Array.from(entries).forEach(function (entry) { result[entry[0]] = entry[1]; });
+    return result;
+  });
+
+  define(Array.prototype, "find", function (predicate, thisArg) {
+    for (var index = 0; index < this.length; index += 1) {
+      if (predicate.call(thisArg, this[index], index, this)) return this[index];
+    }
+    return undefined;
+  });
+
+  define(Array.prototype, "includes", function (value, fromIndex) {
+    var length = this.length >>> 0;
+    var index = Math.max(Number(fromIndex) || 0, 0);
+    while (index < length) {
+      if (this[index] === value || (this[index] !== this[index] && value !== value)) return true;
+      index += 1;
+    }
+    return false;
+  });
+
+  define(Array.prototype, "flatMap", function (callback, thisArg) {
+    return Array.prototype.concat.apply([], this.map(callback, thisArg));
+  });
+
+  if (window.Element && !Element.prototype.matches) {
+    Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+  }
+  if (window.Element && !Element.prototype.closest) {
+    Element.prototype.closest = function (selector) {
+      var node = this;
+      while (node && node.nodeType === 1) {
+        if (node.matches(selector)) return node;
+        node = node.parentElement || node.parentNode;
+      }
+      return null;
+    };
+  }
+
+  function notice() { return document.getElementById("runtimeNotice"); }
+  function markFailed(event) {
+    var node = notice();
+    if (!node) return;
+    node.className = "runtime-notice runtime-notice-error";
+    node.setAttribute("data-state", "error");
+    var detail = node.querySelector("small");
+    var message = event && (event.message || (event.reason && event.reason.message));
+    if (detail && message) detail.textContent = "错误信息 / Error: " + message;
+  }
+  function markReady() {
+    var node = notice();
+    if (node) node.className = "runtime-notice hidden";
+    document.documentElement.setAttribute("data-app-ready", "true");
+  }
+
+  window.addEventListener("error", markFailed, false);
+  window.addEventListener("unhandledrejection", markFailed, false);
+  window.DD_COMPAT = { markReady: markReady, markFailed: markFailed };
+}());
+
+</script>
   <script>
 /* Embedded from assets/data/ingredients.js */
 window.DD_DATA = window.DD_DATA || {};
@@ -1631,6 +1740,7 @@ window.DD_DATA.ingredientMap = Object.fromEntries(window.DD_DATA.ingredients.map
   addCustomIngredientRow();
   renderPantry();
   renderAll();
+  if (window.DD_COMPAT) window.DD_COMPAT.markReady();
 }());
 
 </script>

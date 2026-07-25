@@ -48,7 +48,7 @@ packages/DawnsDew-v0.0.1-Beta-Standalone/DawnsDew-v0.0.1-Beta-Standalone.html
 node tools/build-standalone.js
 ```
 
-微信等聊天软件的内置预览器可能限制本地存储、文件导入或下载；遇到此情况时请选择“用浏览器打开”。
+微信等聊天软件的内置预览器、手机文件管理器的文档预览页可能只显示页面而不执行 JavaScript，此时所有按钮都会无响应。遇到此情况时，请先将 HTML 下载到本机，再通过系统“打开方式”明确选择 Safari、Chrome、Edge 或 Firefox；封装版还会在交互功能未能启动时显示诊断提示。
 
 ## 默认估算规则
 

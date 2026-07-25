@@ -31,6 +31,18 @@ button { color: inherit; }
 button, select, input[type="checkbox"], .file-button { cursor: pointer; }
 a { color: var(--gold-light); }
 .hidden { display: none !important; }
+.runtime-notice {
+  position: fixed; z-index: 190; top: calc(var(--topbar) + 12px); left: 50%; width: min(680px, calc(100% - 28px));
+  padding: 13px 16px; border: 1px solid rgba(216,178,110,.42); border-radius: 14px; color: var(--text);
+  background: rgba(22,19,20,.97); box-shadow: var(--shadow); transform: translateX(-50%); visibility: hidden; opacity: 0;
+  pointer-events: none; animation: runtimeNoticeReveal 0s 1.4s forwards;
+}
+.runtime-notice strong, .runtime-notice span, .runtime-notice small { display: block; }
+.runtime-notice strong { color: var(--gold-light); font-size: .8rem; }
+.runtime-notice span { margin-top: 5px; color: #ded7cc; font-size: .72rem; line-height: 1.55; }
+.runtime-notice small { margin-top: 4px; color: var(--muted); font-size: .63rem; line-height: 1.45; }
+.runtime-notice-error { visibility: visible; opacity: 1; animation: none; border-color: rgba(216,116,95,.62); }
+@keyframes runtimeNoticeReveal { to { visibility: visible; opacity: 1; } }
 
 body::before {
   content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -3;

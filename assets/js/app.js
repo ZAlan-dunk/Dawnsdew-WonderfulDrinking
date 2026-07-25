@@ -444,4 +444,5 @@
   addCustomIngredientRow();
   renderPantry();
   renderAll();
+  if (window.DD_COMPAT) window.DD_COMPAT.markReady();
 }());

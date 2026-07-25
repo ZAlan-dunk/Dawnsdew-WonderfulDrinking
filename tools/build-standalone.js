@@ -7,6 +7,7 @@ const packageDir = path.join(root, "packages", "DawnsDew-v0.0.1-Beta-Standalone"
 const outputName = "DawnsDew-v0.0.1-Beta-Standalone.html";
 const outputPath = path.join(packageDir, outputName);
 const scriptOrder = [
+  "assets/js/compat.js",
   "assets/data/ingredients.js",
   "assets/data/personal-recipes.js",
   "assets/data/classic-recipes.js",
@@ -64,7 +65,7 @@ const guide = `破晓微醺 · Dawn's Dew v0.0.1 Beta 单文件封装版\n\n` +
   `- 手机底部导航、安全区域、触控尺寸和小屏布局适配\n\n` +
   `注意：\n` +
   `- 用户数据保存在打开该文件的浏览器本机。\n` +
-  `- 微信或聊天软件内置预览器可能限制本地存储或下载功能；遇到限制时请选择“用浏览器打开”。\n` +
+  `- 微信、聊天软件或文件管理器的预览页可能不执行 JavaScript；若按钮无响应，请先下载文件，再通过“打开方式”明确选择 Safari、Chrome、Edge 或 Firefox。\n` +
   `- 建议在数据管理页面定期导出 JSON 备份。\n\n` +
   `SHA-256：${sha256}\n`;
 fs.writeFileSync(path.join(packageDir, "使用说明.txt"), guide, "utf8");
