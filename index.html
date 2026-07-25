@@ -1,0 +1,154 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#090a0d">
+  <meta name="description" content="破晓微醺——为家庭调酒爱好者打造的本地配方、酒柜与材料匹配助手。">
+  <title>破晓微醺 · Dawn's Dew</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <header class="topbar">
+    <button class="brand" type="button" data-nav="home" aria-label="Home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64"><path d="M32 5c7 11 17 22 17 35a17 17 0 1 1-34 0C15 27 25 16 32 5Z"/><path d="M23 42c2 6 8 9 14 7"/></svg>
+      </span>
+      <span><strong data-i18n="appName">破晓微醺</strong><small>Dawn's Dew · v0.0.1 Beta</small></span>
+    </button>
+    <div class="top-actions">
+      <button class="icon-button" id="quickRandomButton" type="button" data-tooltip="随机推荐" aria-label="Random recipe">✦</button>
+      <button class="language-toggle" id="languageToggle" type="button" aria-label="Switch language"><span class="active">中</span><span>EN</span></button>
+    </div>
+  </header>
+
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Primary navigation">
+      <nav>
+        <button class="nav-item active" type="button" data-nav="home"><span>⌂</span><b data-i18n="navHome">首页</b></button>
+        <button class="nav-item" type="button" data-nav="recipes"><span>◫</span><b data-i18n="navRecipes">配方库</b></button>
+        <button class="nav-item" type="button" data-nav="pantry"><span>♜</span><b data-i18n="navPantry">我的酒柜</b></button>
+        <button class="nav-item" type="button" data-nav="custom"><span>＋</span><b data-i18n="navCustom">自定义</b></button>
+        <button class="nav-item" type="button" data-nav="data"><span>⇅</span><b data-i18n="navData">数据管理</b></button>
+      </nav>
+      <div class="sidebar-note"><span class="status-dot"></span><span data-i18n="localOnly">所有数据仅保存在本机</span></div>
+    </aside>
+
+    <main id="mainContent" tabindex="-1">
+      <section class="view active" id="view-home" aria-labelledby="homeTitle">
+        <div class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow" data-i18n="heroEyebrow">HOME MIXOLOGY · LOCAL FIRST</p>
+            <h1 id="homeTitle"><span data-i18n="heroTitleA">在破晓之前，</span><br><em data-i18n="heroTitleB">调一杯属于自己的微醺。</em></h1>
+            <p data-i18n="heroBody">从便利店材料到经典配方，管理你的酒柜，发现今晚刚好能做的那一杯。</p>
+            <div class="hero-actions">
+              <button class="button primary" type="button" data-nav="recipes" data-i18n="browseRecipes">浏览配方</button>
+              <button class="button ghost" id="heroRandomButton" type="button" data-i18n="randomPick">随机一杯</button>
+            </div>
+          </div>
+          <div class="hero-glass" aria-hidden="true">
+            <div class="glass-rim"></div><div class="glass-liquid"></div><div class="glass-shine"></div><div class="garnish"></div>
+          </div>
+        </div>
+
+        <div class="stats-grid" id="homeStats"></div>
+        <div class="section-heading"><div><p class="eyebrow" data-i18n="tonightLabel">TONIGHT'S POUR</p><h2 data-i18n="todayRecommend">今晚推荐</h2></div><button class="text-button" id="refreshFeatured" type="button" data-i18n="changeOne">换一杯</button></div>
+        <div id="featuredRecipe"></div>
+        <div class="section-heading"><div><p class="eyebrow" data-i18n="quickEntry">QUICK ENTRY</p><h2 data-i18n="startFromNeed">从你的需要开始</h2></div></div>
+        <div class="quick-grid">
+          <button class="quick-card" type="button" data-nav="recipes" data-filter-mode="makeable"><span class="quick-icon">✓</span><b data-i18n="canMakeNow">现在能做什么</b><small data-i18n="matchFromPantry">根据酒柜材料匹配</small></button>
+          <button class="quick-card" type="button" data-nav="pantry"><span class="quick-icon">◇</span><b data-i18n="managePantry">整理我的酒柜</b><small data-i18n="recordStockPrice">记录库存与价格</small></button>
+          <button class="quick-card" type="button" id="partyRandomButton"><span class="quick-icon">✦</span><b data-i18n="partyRandom">聚会随机推荐</b><small data-i18n="avoidRepeat">优先可制作且避免重复</small></button>
+          <button class="quick-card" type="button" data-nav="custom"><span class="quick-icon">＋</span><b data-i18n="createRecipe">记录我的配方</b><small data-i18n="customAutoSave">自定义并自动保存</small></button>
+        </div>
+        <div class="section-heading recent-heading"><div><p class="eyebrow">RECENT</p><h2 data-i18n="recentViewed">最近查看</h2></div></div>
+        <div class="recipe-grid compact" id="recentRecipes"></div>
+      </section>
+
+      <section class="view" id="view-recipes" aria-labelledby="recipesTitle">
+        <div class="page-heading"><div><p class="eyebrow">THE RECIPE LIBRARY</p><h1 id="recipesTitle" data-i18n="recipeLibrary">配方库</h1><p data-i18n="recipeSubtitle">破晓原创、经典配方与便利店灵感。</p></div><div class="result-count" id="recipeResultCount"></div></div>
+        <div class="toolbar">
+          <label class="search-box"><span>⌕</span><input id="recipeSearch" type="search" data-i18n-placeholder="searchPlaceholder" placeholder="搜索中文名、英文名或材料"></label>
+          <button class="button ghost small" id="clearFilters" type="button" data-i18n="clearFilters">清除筛选</button>
+        </div>
+        <div class="filters">
+          <label><span data-i18n="filterOrigin">分类</span><select id="originFilter"></select></label>
+          <label><span data-i18n="filterBase">基酒</span><select id="baseFilter"></select></label>
+          <label><span data-i18n="filterTaste">口味</span><select id="tasteFilter"></select></label>
+          <label><span data-i18n="filterDifficulty">难度</span><select id="difficultyFilter"></select></label>
+          <label class="check-filter"><input id="makeableFilter" type="checkbox"><span data-i18n="onlyMakeable">只看可制作</span></label>
+          <label class="check-filter"><input id="favoriteFilter" type="checkbox"><span data-i18n="onlyFavorites">只看收藏</span></label>
+        </div>
+        <div class="recipe-grid" id="recipeGrid"></div>
+        <div class="empty-state hidden" id="recipeEmpty"><span>◇</span><h3 data-i18n="noRecipes">没有找到符合条件的配方</h3><p data-i18n="tryFilters">试试更换关键词或清除筛选。</p></div>
+      </section>
+
+      <section class="view" id="view-pantry" aria-labelledby="pantryTitle">
+        <div class="page-heading"><div><p class="eyebrow">MY HOME BAR</p><h1 id="pantryTitle" data-i18n="myPantry">我的酒柜</h1><p data-i18n="pantrySubtitle">勾选已有材料，填写价格后即可匹配配方与估算成本。</p></div><button class="button primary" type="button" data-nav="recipes" data-filter-mode="makeable" data-i18n="findMakeable">查看可制作配方</button></div>
+        <div class="pantry-summary" id="pantrySummary"></div>
+        <div class="toolbar pantry-toolbar"><label class="search-box"><span>⌕</span><input id="pantrySearch" type="search" data-i18n-placeholder="searchIngredient" placeholder="搜索材料"></label><button class="button ghost small" id="selectCommonIngredients" type="button" data-i18n="selectCommon">勾选常用材料</button></div>
+        <div id="pantryGroups"></div>
+      </section>
+
+      <section class="view" id="view-custom" aria-labelledby="customTitle">
+        <div class="page-heading"><div><p class="eyebrow">YOUR SIGNATURE</p><h1 id="customTitle" data-i18n="customRecipes">自定义配方</h1><p data-i18n="customSubtitle">记录属于你的下一杯，保存后立即进入配方库。</p></div></div>
+        <div class="two-column">
+          <form class="panel form-panel" id="customRecipeForm">
+            <div class="form-grid">
+              <label><span data-i18n="nameZh">中文名称</span><input required name="nameZh" maxlength="40"></label>
+              <label><span data-i18n="nameEn">英文名称</span><input required name="nameEn" maxlength="60"></label>
+              <label><span data-i18n="baseSpirit">基酒</span><select required name="base" id="customBaseSelect"></select></label>
+              <label><span data-i18n="taste">口味</span><select name="taste"><option value="sweet">甜</option><option value="fresh">清爽</option><option value="fruity">果香</option><option value="creamy">奶香</option><option value="strong">浓烈</option><option value="balanced">平衡</option></select></label>
+              <label><span data-i18n="difficulty">难度</span><select name="difficulty"><option value="easy">简单</option><option value="beginner">入门</option><option value="advanced">进阶</option></select></label>
+              <label><span data-i18n="glassCapacity">杯容量（ml）</span><input name="glassCapacity" type="number" min="30" max="2000" value="300"></label>
+            </div>
+            <div class="form-section-title"><b data-i18n="ingredients">材料</b><button class="text-button" id="addIngredientRow" type="button" data-i18n="addIngredient">＋ 添加材料</button></div>
+            <div id="customIngredientRows"></div>
+            <div class="form-grid textareas">
+              <label><span data-i18n="stepsZh">中文制作步骤</span><textarea required name="stepsZh" rows="4" placeholder="每行一个步骤"></textarea></label>
+              <label><span data-i18n="stepsEn">英文制作步骤</span><textarea required name="stepsEn" rows="4" placeholder="One step per line"></textarea></label>
+            </div>
+            <button class="button primary wide" type="submit" data-i18n="saveRecipe">保存自定义配方</button>
+          </form>
+          <div><div class="section-heading flush"><div><h2 data-i18n="savedCustom">已保存的自定义配方</h2></div></div><div class="recipe-grid single" id="customRecipeList"></div></div>
+        </div>
+      </section>
+
+      <section class="view" id="view-data" aria-labelledby="dataTitle">
+        <div class="page-heading"><div><p class="eyebrow">LOCAL DATA</p><h1 id="dataTitle" data-i18n="dataManagement">数据管理</h1><p data-i18n="dataSubtitle">所有数据默认仅保存在当前浏览器。定期导出可避免浏览器清理造成丢失。</p></div></div>
+        <div class="data-grid">
+          <article class="panel data-card"><span class="data-icon">⇩</span><h2 data-i18n="exportData">导出数据</h2><p data-i18n="exportDesc">导出酒柜、收藏、自定义配方、价格与设置。</p><button class="button primary" id="exportButton" type="button" data-i18n="exportJson">导出 JSON</button></article>
+          <article class="panel data-card"><span class="data-icon">⇧</span><h2 data-i18n="importData">导入数据</h2><p data-i18n="importDesc">导入前会自动备份当前数据，并检查文件版本。</p><label class="button ghost file-button"><span data-i18n="chooseJson">选择 JSON 文件</span><input id="importInput" type="file" accept="application/json,.json"></label></article>
+          <article class="panel data-card"><span class="data-icon">⌁</span><h2 data-i18n="preferences">估算设置</h2><div class="settings-form"><label><span data-i18n="defaultGlass">默认杯容量</span><input id="settingGlassCapacity" type="number" min="30" max="2000"></label><label><span data-i18n="icedCapacity">满冰可用液体容量</span><input id="settingIcedCapacity" type="number" min="30" max="2000"></label><label><span data-i18n="currency">货币符号</span><input id="settingCurrency" maxlength="4"></label></div><button class="button ghost" id="saveSettings" type="button" data-i18n="saveSettings">保存设置</button></article>
+          <article class="panel data-card danger"><span class="data-icon">×</span><h2 data-i18n="resetData">重置本地数据</h2><p data-i18n="resetDesc">清空酒柜、收藏、自定义配方和设置，不影响内置配方。</p><button class="button danger-button" id="resetButton" type="button" data-i18n="resetAll">清空全部本地数据</button></article>
+        </div>
+        <div class="panel storage-status" id="storageStatus"></div>
+      </section>
+    </main>
+  </div>
+
+  <nav class="bottom-nav" aria-label="Mobile navigation">
+    <button class="active" type="button" data-nav="home"><span>⌂</span><small data-i18n="navHome">首页</small></button>
+    <button type="button" data-nav="recipes"><span>◫</span><small data-i18n="navRecipes">配方库</small></button>
+    <button type="button" data-nav="pantry"><span>♜</span><small data-i18n="navPantry">我的酒柜</small></button>
+    <button type="button" data-nav="custom"><span>＋</span><small data-i18n="navCustom">自定义</small></button>
+    <button type="button" data-nav="data"><span>⇅</span><small data-i18n="navData">数据</small></button>
+  </nav>
+
+  <div class="modal-backdrop hidden" id="recipeModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <article class="recipe-modal"><button class="modal-close" id="modalClose" type="button" aria-label="Close">×</button><div id="modalContent"></div></article>
+  </div>
+  <div class="toast-region" id="toastRegion" aria-live="polite"></div>
+
+  <script src="assets/data/ingredients.js"></script>
+  <script src="assets/data/personal-recipes.js"></script>
+  <script src="assets/data/classic-recipes.js"></script>
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/calculators.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

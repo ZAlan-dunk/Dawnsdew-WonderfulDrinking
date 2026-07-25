@@ -1,0 +1,190 @@
+﻿(function () {
+  const R = (id, rating, zh, en, base, taste, difficulty, colors, ingredients, zhSteps, enSteps, descriptionZh, descriptionEn, sourceText, extra = {}) => ({
+    id, rating, name: { zh, en }, origin: "personal", base, taste, difficulty,
+    colors, glassCapacity: 300, method: extra.method || "build", ingredients,
+    steps: { zh: zhSteps, en: enSteps },
+    description: { zh: descriptionZh, en: descriptionEn },
+    sourceText, ...extra
+  });
+  const ml = (id, amount, optional = false) => ({ id, amount, unit: "ml", optional });
+  const piece = (id, amount, optional = false) => ({ id, amount, unit: "piece", optional });
+  const fill = (id, ratio) => ({ id, fillTo: ratio, unit: "fill" });
+  const top = id => ({ id, topUp: true, unit: "top" });
+
+  window.DD_DATA.personalRecipes = [
+    R("warmth-snowy-night", "S", "雪夜温情", "Warmth on a Snowy Night", ["baileys"], ["sweet", "creamy"], "easy", ["#39252b", "#b88c69"],
+      [ml("baileys", 30), ml("assam_jasmine_milk_tea", 90)],
+      ["杯中加入百利甜。", "加入阿萨姆茉莉奶绿，轻轻搅匀后饮用。"],
+      ["Add Baileys to the glass.", "Pour in the Assam jasmine milk tea and stir gently."],
+      "奶香与茶香交叠，像雪夜里的一盏暖灯。", "Creamy, tea-forward and comforting—like a warm light on a snowy night.",
+      "百利甜30+阿萨姆茉莉奶绿90"),
+
+    R("brandy-cola", "D", "可乐白兰地", "Brandy & Cola", ["brandy"], ["sweet", "fresh"], "easy", ["#241515", "#8b542f"],
+      [ml("brandy", 50), top("cola")],
+      ["杯中装入冰块并加入白兰地。", "用可乐补满，轻轻搅拌。"],
+      ["Fill the glass with ice and add brandy.", "Top with cola and stir gently."],
+      "直接、浓郁，适合想要快速完成的一杯。", "A direct, rich highball for an effortless home pour.",
+      "白兰地50+可乐补满", { ice: "full" }),
+
+    R("green-kumquat-brandy", "S", "青桔白兰地", "Green Kumquat Brandy", ["brandy"], ["citrus", "fresh"], "easy", ["#273326", "#b89144"],
+      [ml("brandy", 35), ml("waterc_green_kumquat", 100)],
+      ["加入白兰地与冰块。", "倒入水溶C青桔，轻轻搅匀。"],
+      ["Add brandy and ice.", "Pour in Water-C green kumquat and stir gently."],
+      "青桔的清亮酸香，让白兰地更轻快。", "Bright kumquat acidity gives brandy a lighter, fresher profile.",
+      "白兰地35+水溶C青桔100", { ice: "full" }),
+
+    R("crimson-mary-dawn", "S", "血腥玛丽（破晓特调版）", "Crimson Mary · Dawn's Special", ["jagermeister"], ["sweet", "fruity", "strong"], "easy", ["#401421", "#a54258"],
+      [ml("jagermeister", 30), ml("grape_juice", 90)],
+      ["杯中加入野格和冰块。", "倒入葡萄汁并搅匀。"],
+      ["Add Jägermeister and ice to the glass.", "Pour in grape juice and stir."],
+      "不是传统番茄版，而是野格与葡萄汁构成的破晓原创版本。", "A Dawn's Dew original—Jägermeister and grape juice rather than the classic tomato profile.",
+      "野格30+葡萄汁90", { ice: "full", aliases: ["血腥玛丽"] }),
+
+    R("sunset-drive", "", "落日飞车", "Sunset Drive", ["white_rum"], ["fruity", "sparkling"], "easy", ["#da6b43", "#83365d"],
+      [ml("white_rum", 50), fill("orange_juice", 0.8), top("grape_soda")],
+      ["杯中装满冰块，加入白朗姆。", "加入橙汁至约八分满。", "用葡萄味汽水补满，轻轻提拉混合。"],
+      ["Fill the glass with ice and add white rum.", "Pour orange juice to roughly eight-tenths full.", "Top with grape soda and lift gently to mix."],
+      "橙色落日与紫色气泡相遇，是一杯有速度感的果香高球。", "Orange sunset meets purple fizz in a fast, fruit-forward highball.",
+      "橙汁八分，白朗姆50，葡萄味汽水补满", { ice: "full" }),
+
+    R("mirror-of-sky", "", "天空之境", "Mirror of the Sky", ["white_rum"], ["citrus", "sparkling", "fresh"], "easy", ["#3c88a2", "#9e7cc2"],
+      [ml("white_rum", 30), fill("waterc_grapefruit", 0.8), top("jasmine_peach_fanta")],
+      ["杯中加入满冰和白朗姆。", "加入水溶C西柚至八分满。", "用芬达茉莉蜜桃补满。"],
+      ["Add a full glass of ice and white rum.", "Pour Water-C grapefruit to eight-tenths full.", "Top with jasmine peach Fanta."],
+      "西柚的微苦与蜜桃茉莉气泡交织，呈现清透天空感。", "Grapefruit bitterness and peach-jasmine fizz create a clear, sky-like finish.",
+      "白朗姆30ml，水溶C西柚八分，茉莉蜜桃芬达补满", { ice: "full" }),
+
+    R("first-love", "", "初恋", "First Love", ["white_rum"], ["citrus", "sweet", "sparkling"], "easy", ["#f2c48d", "#a55c8d"],
+      [ml("white_rum", 30), fill("waterc_lemon", 0.6), top("grape_soda")],
+      ["杯中加入冰块与白朗姆。", "加入水溶C柠檬至六分满。", "用葡萄味汽水补满。"],
+      ["Add ice and white rum.", "Pour Water-C lemon to six-tenths full.", "Top with grape soda."],
+      "酸甜轻盈，紫色气泡带来初次心动般的明快。", "Lightly sweet and tart, with purple fizz and a first-flutter brightness.",
+      "水溶C柠檬六分，白朗姆30ml，葡萄味气泡补满", { ice: "full" }),
+
+    R("evening-glow", "", "晚霞", "Evening Glow", ["white_rum"], ["fruity", "citrus"], "beginner", ["#d75e4e", "#ecaa6c"],
+      [fill("waterc_green_orange", 0.8), ml("white_rum", 30), ml("berry_peach", 60)],
+      ["杯中加入冰块和水溶C青皮橘至八分满。", "将白朗姆与莓莓桃桃加冰摇匀。", "把摇匀后的酒液加入杯中，形成晚霞层次。"],
+      ["Add ice and Water-C green orange to eight-tenths full.", "Shake white rum and berry peach drink with ice.", "Pour the shaken mixture into the glass for a layered sunset effect."],
+      "橘色基底与莓桃色泽交叠，像天边缓慢铺开的晚霞。", "Orange citrus and berry-peach tones layer like a slowly spreading evening sky.",
+      "水溶C青皮橘八分，白朗姆30ml莓莓桃桃60 shake加入", { ice: "full", method: "shake" }),
+
+    R("california-love", "", "加州之恋", "California Love", ["white_rum"], ["citrus", "fresh", "sparkling"], "easy", ["#e38b46", "#efc267"],
+      [ml("white_rum", 45), ml("orange_juice", 90), ml("lemon_juice", 10, true), top("soda_water")],
+      ["杯中加满冰块，加入白朗姆和橙汁。", "按口味挤入少量柠檬汁。", "用气泡水补满并轻搅。"],
+      ["Fill the glass with ice, then add white rum and orange juice.", "Add a little lemon juice to taste.", "Top with soda water and stir gently."],
+      "明亮柑橘与气泡感，像加州午后的阳光。", "Bright citrus and bubbles with the warmth of a California afternoon.",
+      "橙汁90，白朗姆45，柠檬，气泡水补满", { ice: "full" }),
+
+    R("cuba-libre-dawn", "", "自由古巴（破晓特调版）", "Cuba Libre · Dawn's Special", ["white_rum"], ["citrus", "sweet", "sparkling"], "easy", ["#231611", "#9b5333"],
+      [ml("white_rum", 50), ml("lime_juice", 15), ml("cola", 180)],
+      ["杯中加满冰块，倒入白朗姆和青柠汁。", "加入可乐，轻轻搅拌。"],
+      ["Fill the glass with ice and add white rum and lime juice.", "Add cola and stir gently."],
+      "更明确的青柠比例，让经典组合更鲜明。", "A lime-forward personal take on the familiar rum-and-cola classic.",
+      "可乐180，青柠15，白朗姆50", { ice: "full", aliases: ["自由古巴", "Cuba Libre"] }),
+
+    R("amnesia", "", "失忆", "Amnesia", ["white_rum", "blue_curacao"], ["citrus", "fruity", "strong"], "easy", ["#18788e", "#cd5a3d"],
+      [ml("white_rum", 30), ml("blue_curacao", 15), fill("waterc_blood_orange", 0.8)],
+      ["杯中加入冰块、白朗姆和蓝橙力娇酒。", "加入水溶C血橙至八分满，轻轻搅匀。"],
+      ["Add ice, white rum and blue curaçao.", "Pour Water-C blood orange to eight-tenths full and stir gently."],
+      "蓝橙与血橙在杯中交错，色彩醒目、果香直接。", "Blue curaçao and blood orange collide in a vivid, fruit-forward pour.",
+      "白朗姆30，蓝橙15，水溶C血橙八分", { ice: "full" }),
+
+    R("waters-oblivion", "", "忘川水", "Waters of Oblivion", ["white_rum", "vodka"], ["fruity", "sparkling", "strong"], "beginner", ["#754e95", "#db6a69"],
+      [ml("white_rum", 15), ml("vodka", 15), ml("jasmine_peach_fanta", 30), ml("sprite", 30), ml("waterc_blood_orange", 30)],
+      ["加入白朗姆、伏特加和冰块。", "依次加入芬达茉莉蜜桃、雪碧与水溶C血橙。", "轻轻搅匀后饮用。"],
+      ["Add white rum, vodka and ice.", "Pour in jasmine peach Fanta, Sprite and Water-C blood orange.", "Stir gently."],
+      "多种果味与双基酒交织，入口轻快但酒体不可低估。", "Layered fruit flavors hide a dual-spirit base—bright, but not lightweight.",
+      "白朗姆15，伏特加15，芬达茉莉蜜桃+雪碧+水溶C血橙各30", { ice: "full" }),
+
+    R("untitled-blue-coconut", "", "未命名", "Untitled", ["white_rum", "blue_curacao"], ["creamy", "sweet"], "easy", ["#2e87a2", "#e7e3d6"],
+      [ml("white_rum", 30), ml("blue_curacao", 15), fill("coconut_milk", 0.8)],
+      ["杯中加入冰块、白朗姆和蓝橙力娇酒。", "加入椰汁至八分满并轻轻搅匀。"],
+      ["Add ice, white rum and blue curaçao.", "Pour coconut drink to eight-tenths full and stir gently."],
+      "蓝色热带感与柔和椰香结合，暂时保留它的未命名状态。", "A blue tropical pour softened by coconut, deliberately left untitled for now.",
+      "椰汁八分，蓝橙15+白朗姆30", { ice: "full" }),
+
+    R("absolute-sunset", "S+", "绝对日落", "Absolute Sunset", ["vodka"], ["fruity", "sparkling"], "easy", ["#f19a4c", "#713a86"],
+      [ml("vodka", 30), ml("orange_juice", 60), top("grape_soda")],
+      ["杯中加冰并倒入伏特加。", "加入橙汁，再用葡萄味汽水补满。", "轻轻提拉一次，让颜色自然交融。"],
+      ["Add ice and vodka.", "Pour in orange juice and top with grape soda.", "Lift once gently to let the colors meet naturally."],
+      "橙紫渐变鲜明，是个人评级最高的一杯之一。", "A vivid orange-to-purple gradient and one of the highest-rated personal pours.",
+      "伏特加30，橙汁60，葡萄味汽水补满", { ice: "full" }),
+
+    R("verdant-ballad", "", "青青子吟", "Verdant Ballad", ["vodka"], ["citrus", "fresh", "sparkling"], "easy", ["#9cbf4e", "#e4d66b"],
+      [ml("vodka", 30), fill("waterc_lemon", 0.6), top("green_apple_fanta")],
+      ["杯中加入冰块和伏特加。", "加入水溶C柠檬至六分满。", "用青苹果美年达补满。"],
+      ["Add ice and vodka.", "Pour Water-C lemon to six-tenths full.", "Top with green apple Mirinda."],
+      "柠檬与青苹果形成清脆明亮的绿色果香。", "Lemon and green apple create a crisp, bright green-fruit profile.",
+      "伏特加30ml，水溶C柠檬六分，青苹果美年达补满", { ice: "full" }),
+
+    R("magic-potion", "B", "魔法药水", "Magic Potion", ["vodka"], ["sweet", "creamy", "fruity"], "easy", ["#6d2e7b", "#d489b3"],
+      [ml("vodka", 45), ml("yakult", 100), fill("grape_juice", 0.8)],
+      ["杯中加入伏特加与一瓶养乐多。", "加入葡萄汁至八分满。", "充分搅匀，按需加冰。"],
+      ["Add vodka and one bottle of Yakult.", "Pour grape juice to eight-tenths full.", "Mix thoroughly and add ice if desired."],
+      "乳酸甜感与葡萄果味组成一杯颜色浓郁的便利店魔法。", "A convenience-store spell of tangy cultured milk and rich grape fruitiness.",
+      "养乐多一瓶，葡萄汁八分，伏特加45ml"),
+
+    R("peach-blossom-luck", "", "桃花运", "Peach Blossom Luck", ["vodka"], ["sweet", "creamy", "fruity"], "easy", ["#dc708a", "#f0b4b4"],
+      [ml("vodka", 30), ml("yakult", 100), ml("berry_peach", 50)],
+      ["加入伏特加、益力多和莓莓桃桃。", "加冰后充分搅匀，或短暂摇和后倒入杯中。"],
+      ["Combine vodka, Yakult and berry peach drink.", "Stir well over ice, or shake briefly and strain into the glass."],
+      "桃香、莓果和乳酸甜感，柔和讨喜。", "Peach, berry and cultured-milk sweetness in a soft, crowd-friendly mix.",
+      "益力多100，莓桃汁50，伏特加30", { method: "shake" }),
+
+    R("violet-hibiscus", "", "紫韵芙蓉", "Violet Hibiscus", ["vodka"], ["creamy", "fruity", "sweet"], "easy", ["#6d3f76", "#dfc5cc"],
+      [ml("vodka", 30), ml("coconut_milk", 100), ml("grape_juice", 100)],
+      ["杯中加入伏特加、椰汁与葡萄汁。", "加入冰块并充分搅匀。"],
+      ["Combine vodka, coconut drink and grape juice.", "Add ice and mix thoroughly."],
+      "椰香柔化葡萄的深色果味，口感饱满。", "Coconut softens deep grape fruit, creating a round and full-bodied drink.",
+      "伏特加30，椰汁100，葡萄汁100"),
+
+    R("longing-to-see-you", "", "想见你", "Longing to See You", ["vodka"], ["fruity", "citrus", "sparkling"], "easy", ["#745191", "#db8f75"],
+      [ml("vodka", 30), ml("grape_soda", 100), ml("waterc_grapefruit", 50)],
+      ["杯中加冰并倒入伏特加。", "加入葡萄味汽水与水溶C西柚，轻轻搅匀。"],
+      ["Add ice and vodka.", "Pour in grape soda and Water-C grapefruit, then stir gently."],
+      "葡萄的甜与西柚的微苦，像想念里并存的甜涩。", "Sweet grape and bittersweet grapefruit echo the mixed edges of longing.",
+      "伏特加30，葡萄味汽水100，水溶C西柚50", { ice: "full" }),
+
+    R("possession", "", "占有欲", "Possession", ["vodka"], ["fruity", "citrus", "strong"], "easy", ["#812f49", "#dfb35e"],
+      [ml("vodka", 30), ml("grape_juice", 50), ml("waterc_lemon", 100)],
+      ["杯中加入伏特加与冰块。", "加入葡萄汁和水溶C柠檬，搅匀。"],
+      ["Add vodka and ice.", "Pour in grape juice and Water-C lemon, then stir."],
+      "葡萄的浓甜被柠檬酸感紧紧收住，轮廓清晰。", "Rich grape sweetness is held tightly by lemon acidity for a sharply defined profile.",
+      "伏特加30，葡萄汁50，水溶C柠檬100", { ice: "full" }),
+
+    R("emerald-wonderland", "", "绿野仙踪", "Emerald Wonderland", ["vodka"], ["citrus", "fresh", "fruity"], "easy", ["#526d42", "#b7cf68"],
+      [ml("vodka", 30), piece("frozen_grapes", 6), ml("waterc_lemon", 100)],
+      ["杯中放入六颗葡萄冰。", "加入伏特加与水溶C柠檬，轻轻搅动。"],
+      ["Place six frozen grapes in the glass.", "Add vodka and Water-C lemon, then stir gently."],
+      "葡萄冰代替普通冰块，随着融化逐渐增加果味。", "Frozen grapes replace ordinary ice, slowly deepening the fruit character as they soften.",
+      "伏特加30，葡萄冰6颗，水溶C柠檬100"),
+
+    R("orange-sea", "", "橘子海", "Orange Sea", ["vodka"], ["fruity", "fresh", "coconut"], "easy", ["#dc7742", "#f1cb84"],
+      [ml("vodka", 30), ml("orange_juice", 60), ml("coconut_water", 60)],
+      ["杯中加入冰块和伏特加。", "加入橙汁与椰子水，轻轻搅匀。"],
+      ["Add ice and vodka.", "Pour in orange juice and coconut water, then stir gently."],
+      "橙香与椰子水清爽融合，像阳光落在海面。", "Orange and coconut water meet in a light, sunlit seaside profile.",
+      "橙汁60，椰子水60，伏特加30", { ice: "full" }),
+
+    R("heartbeat", "", "怦然心动", "Heartbeat", ["vodka"], ["sweet", "fruity", "sparkling"], "easy", ["#d9647f", "#f1aa97"],
+      [ml("vodka", 30), fill("berry_peach", 0.5), top("peach_sparkling_water")],
+      ["杯中加入冰块与伏特加。", "加入莓莓桃桃至五分满。", "用蜜桃气泡水补满。"],
+      ["Add ice and vodka.", "Pour berry peach drink to halfway.", "Top with peach sparkling water."],
+      "轻柔莓桃果香配上细密气泡，是一杯没有压力的心动。", "Soft berry-peach fruit and fine bubbles make an easygoing first flutter.",
+      "伏特加30，莓莓桃桃五分，蜜桃气泡水补满", { ice: "full" }),
+
+    R("manchester-by-sea", "", "海边的曼切斯特", "Manchester by the Sea", ["vodka", "blue_curacao"], ["fresh", "citrus", "sparkling"], "easy", ["#176f91", "#79bed1"],
+      [ml("vodka", 30), ml("blue_curacao", 25), top("soda_water")],
+      ["杯中加满冰块，倒入伏特加和蓝橙力娇酒。", "用气泡水补满，轻轻搅匀。"],
+      ["Fill the glass with ice and add vodka and blue curaçao.", "Top with soda water and stir gently."],
+      "蓝色酒液、清透气泡与克制甜度，带着冷静的海岸感。", "Blue spirit, clear bubbles and restrained sweetness evoke a cool, quiet coast.",
+      "伏特加30，蓝橙25，气泡水补满", { ice: "full" }),
+
+    R("poison", "", "毒药", "Poison", ["vodka", "blue_curacao"], ["sweet", "fruity", "strong"], "easy", ["#26317d", "#7e274c"],
+      [ml("vodka", 30), ml("blue_curacao", 30), ml("grape_juice", 15), fill("sprite", 0.8)],
+      ["杯中加入冰块、伏特加、蓝橙力娇酒和葡萄汁。", "加入雪碧至八分满，轻轻搅匀。"],
+      ["Add ice, vodka, blue curaçao and grape juice.", "Pour Sprite to eight-tenths full and stir gently."],
+      "颜色迷人、甜味易饮，但双重酒基需要慢饮。", "Visually inviting and easy to sip, but its dual alcoholic base deserves a slower pace.",
+      "伏特加30+蓝橙30+葡萄汁15+雪碧八分", { ice: "full" })
+  ];
+}());
