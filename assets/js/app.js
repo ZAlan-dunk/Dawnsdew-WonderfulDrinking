@@ -160,10 +160,10 @@
         const entry = pantryEntry(item.id);
         return `<div class="pantry-row" data-pantry-row="${esc(item.id)}">
           <label class="ingredient-check"><input type="checkbox" data-pantry-field="owned" data-id="${esc(item.id)}" ${entry.owned ? "checked" : ""}><span><b>${esc(item[state.settings.lang])}</b><small>${esc(state.settings.lang === "zh" ? item.en : item.zh)}</small></span></label>
-          <input type="number" min="0" step="1" data-pantry-field="stock" data-id="${esc(item.id)}" value="${esc(entry.stock)}" aria-label="${esc(t("pantryStock"))}">
-          <input type="number" min="0" step="0.01" data-pantry-field="price" data-id="${esc(item.id)}" value="${esc(entry.price)}" aria-label="${esc(t("pantryPrice"))}">
-          <input type="number" min="0.01" step="1" data-pantry-field="packSize" data-id="${esc(item.id)}" value="${esc(entry.packSize)}" aria-label="${esc(t("pantryPack"))}">
-          <input type="number" min="0" max="100" step="0.1" data-pantry-field="abv" data-id="${esc(item.id)}" value="${esc(entry.abv)}" aria-label="${esc(t("pantryAbv"))}">
+          <label class="pantry-field"><span>${esc(t("pantryStock"))}</span><input type="number" min="0" step="1" data-pantry-field="stock" data-id="${esc(item.id)}" value="${esc(entry.stock)}" aria-label="${esc(t("pantryStock"))}"></label>
+          <label class="pantry-field"><span>${esc(t("pantryPrice"))}</span><input type="number" min="0" step="0.01" data-pantry-field="price" data-id="${esc(item.id)}" value="${esc(entry.price)}" aria-label="${esc(t("pantryPrice"))}"></label>
+          <label class="pantry-field"><span>${esc(t("pantryPack"))}</span><input type="number" min="0.01" step="1" data-pantry-field="packSize" data-id="${esc(item.id)}" value="${esc(entry.packSize)}" aria-label="${esc(t("pantryPack"))}"></label>
+          <label class="pantry-field"><span>${esc(t("pantryAbv"))}</span><input type="number" min="0" max="100" step="0.1" data-pantry-field="abv" data-id="${esc(item.id)}" value="${esc(entry.abv)}" aria-label="${esc(t("pantryAbv"))}"></label>
         </div>`;
       }).join("");
       return `<section class="pantry-group panel"><h2>${esc(label)}</h2><div class="pantry-head"><span>${esc(t("pantryIngredient"))}</span><span>${esc(t("pantryStock"))}</span><span>${esc(t("pantryPrice"))}</span><span>${esc(t("pantryPack"))}</span><span>${esc(t("pantryAbv"))}</span></div>${rows}</section>`;

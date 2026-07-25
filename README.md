@@ -32,6 +32,24 @@
 
 无需运行安装命令，也无需启动本地服务器。为保证本地数据持续可用，建议不要频繁移动 `index.html`，并定期在“数据管理”中导出 JSON 备份。
 
+## 可直接分享的单文件封装版
+
+如果要通过聊天软件、网盘或 U 盘直接发给他人，只需发送下面这一个文件：
+
+```text
+packages/DawnsDew-v0.0.1-Beta-Standalone/DawnsDew-v0.0.1-Beta-Standalone.html
+```
+
+该 HTML 已内置全部样式、CSS 杯形美术、SVG 标志、45 杯配方数据和程序脚本，不依赖 `assets` 文件夹，并保留手机端底部导航、安全区域、触控尺寸和小屏布局适配。接收方下载后使用手机或电脑浏览器打开即可。
+
+封装目录还包含 `使用说明.txt` 和 `SHA256.txt`。如需在修改源码后重新生成封装版，可在项目根目录运行：
+
+```powershell
+node tools/build-standalone.js
+```
+
+微信等聊天软件的内置预览器可能限制本地存储、文件导入或下载；遇到此情况时请选择“用浏览器打开”。
+
 ## 默认估算规则
 
 - 默认杯容量：`300 ml`
@@ -66,6 +84,10 @@ Dawnsdew-WonderfulDrinking/
 │     ├─ storage.js
 │     ├─ calculators.js
 │     └─ app.js
+├─ packages/
+│  └─ DawnsDew-v0.0.1-Beta-Standalone/
+├─ tools/
+│  └─ build-standalone.js
 ├─ docs/
 │  ├─ product-plan.md
 │  └─ recipe-schema.md
