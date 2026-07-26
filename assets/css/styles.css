@@ -374,3 +374,40 @@ body.capacitor-native .app-shell { padding-top: env(safe-area-inset-top); }
   .bottom-nav small { font-size: .48rem; letter-spacing: -.02em; }
   .tonight-card-button { max-width: calc(100% - 58px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 }
+
+/* v0.0.2 — Installable web app (PWA / iPhone Home Screen) */
+.pwa-install-card {
+  margin: 22px 0 28px;
+  padding: 18px 20px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+  border: 1px solid rgba(216,178,110,.28);
+  border-radius: var(--radius);
+  background: linear-gradient(115deg, rgba(216,178,110,.11), rgba(22,18,28,.92) 45%, rgba(9,10,13,.96));
+  box-shadow: var(--shadow);
+}
+.pwa-install-card img { border-radius: 18px; box-shadow: 0 12px 34px rgba(0,0,0,.34); }
+.pwa-install-copy { min-width: 0; }
+.pwa-install-copy h2 { margin: 3px 0 5px; font-size: clamp(1.05rem, 2vw, 1.35rem); }
+.pwa-install-copy p:last-child { margin: 0; max-width: 660px; color: var(--muted); font-size: .8rem; line-height: 1.65; }
+.pwa-install-card .button { white-space: nowrap; }
+.pwa-guide-backdrop { position: fixed; inset: 0; z-index: 120; display: grid; place-items: center; padding: 18px; background: rgba(3,3,5,.82); backdrop-filter: blur(14px); }
+.pwa-guide { position: relative; width: min(560px, 100%); max-height: min(820px, 94vh); overflow: auto; padding: 34px; border: 1px solid rgba(216,178,110,.3); border-radius: 25px; background: #111014; box-shadow: 0 40px 120px rgba(0,0,0,.72); }
+.pwa-guide > img { display: block; margin: 0 0 18px; border-radius: 20px; box-shadow: 0 12px 36px rgba(0,0,0,.36); }
+.pwa-guide h2 { margin: 5px 0 22px; font-size: clamp(1.55rem, 5vw, 2.15rem); }
+.pwa-guide ol { display: grid; gap: 13px; margin: 0 0 24px; padding: 0; list-style: none; }
+.pwa-guide li { display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: start; padding: 13px; border: 1px solid var(--line); border-radius: 13px; background: rgba(216,178,110,.045); }
+.pwa-guide li > span { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; color: #15100a; background: var(--gold); font: 800 .76rem Inter, sans-serif; }
+.pwa-guide li b { display: block; margin: 2px 0 5px; font-size: .84rem; }
+.pwa-guide li p { margin: 0; color: var(--muted); font-size: .73rem; line-height: 1.55; }
+body.modal-open { overflow: hidden; }
+
+@media (max-width: 700px) {
+  .pwa-install-card { grid-template-columns: auto minmax(0, 1fr); padding: 16px; gap: 13px; }
+  .pwa-install-card img { width: 56px; height: 56px; border-radius: 15px; }
+  .pwa-install-card .button { grid-column: 1 / -1; width: 100%; }
+  .pwa-guide-backdrop { padding: 0; align-items: end; }
+  .pwa-guide { max-height: 95vh; padding: 28px 20px max(28px, env(safe-area-inset-bottom)); border-radius: 24px 24px 0 0; }
+}

@@ -24,6 +24,8 @@ function read(relativePath) {
 }
 
 let html = read("index.html");
+// Service workers and install metadata only apply to HTTPS-hosted builds, not file:// standalone packages.
+html = html.replace(/\s*<!-- PWA_ONLY_START -->[\s\S]*?<!-- PWA_ONLY_END -->/g, "");
 const css = read("assets/css/styles.css");
 html = html.replace(
   '<link rel="stylesheet" href="assets/css/styles.css">',

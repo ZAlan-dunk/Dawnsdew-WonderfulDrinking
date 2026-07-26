@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">朝露酒笺</title>
+  <desc id="desc">Dawn's Dew sunrise cocktail mark</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#15121a"/>
+      <stop offset="1" stop-color="#07080b"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffe8a6"/>
+      <stop offset=".45" stop-color="#d8b26e"/>
+      <stop offset="1" stop-color="#9b6a34"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <circle cx="256" cy="256" r="190" fill="none" stroke="#d8b26e" stroke-opacity=".22" stroke-width="2"/>
+  <circle cx="256" cy="223" r="86" fill="url(#gold)" opacity=".95"/>
+  <path d="M116 302h280" stroke="#d8b26e" stroke-width="7" stroke-linecap="round" opacity=".85"/>
+  <path d="M156 174l26 20M197 139l14 28M256 126v33M315 139l-14 28M356 174l-26 20" stroke="#d8b26e" stroke-width="7" stroke-linecap="round" opacity=".7"/>
+  <path d="M142 161h228L256 302 142 161Z" fill="#090a0d" fill-opacity=".82" stroke="url(#gold)" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M164 190h184l-92 103-92-103Z" fill="#ba764d" fill-opacity=".38"/>
+  <path d="M256 302v76M196 396h120" stroke="url(#gold)" stroke-width="8" stroke-linecap="round"/>
+  <path d="M339 112c0 18-13 31-29 31s-29-13-29-31c0-18 29-54 29-54s29 36 29 54Z" fill="url(#gold)" stroke="#ffe8a6" stroke-width="3"/>
+  <circle cx="304" cy="102" r="7" fill="#fff3c8" opacity=".8"/>
+</svg>

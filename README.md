@@ -2,7 +2,7 @@
 
 > 面向家庭调酒爱好者的本地优先调酒助手。当前版本：**v0.0.2 Beta**。
 
-[📱 **下载 Android 测试版（GitHub Releases）**](https://github.com/ZAlan-dunk/Dawnsdew-WonderfulDrinking/releases/tag/v0.0.2-beta) · [🌐 **打开在线网页版**](https://zalan-dunk.github.io/Dawnsdew-WonderfulDrinking/)
+[🍎 **iPhone 网页 App 安装指南**](docs/iphone-pwa-guide.md) · [📱 **下载 Android 测试版（GitHub Releases）**](https://github.com/ZAlan-dunk/Dawnsdew-WonderfulDrinking/releases/tag/v0.0.2-beta) · [🌐 **打开在线网页版**](https://zalan-dunk.github.io/Dawnsdew-WonderfulDrinking/)
 
 朝露酒笺以“便利店材料也能调一杯”为核心方向，提供配方浏览、材料匹配、个人酒柜、今夜酒单、聚会推荐、收藏、自定义配方，以及酒精度与成本估算。网页版可直接离线打开，也可通过 Capacitor 封装为 Android APK。
 
@@ -30,6 +30,7 @@
 - 估算单杯酒精度、酒液体积和材料成本
 - 电脑与手机响应式布局
 - Android 返回键依次执行：关闭配方详情、返回首页、退出应用
+- 可安装 PWA：支持添加到 iPhone/Android/电脑桌面，首次完整载入后可离线使用内置功能
 
 ## 使用方式
 
@@ -57,7 +58,22 @@ packages/DawnsDew-v0.0.2-Beta-Standalone/DawnsDew-v0.0.2-Beta-Standalone.html
 npm run build:standalone
 ```
 
-### 3. Android APK
+### 3. iPhone 网页 App（PWA，推荐）
+
+无需下载 IPA，也无需 App Store。使用 iPhone 的 **Safari** 打开在线版：
+
+<https://zalan-dunk.github.io/Dawnsdew-WonderfulDrinking/>
+
+然后依次执行：
+
+1. 点击 Safari 的“分享”按钮。
+2. 选择“添加到主屏幕”。
+3. 确认名称并点击“添加”。
+4. 从桌面图标全屏打开朝露酒笺。
+
+首次完整载入后，内置配方、界面资源和主要功能可离线打开；酒柜、收藏、今夜酒单与自定义配方仍只保存在当前设备。详细说明见 [iPhone 网页 App 安装指南](docs/iphone-pwa-guide.md)。
+
+### 4. Android APK
 
 > [前往 v0.0.2 Beta 发布页下载 APK](https://github.com/ZAlan-dunk/Dawnsdew-WonderfulDrinking/releases/tag/v0.0.2-beta)
 
@@ -117,7 +133,10 @@ android/app/build/outputs/apk/debug/app-debug.apk
 ```text
 Dawnsdew-WonderfulDrinking/
 ├─ index.html
+├─ manifest.webmanifest          # PWA 安装信息
+├─ sw.js                         # 离线缓存
 ├─ assets/
+│  ├─ icons/                     # PWA 与 iPhone 桌面图标
 │  ├─ css/styles.css
 │  ├─ data/
 │  └─ js/
@@ -166,6 +185,7 @@ Dawnsdew-WonderfulDrinking/
 
 ## 文档
 
+- [iPhone 网页 App 安装指南](docs/iphone-pwa-guide.md)
 - [产品详细方案](docs/product-plan.md)
 - [配方数据结构](docs/recipe-schema.md)
 - [版本记录](CHANGELOG.md)

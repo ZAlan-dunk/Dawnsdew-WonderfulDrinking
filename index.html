@@ -4,7 +4,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#090a0d">
+  <meta name="color-scheme" content="dark">
   <meta name="description" content="朝露酒笺——为家庭调酒爱好者打造的本地配方、酒柜与材料匹配助手。">
+  <!-- PWA_ONLY_START -->
+  <meta name="application-name" content="朝露酒笺">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="朝露酒笺">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
+  <!-- PWA_ONLY_END -->
   <title>朝露酒笺 · Dawn's Dew</title>
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
@@ -60,6 +71,18 @@
             <div class="glass-rim"></div><div class="glass-liquid"></div><div class="glass-shine"></div><div class="garnish"></div>
           </div>
         </div>
+
+        <!-- PWA_ONLY_START -->
+        <aside class="pwa-install-card hidden" id="pwaInstallCard" aria-labelledby="pwaInstallTitle">
+          <img src="assets/icons/icon-192.png" alt="" width="68" height="68">
+          <div class="pwa-install-copy">
+            <p class="eyebrow">WEB APP · OFFLINE READY</p>
+            <h2 id="pwaInstallTitle" data-i18n="pwaInstallTitle">把朝露酒笺装到手机桌面</h2>
+            <p data-i18n="pwaInstallBody">像 App 一样全屏打开；首次联网载入后，离线也能查看配方与管理本地数据。</p>
+          </div>
+          <button class="button primary" id="pwaInstallButton" type="button" data-i18n="pwaInstallButton">安装 / 查看步骤</button>
+        </aside>
+        <!-- PWA_ONLY_END -->
 
         <div class="stats-grid" id="homeStats"></div>
         <div class="section-heading tonight-heading"><div><p class="eyebrow">TONIGHT'S MENU</p><h2 data-i18n="tonightMenuTitle">今夜酒单</h2><p class="section-subtitle" data-i18n="tonightMenuHomeSubtitle">把今晚想调的酒先放进这里。</p></div><button class="text-button" type="button" data-nav="tonight" data-i18n="manageTonightMenu">管理酒单</button></div>
@@ -159,6 +182,24 @@
   </div>
   <div class="toast-region" id="toastRegion" aria-live="polite"></div>
 
+  <!-- PWA_ONLY_START -->
+  <div class="pwa-guide-backdrop hidden" id="pwaInstallGuide" role="dialog" aria-modal="true" aria-labelledby="pwaGuideTitle">
+    <article class="pwa-guide">
+      <button class="modal-close" id="pwaGuideClose" type="button" aria-label="Close">×</button>
+      <img src="assets/icons/apple-touch-icon.png" alt="" width="84" height="84">
+      <p class="eyebrow">IPHONE · SAFARI</p>
+      <h2 id="pwaGuideTitle" data-i18n="pwaGuideTitle">添加到 iPhone 主屏幕</h2>
+      <ol>
+        <li><span>1</span><div><b data-i18n="pwaStep1Title">使用 Safari 打开在线版</b><p data-i18n="pwaStep1Body">请不要停留在微信、QQ 或其他应用的内置浏览器。</p></div></li>
+        <li><span>2</span><div><b data-i18n="pwaStep2Title">点击 Safari 的“分享”按钮</b><p data-i18n="pwaStep2Body">图标通常是一个向上箭头伸出方框。</p></div></li>
+        <li><span>3</span><div><b data-i18n="pwaStep3Title">选择“添加到主屏幕”</b><p data-i18n="pwaStep3Body">若没有看到，请向下滚动分享菜单。</p></div></li>
+        <li><span>4</span><div><b data-i18n="pwaStep4Title">确认名称并点击“添加”</b><p data-i18n="pwaStep4Body">以后可从桌面图标全屏打开，数据仍保存在这台设备上。</p></div></li>
+      </ol>
+      <button class="button primary wide" id="pwaGuideDone" type="button" data-i18n="pwaGuideDone">我知道了</button>
+    </article>
+  </div>
+  <!-- PWA_ONLY_END -->
+
   <script src="assets/js/compat.js"></script>
   <script src="assets/data/ingredients.js"></script>
   <script src="assets/data/personal-recipes.js"></script>
@@ -168,5 +209,8 @@
   <script src="assets/js/calculators.js"></script>
   <script src="assets/js/native.js"></script>
   <script src="assets/js/app.js"></script>
+  <!-- PWA_ONLY_START -->
+  <script src="assets/js/pwa.js"></script>
+  <!-- PWA_ONLY_END -->
 </body>
 </html>
