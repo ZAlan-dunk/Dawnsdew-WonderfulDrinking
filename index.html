@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#090a0d">
-  <meta name="description" content="破晓微醺——为家庭调酒爱好者打造的本地配方、酒柜与材料匹配助手。">
-  <title>破晓微醺 · Dawn's Dew</title>
+  <meta name="description" content="朝露酒笺——为家庭调酒爱好者打造的本地配方、酒柜与材料匹配助手。">
+  <title>朝露酒笺 · Dawn's Dew</title>
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
@@ -23,7 +23,7 @@
       <span class="brand-mark" aria-hidden="true">
         <svg viewBox="0 0 64 64"><path d="M32 5c7 11 17 22 17 35a17 17 0 1 1-34 0C15 27 25 16 32 5Z"/><path d="M23 42c2 6 8 9 14 7"/></svg>
       </span>
-      <span><strong data-i18n="appName">破晓微醺</strong><small>Dawn's Dew · v0.0.1 Beta</small></span>
+      <span><strong data-i18n="appName">朝露酒笺</strong><small>Dawn's Dew · v0.0.2 Beta</small></span>
     </button>
     <div class="top-actions">
       <button class="icon-button" id="quickRandomButton" type="button" data-tooltip="随机推荐" aria-label="Random recipe">✦</button>
@@ -35,6 +35,7 @@
     <aside class="sidebar" aria-label="Primary navigation">
       <nav>
         <button class="nav-item active" type="button" data-nav="home"><span>⌂</span><b data-i18n="navHome">首页</b></button>
+        <button class="nav-item" type="button" data-nav="tonight"><span>☾</span><b data-i18n="navTonight">今夜酒单</b></button>
         <button class="nav-item" type="button" data-nav="recipes"><span>◫</span><b data-i18n="navRecipes">配方库</b></button>
         <button class="nav-item" type="button" data-nav="pantry"><span>♜</span><b data-i18n="navPantry">我的酒柜</b></button>
         <button class="nav-item" type="button" data-nav="custom"><span>＋</span><b data-i18n="navCustom">自定义</b></button>
@@ -61,6 +62,8 @@
         </div>
 
         <div class="stats-grid" id="homeStats"></div>
+        <div class="section-heading tonight-heading"><div><p class="eyebrow">TONIGHT'S MENU</p><h2 data-i18n="tonightMenuTitle">今夜酒单</h2><p class="section-subtitle" data-i18n="tonightMenuHomeSubtitle">把今晚想调的酒先放进这里。</p></div><button class="text-button" type="button" data-nav="tonight" data-i18n="manageTonightMenu">管理酒单</button></div>
+        <div class="recipe-grid compact tonight-home-grid" id="homeTonightMenu"></div>
         <div class="section-heading"><div><p class="eyebrow" data-i18n="tonightLabel">TONIGHT'S POUR</p><h2 data-i18n="todayRecommend">今晚推荐</h2></div><button class="text-button" id="refreshFeatured" type="button" data-i18n="changeOne">换一杯</button></div>
         <div id="featuredRecipe"></div>
         <div class="section-heading"><div><p class="eyebrow" data-i18n="quickEntry">QUICK ENTRY</p><h2 data-i18n="startFromNeed">从你的需要开始</h2></div></div>
@@ -72,6 +75,12 @@
         </div>
         <div class="section-heading recent-heading"><div><p class="eyebrow">RECENT</p><h2 data-i18n="recentViewed">最近查看</h2></div></div>
         <div class="recipe-grid compact" id="recentRecipes"></div>
+      </section>
+
+      <section class="view" id="view-tonight" aria-labelledby="tonightTitle">
+        <div class="page-heading"><div><p class="eyebrow">TONIGHT'S MENU</p><h1 id="tonightTitle" data-i18n="tonightMenuTitle">今夜酒单</h1><p data-i18n="tonightMenuSubtitle">从现有配方中挑选今晚准备制作的酒。</p></div><div class="tonight-page-actions"><span class="result-count" id="tonightMenuCount"></span><button class="button ghost small" id="clearTonightMenu" type="button" data-i18n="clearTonightMenu">清空酒单</button></div></div>
+        <div class="recipe-grid" id="tonightMenuGrid"></div>
+        <div class="empty-state" id="tonightMenuEmpty"><span>☾</span><h3 data-i18n="tonightMenuEmpty">今夜酒单还是空的</h3><p data-i18n="tonightMenuEmptyHint">在配方卡片或配方详情中点击“加入今夜酒单”。</p><button class="button primary" type="button" data-nav="recipes" data-i18n="browseRecipes">浏览配方</button></div>
       </section>
 
       <section class="view" id="view-recipes" aria-labelledby="recipesTitle">
@@ -138,6 +147,7 @@
 
   <nav class="bottom-nav" aria-label="Mobile navigation">
     <button class="active" type="button" data-nav="home"><span>⌂</span><small data-i18n="navHome">首页</small></button>
+    <button type="button" data-nav="tonight"><span>☾</span><small data-i18n="navTonightShort">今夜</small></button>
     <button type="button" data-nav="recipes"><span>◫</span><small data-i18n="navRecipes">配方库</small></button>
     <button type="button" data-nav="pantry"><span>♜</span><small data-i18n="navPantry">我的酒柜</small></button>
     <button type="button" data-nav="custom"><span>＋</span><small data-i18n="navCustom">自定义</small></button>
@@ -156,6 +166,7 @@
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/storage.js"></script>
   <script src="assets/js/calculators.js"></script>
+  <script src="assets/js/native.js"></script>
   <script src="assets/js/app.js"></script>
 </body>
 </html>

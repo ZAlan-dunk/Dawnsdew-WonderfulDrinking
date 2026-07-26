@@ -1,6 +1,17 @@
-﻿.DS_Store
+.DS_Store
 Thumbs.db
 Desktop.ini
 .vscode/
 .idea/
 *.log
+
+# Local dependencies and generated web bundle
+node_modules/
+www/
+
+# Android local/build outputs
+android/.gradle/
+android/app/build/
+android/local.properties
+*.apk
+*.aab

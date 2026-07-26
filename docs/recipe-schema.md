@@ -1,4 +1,4 @@
-﻿# 配方数据结构 v0.0.1
+# 配方数据结构 v0.0.2
 
 配方通过普通脚本加载到 `window.DD_DATA`，以便项目直接通过 `file://` 打开，不依赖模块服务器或 `fetch()`。
 
@@ -94,7 +94,7 @@
 
 ```js
 {
-  version: "0.0.1",
+  version: "0.0.2",
   savedAt: "ISO-8601 time or null",
   settings: {
     lang: "zh",
@@ -112,6 +112,7 @@
     }
   },
   favorites: ["mirror-of-sky"],
+  tonightMenu: ["mirror-of-sky"],
   customRecipes: [],
   recent: [],
   partyHistory: []
@@ -122,11 +123,11 @@
 
 ```js
 {
-  app: "Dawn's Dew / 破晓微醺",
-  schemaVersion: "0.0.1",
+  app: "Dawn's Dew / 朝露酒笺",
+  schemaVersion: "0.0.2",
   exportedAt: "ISO-8601 time",
   state: { /* 本地状态 */ }
 }
 ```
 
-导入只接受相同 `schemaVersion`。未来如修改结构，应增加迁移函数，而不是直接复用旧版本键。
+v0.0.2 支持导入同版本数据，也支持迁移 v0.0.1 状态与备份。未来如修改结构，应增加迁移函数，而不是直接复用旧版本键。

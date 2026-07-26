@@ -5,6 +5,7 @@
   const i18n = window.DD_I18N;
   const storage = window.DD_STORAGE;
   const calc = window.DD_CALC;
+  const native = window.DD_NATIVE || { isNative: () => false, shareJson: async () => false, onBackButton: () => {}, exitApp: () => {} };
   const $ = selector => document.querySelector(selector);
   const $$ = selector => Array.from(document.querySelectorAll(selector));
   const map = data.ingredientMap;
@@ -42,6 +43,7 @@
     return Number(value || 0).toLocaleString(state.settings.lang === "en" ? "en-US" : "zh-CN", { maximumFractionDigits: digits === undefined ? 1 : digits });
   }
   function isFavorite(id) { return state.favorites.includes(id); }
+  function isInTonightMenu(id) { return state.tonightMenu.includes(id); }
 
   function toast(message) {
     const node = document.createElement("div");
@@ -77,6 +79,7 @@
         <div class="meta-row">${tags}${matchBadge(recipe)}</div>
         <div class="card-metrics"><span>${esc(difficultyName(recipe.difficulty))}</span><span>${formatNumber(abv.abv, 1)}% ABV</span></div>
         <button class="favorite-button ${isFavorite(recipe.id) ? "active" : ""}" type="button" data-favorite="${esc(recipe.id)}" aria-label="${esc(favoriteLabel)}">${isFavorite(recipe.id) ? "♥" : "♡"}</button>
+        <button class="tonight-card-button ${isInTonightMenu(recipe.id) ? "active" : ""}" type="button" data-tonight-toggle="${esc(recipe.id)}" aria-label="${esc(isInTonightMenu(recipe.id) ? t("removeFromTonight") : t("addToTonight"))}">${isInTonightMenu(recipe.id) ? "✓ " + esc(t("navTonightShort")) : "+ " + esc(t("navTonightShort"))}</button>
       </div>
     </article>`;
   }
@@ -101,8 +104,19 @@
       <div class="featured-actions"><button class="button primary" type="button" data-open-recipe="${esc(featured.id)}">${esc(t("viewRecipe"))}</button><button class="button ghost" type="button" data-favorite="${esc(featured.id)}">${isFavorite(featured.id) ? "♥ " + esc(t("unfavorite")) : "♡ " + esc(t("favorite"))}</button></div></div>
     </article>`;
 
+    const tonight = state.tonightMenu.map(recipeById).filter(Boolean).slice(0, 4);
+    $("#homeTonightMenu").innerHTML = tonight.length ? tonight.map(recipe => recipeCard(recipe, true)).join("") : `<div class="empty-state tonight-empty"><span>☾</span><p>${esc(t("tonightMenuEmptyHint"))}</p><button class="button ghost small" type="button" data-nav="recipes">${esc(t("browseRecipes"))}</button></div>`;
     const recent = state.recent.map(recipeById).filter(Boolean).slice(0, 4);
     $("#recentRecipes").innerHTML = recent.length ? recent.map(recipe => recipeCard(recipe, true)).join("") : `<div class="empty-state"><span>◇</span><p>${esc(t("noRecent"))}</p></div>`;
+  }
+
+  function renderTonightMenu() {
+    state.tonightMenu = state.tonightMenu.filter(id => Boolean(recipeById(id)));
+    const recipes = state.tonightMenu.map(recipeById).filter(Boolean);
+    $("#tonightMenuCount").textContent = t("tonightMenuCount", { count: recipes.length });
+    $("#tonightMenuGrid").innerHTML = recipes.map(recipe => recipeCard(recipe, false)).join("");
+    $("#tonightMenuEmpty").classList.toggle("hidden", recipes.length > 0);
+    $("#clearTonightMenu").disabled = recipes.length === 0;
   }
 
   function option(value, label, selected) { return `<option value="${esc(value)}"${value === selected ? " selected" : ""}>${esc(label)}</option>`; }
@@ -253,7 +267,7 @@
       ${missing.length ? `<div class="detail-section"><h3>${esc(t("missingIngredients"))}</h3><p>${esc(missing.join(state.settings.lang === "zh" ? "、" : ", "))}</p></div>` : ""}
       ${recipe.sourceText ? `<div class="original-note"><b>${esc(t("originalFormula"))}</b><br>${esc(recipe.sourceText)}</div>` : ""}
       <p class="warning-note">${esc(t("estimateOnly"))}</p>${volume.exceedsCapacity ? `<p class="warning-note">${esc(t("capacityWarning"))}</p>` : ""}
-      <div class="modal-actions"><button class="button primary" type="button" data-favorite="${esc(recipe.id)}">${isFavorite(recipe.id) ? "♥ " + esc(t("unfavorite")) : "♡ " + esc(t("favorite"))}</button>${missing.length ? `<button class="button ghost" type="button" data-add-missing="${esc(recipe.id)}">${esc(t("addToPantry"))}</button>` : ""}</div></div>`;
+      <div class="modal-actions"><button class="button primary" type="button" data-favorite="${esc(recipe.id)}">${isFavorite(recipe.id) ? "♥ " + esc(t("unfavorite")) : "♡ " + esc(t("favorite"))}</button><button class="button ghost ${isInTonightMenu(recipe.id) ? "tonight-active" : ""}" type="button" data-tonight-toggle="${esc(recipe.id)}">${isInTonightMenu(recipe.id) ? "✓ " + esc(t("removeFromTonight")) : "+ " + esc(t("addToTonight"))}</button>${missing.length ? `<button class="button ghost" type="button" data-add-missing="${esc(recipe.id)}">${esc(t("addToPantry"))}</button>` : ""}</div></div>`;
     $("#recipeModal").classList.remove("hidden");
     document.body.style.overflow = "hidden";
     renderHome();
@@ -271,12 +285,22 @@
     if (!$("#recipeModal").classList.contains("hidden")) openRecipe(id);
   }
 
+  function toggleTonightMenu(id) {
+    const removing = isInTonightMenu(id);
+    state.tonightMenu = removing ? state.tonightMenu.filter(value => value !== id) : state.tonightMenu.concat(id).slice(-24);
+    save();
+    renderAll();
+    toast(t(removing ? "removedFromTonight" : "addedToTonight"));
+    if (!$("#recipeModal").classList.contains("hidden")) openRecipe(id);
+  }
+
   function navigate(view, filterMode) {
     activeView = view;
     $$(".view").forEach(node => node.classList.toggle("active", node.id === `view-${view}`));
     $$('[data-nav]').forEach(node => node.classList.toggle("active", node.dataset.nav === view));
     if (filterMode === "makeable") $("#makeableFilter").checked = true;
     if (view === "recipes") renderRecipes();
+    if (view === "tonight") renderTonightMenu();
     if (view === "pantry") renderPantry();
     $("#mainContent").focus({ preventScroll: true });
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -308,12 +332,13 @@
     const spans = $$("#languageToggle span");
     spans[0].classList.toggle("active", state.settings.lang === "zh");
     spans[1].classList.toggle("active", state.settings.lang === "en");
-    document.title = state.settings.lang === "zh" ? "破晓微醺 · Dawn's Dew" : "Dawn's Dew · 破晓微醺";
+    document.title = state.settings.lang === "zh" ? "朝露酒笺 · Dawn's Dew" : "Dawn's Dew · 朝露酒笺";
   }
 
   function renderAll() {
     applyLanguage();
     renderHome();
+    renderTonightMenu();
     renderRecipes();
     renderPantrySummary();
     renderCustomControls();
@@ -336,6 +361,8 @@
     if (open) { openRecipe(open.dataset.openRecipe); return; }
     const favorite = event.target.closest("[data-favorite]");
     if (favorite) { toggleFavorite(favorite.dataset.favorite); return; }
+    const tonightToggle = event.target.closest("[data-tonight-toggle]");
+    if (tonightToggle) { toggleTonightMenu(tonightToggle.dataset.tonightToggle); return; }
     const removeRow = event.target.closest("[data-remove-row]");
     if (removeRow) { removeRow.closest(".custom-ingredient-row").remove(); return; }
     const deletion = event.target.closest("[data-delete-custom]");
@@ -343,6 +370,7 @@
       const id = deletion.dataset.deleteCustom;
       state.customRecipes = state.customRecipes.filter(recipe => recipe.id !== id);
       state.favorites = state.favorites.filter(value => value !== id);
+      state.tonightMenu = state.tonightMenu.filter(value => value !== id);
       save(); renderAll(); toast(t("customDeleted")); return;
     }
     const addMissing = event.target.closest("[data-add-missing]");
@@ -407,12 +435,14 @@
     save(); event.currentTarget.reset(); $("#customIngredientRows").innerHTML = ""; addCustomIngredientRow(); renderAll(); toast(t("customSaved"));
   });
 
-  $("#exportButton").addEventListener("click", () => {
+  $("#exportButton").addEventListener("click", async () => {
     const payload = JSON.stringify(storage.exportData(state), null, 2);
+    const fileName = `dawnsdew-v0.0.2-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    try { if (await native.shareJson(fileName, payload)) { toast(t("exportSuccess")); return; } } catch (error) { console.warn("Native export failed, using browser download", error); }
     const blob = new Blob([payload], { type: "application/json;charset=utf-8" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = `dawnsdew-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    link.download = fileName;
     document.body.appendChild(link); link.click(); link.remove(); URL.revokeObjectURL(link.href); toast(t("exportSuccess"));
   });
 
@@ -429,6 +459,12 @@
     reader.readAsText(file, "utf-8");
   });
 
+  $("#clearTonightMenu").addEventListener("click", () => {
+    if (!state.tonightMenu.length) return;
+    state.tonightMenu = [];
+    save(); renderAll(); toast(t("tonightCleared"));
+  });
+
   $("#saveSettings").addEventListener("click", () => {
     state.settings.glassCapacity = Math.max(30, Number($("#settingGlassCapacity").value) || 300);
     state.settings.icedLiquidCapacity = Math.max(30, Number($("#settingIcedCapacity").value) || 150);
@@ -439,6 +475,12 @@
   $("#resetButton").addEventListener("click", () => {
     if (!window.confirm(t("resetConfirm"))) return;
     state = storage.reset(); featuredId = null; clearFilters(); renderPantry(); renderAll(); toast(t("resetSuccess"));
+  });
+
+  native.onBackButton(() => {
+    if (!$("#recipeModal").classList.contains("hidden")) { closeModal(); return; }
+    if (activeView !== "home") { navigate("home"); return; }
+    native.exitApp();
   });
 
   addCustomIngredientRow();

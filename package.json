@@ -1,0 +1,34 @@
+{
+  "name": "dawnsdew-wonderful-drinking",
+  "version": "0.0.2",
+  "description": "朝露酒笺 Dawn's Dew - 家庭调酒助手",
+  "scripts": {
+    "build:mobile": "node tools/build-mobile.js",
+    "build:standalone": "node tools/build-standalone.js",
+    "android:sync": "npm run build:mobile && npx cap sync android",
+    "android:apk": "npm run android:sync && cd android && gradlew.bat assembleDebug"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZAlan-dunk/Dawnsdew-WonderfulDrinking.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ZAlan-dunk/Dawnsdew-WonderfulDrinking/issues"
+  },
+  "homepage": "https://zalan-dunk.github.io/Dawnsdew-WonderfulDrinking/",
+  "private": true,
+  "dependencies": {
+    "@capacitor/android": "^8.4.2",
+    "@capacitor/app": "^8.1.1",
+    "@capacitor/core": "^8.4.2",
+    "@capacitor/filesystem": "^8.1.2",
+    "@capacitor/share": "^8.0.1"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.4.2"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}

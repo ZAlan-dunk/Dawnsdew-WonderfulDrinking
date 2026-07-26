@@ -1,13 +1,13 @@
 ﻿(function () {
   const dictionaries = {
     zh: {
-      appName: "破晓微醺", navHome: "首页", navRecipes: "配方库", navPantry: "我的酒柜", navCustom: "自定义", navData: "数据管理",
-      localOnly: "所有数据仅保存在本机", heroEyebrow: "HOME MIXOLOGY · LOCAL FIRST", heroTitleA: "在破晓之前，", heroTitleB: "调一杯属于自己的微醺。",
+      appName: "朝露酒笺", navHome: "首页", navTonight: "今夜酒单", navTonightShort: "今夜", navRecipes: "配方库", navPantry: "我的酒柜", navCustom: "自定义", navData: "数据管理",
+      localOnly: "所有数据仅保存在本机", heroEyebrow: "HOME MIXOLOGY · LOCAL FIRST", heroTitleA: "朝露未晞，", heroTitleB: "把今夜的故事调进杯中。",
       heroBody: "从便利店材料到经典配方，管理你的酒柜，发现今晚刚好能做的那一杯。", browseRecipes: "浏览配方", randomPick: "随机一杯",
-      tonightLabel: "TONIGHT'S POUR", todayRecommend: "今晚推荐", changeOne: "换一杯", quickEntry: "QUICK ENTRY", startFromNeed: "从你的需要开始",
+      tonightMenuTitle: "今夜酒单", tonightMenuHomeSubtitle: "把今晚想调的酒先放进这里。", manageTonightMenu: "管理酒单", tonightMenuSubtitle: "从现有配方中挑选今晚准备制作的酒。", clearTonightMenu: "清空酒单", tonightMenuEmpty: "今夜酒单还是空的", tonightMenuEmptyHint: "在配方卡片或配方详情中点击“加入今夜酒单”。", tonightMenuCount: "已选 {count} 杯", addToTonight: "加入今夜酒单", removeFromTonight: "移出今夜酒单", addedToTonight: "已加入今夜酒单", removedFromTonight: "已移出今夜酒单", tonightCleared: "今夜酒单已清空", tonightLabel: "TONIGHT'S POUR", todayRecommend: "今晚推荐", changeOne: "换一杯", quickEntry: "QUICK ENTRY", startFromNeed: "从你的需要开始",
       canMakeNow: "现在能做什么", matchFromPantry: "根据酒柜材料匹配", managePantry: "整理我的酒柜", recordStockPrice: "记录库存与价格",
       partyRandom: "聚会随机推荐", avoidRepeat: "优先可制作且避免重复", createRecipe: "记录我的配方", customAutoSave: "自定义并自动保存", recentViewed: "最近查看",
-      recipeLibrary: "配方库", recipeSubtitle: "破晓原创、经典配方与便利店灵感。", searchPlaceholder: "搜索中文名、英文名或材料", clearFilters: "清除筛选",
+      recipeLibrary: "配方库", recipeSubtitle: "私人酒单、经典配方与便利店灵感。", searchPlaceholder: "搜索中文名、英文名或材料", clearFilters: "清除筛选",
       filterOrigin: "分类", filterBase: "基酒", filterTaste: "口味", filterDifficulty: "难度", onlyMakeable: "只看可制作", onlyFavorites: "只看收藏", noRecipes: "没有找到合适的配方", tryFilters: "尝试清除筛选或补充酒柜材料。",
       myPantry: "我的酒柜", pantrySubtitle: "勾选现有材料，填写库存、购入价格与包装容量，系统将自动估算可制作配方和单杯成本。", selectCommon: "快速选择常用材料", findMakeable: "查看可制作配方", searchIngredient: "搜索材料",
       customRecipes: "自定义配方", customSubtitle: "记录自己的灵感。保存后会与内置配方一起参与搜索、收藏和材料匹配。", nameZh: "中文名称", nameEn: "英文名称", baseSpirit: "基酒", taste: "口味标签", difficulty: "难度", glassCapacity: "杯容量（ml）", ingredients: "材料", addIngredient: "＋ 添加材料", stepsZh: "中文制作步骤", stepsEn: "英文制作步骤", saveRecipe: "保存自定义配方", savedCustom: "已保存的自定义配方",
@@ -27,13 +27,13 @@
       searchResults: "找到 {count} 杯", languageChanged: "语言已切换", copied: "已复制", close: "关闭", delete: "删除", addToPantry: "加入酒柜", addedToPantry: "已加入酒柜", noneMissing: "材料齐全", unknownIngredient: "未知材料", custom: "自定义"
     },
     en: {
-      appName: "Dawn's Dew", navHome: "Home", navRecipes: "Recipes", navPantry: "My Pantry", navCustom: "Custom", navData: "Data",
-      localOnly: "All data stays on this device", heroEyebrow: "HOME MIXOLOGY · LOCAL FIRST", heroTitleA: "Before the dawn,", heroTitleB: "mix a gentle buzz of your own.",
+      appName: "Dawn's Dew Notes", navHome: "Home", navTonight: "Tonight's Menu", navTonightShort: "Tonight", navRecipes: "Recipes", navPantry: "My Pantry", navCustom: "Custom", navData: "Data",
+      localOnly: "All data stays on this device", heroEyebrow: "HOME MIXOLOGY · LOCAL FIRST", heroTitleA: "Before the morning dew fades,", heroTitleB: "mix tonight's story into a glass.",
       heroBody: "From corner-store ingredients to timeless classics, organize your pantry and discover what you can make tonight.", browseRecipes: "Browse recipes", randomPick: "Pick one",
-      tonightLabel: "TONIGHT'S POUR", todayRecommend: "Tonight's pick", changeOne: "Try another", quickEntry: "QUICK ENTRY", startFromNeed: "Start with what you need",
+      tonightMenuTitle: "Tonight's Menu", tonightMenuHomeSubtitle: "Save the drinks you want to make tonight.", manageTonightMenu: "Manage menu", tonightMenuSubtitle: "Choose tonight's drinks from your existing recipes.", clearTonightMenu: "Clear menu", tonightMenuEmpty: "Tonight's menu is empty", tonightMenuEmptyHint: "Use Add to Tonight on a recipe card or recipe detail.", tonightMenuCount: "{count} selected", addToTonight: "Add to Tonight", removeFromTonight: "Remove from Tonight", addedToTonight: "Added to Tonight's Menu", removedFromTonight: "Removed from Tonight's Menu", tonightCleared: "Tonight's Menu cleared", tonightLabel: "TONIGHT'S POUR", todayRecommend: "Tonight's pick", changeOne: "Try another", quickEntry: "QUICK ENTRY", startFromNeed: "Start with what you need",
       canMakeNow: "What can I make?", matchFromPantry: "Match from your pantry", managePantry: "Organize my pantry", recordStockPrice: "Track stock and prices",
       partyRandom: "Party randomizer", avoidRepeat: "Prefer makeable drinks and avoid repeats", createRecipe: "Record my recipe", customAutoSave: "Create and save locally", recentViewed: "Recently viewed",
-      recipeLibrary: "Recipe library", recipeSubtitle: "Dawn originals, classics and corner-store inspiration.", searchPlaceholder: "Search names or ingredients", clearFilters: "Clear filters",
+      recipeLibrary: "Recipe library", recipeSubtitle: "Personal favorites, classics and corner-store inspiration.", searchPlaceholder: "Search names or ingredients", clearFilters: "Clear filters",
       filterOrigin: "Origin", filterBase: "Base", filterTaste: "Taste", filterDifficulty: "Difficulty", onlyMakeable: "Makeable only", onlyFavorites: "Favorites only", noRecipes: "No matching recipes", tryFilters: "Clear filters or add ingredients to your pantry.",
       myPantry: "My pantry", pantrySubtitle: "Mark ingredients you own and enter stock, purchase price and package size. The app estimates makeable recipes and per-glass cost.", selectCommon: "Select common ingredients", findMakeable: "Find makeable recipes", searchIngredient: "Search ingredients",
       customRecipes: "Custom recipes", customSubtitle: "Capture your own ideas. Saved recipes join built-ins in search, favorites and pantry matching.", nameZh: "Chinese name", nameEn: "English name", baseSpirit: "Base spirit", taste: "Taste tags", difficulty: "Difficulty", glassCapacity: "Glass capacity (ml)", ingredients: "Ingredients", addIngredient: "+ Add ingredient", stepsZh: "Chinese steps", stepsEn: "English steps", saveRecipe: "Save custom recipe", savedCustom: "Saved custom recipes",
