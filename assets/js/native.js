@@ -11,7 +11,7 @@
     const Share = plugin("Share");
     if (!Filesystem || !Share) return false;
     const written = await Filesystem.writeFile({ path: fileName, data: content, directory: "CACHE", encoding: "utf8", recursive: true });
-    await Share.share({ title: fileName, text: "朝露酒笺 v0.0.2 Beta 数据备份", files: [written.uri], dialogTitle: "导出并分享酒单备份" });
+    await Share.share({ title: fileName, text: "朝露酒笺 v0.2 Beta 数据备份", files: [written.uri], dialogTitle: "导出并分享酒单备份" });
     return true;
   }
 

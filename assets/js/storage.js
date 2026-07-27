@@ -1,9 +1,9 @@
 (function () {
-  const VERSION = "0.0.2";
-  const KEY = "dawnsdew.v0.0.2.state";
-  const BACKUP_KEY = "dawnsdew.v0.0.2.backup";
-  const LEGACY_KEYS = ["dawnsdew.v0.0.1.state"];
-  const SUPPORTED_IMPORT_VERSIONS = ["0.0.1", VERSION];
+  const VERSION = "0.2";
+  const KEY = "dawnsdew.v0.2.state";
+  const BACKUP_KEY = "dawnsdew.v0.2.backup";
+  const LEGACY_KEYS = ["dawnsdew.v0.0.2.state", "dawnsdew.v0.0.1.state"];
+  const SUPPORTED_IMPORT_VERSIONS = ["0.0.1", "0.0.2", VERSION];
   const clone = value => JSON.parse(JSON.stringify(value));
   const defaults = {
     version: VERSION,

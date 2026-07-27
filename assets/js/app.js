@@ -437,7 +437,7 @@
 
   $("#exportButton").addEventListener("click", async () => {
     const payload = JSON.stringify(storage.exportData(state), null, 2);
-    const fileName = `dawnsdew-v0.0.2-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    const fileName = `dawnsdew-v0.2-backup-${new Date().toISOString().slice(0, 10)}.json`;
     try { if (await native.shareJson(fileName, payload)) { toast(t("exportSuccess")); return; } } catch (error) { console.warn("Native export failed, using browser download", error); }
     const blob = new Blob([payload], { type: "application/json;charset=utf-8" });
     const link = document.createElement("a");

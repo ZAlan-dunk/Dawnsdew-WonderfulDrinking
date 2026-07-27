@@ -1,12 +1,12 @@
 # 朝露酒笺 · Dawn's Dew
 
-> 面向家庭调酒爱好者的本地优先调酒助手。当前版本：**v0.0.2 Beta**。
+> 面向家庭调酒爱好者的本地优先调酒助手。当前版本：**v0.2 Beta**。
 
-[🍎 **iPhone 网页 App 安装指南**](docs/iphone-pwa-guide.md) · [📱 **下载 Android 测试版（GitHub Releases）**](https://github.com/ZAlan-dunk/Dawnsdew-WonderfulDrinking/releases/tag/v0.0.2-beta) · [🌐 **打开在线网页版**](https://zalan-dunk.github.io/Dawnsdew-WonderfulDrinking/)
+[🍎 **iPhone 网页 App 安装指南**](docs/iphone-pwa-guide.md) · [📱 **下载 Android 测试版（GitHub Releases）**](https://github.com/ZAlan-dunk/Dawnsdew-WonderfulDrinking/releases/tag/v0.2-beta) · [🌐 **打开在线网页版**](https://zalan-dunk.github.io/Dawnsdew-WonderfulDrinking/)
 
 朝露酒笺以“便利店材料也能调一杯”为核心方向，提供配方浏览、材料匹配、个人酒柜、今夜酒单、聚会推荐、收藏、自定义配方，以及酒精度与成本估算。网页版可直接离线打开，也可通过 Capacitor 封装为 Android APK。
 
-## v0.0.2 Beta 功能
+## v0.2 Beta 功能
 
 - 45 杯内置配方
   - 25 杯个人酒单，保留原名称、个人评级与原始记录
@@ -42,19 +42,20 @@
 
 ### 2. 可直接分享的单文件封装版
 
-只需发送下面这一个 HTML 文件：
+单文件封装版与 APK 一起通过 [v0.2 Beta 发布页](https://github.com/ZAlan-dunk/Dawnsdew-WonderfulDrinking/releases/tag/v0.2-beta) 提供下载。文件名为：
 
 ```text
-packages/DawnsDew-v0.0.2-Beta-Standalone/DawnsDew-v0.0.2-Beta-Standalone.html
+DawnsDew-v0.2-Beta-Standalone.html
 ```
 
 该文件已经内置全部样式、杯形美术、SVG 标志、配方数据和程序脚本，不依赖 `assets` 文件夹。
 
 微信等聊天软件的内置预览器、手机文件管理器的文档预览页可能不会执行 JavaScript，表现为按钮无响应。请先把文件下载到手机，再用 Chrome、Edge、Firefox 或 Safari 等完整浏览器打开；如需更稳定的手机体验，优先使用 APK 或 GitHub Pages 在线版。
 
-重新生成封装版：
+重新生成封装版时，建议将产物输出到仓库外的工作目录：
 
 ```powershell
+$env:DAWNSDEW_ARTIFACT_ROOT="F:\AAAASMWORK\AgentProject\DawnsDewAndroid\artifacts"
 npm run build:standalone
 ```
 
@@ -75,14 +76,14 @@ npm run build:standalone
 
 ### 4. Android APK
 
-> [前往 v0.0.2 Beta 发布页下载 APK](https://github.com/ZAlan-dunk/Dawnsdew-WonderfulDrinking/releases/tag/v0.0.2-beta)
+> [前往 v0.2 Beta 发布页下载 APK](https://github.com/ZAlan-dunk/Dawnsdew-WonderfulDrinking/releases/tag/v0.2-beta)
 
 Android 应用信息：
 
 ```text
 应用名称：朝露酒笺
 应用 ID：com.zalandunk.dawnsdew
-版本：0.0.2-beta
+版本：0.2-beta
 versionCode：2
 最低 Android 版本：Android 7.0（API 24）
 目标 SDK：Android 16 / API 36
@@ -124,9 +125,9 @@ android/app/build/outputs/apk/debug/app-debug.apk
 
 - 没有账号、后端、统计脚本或云同步。
 - 酒柜、价格、收藏、今夜酒单、自定义配方和设置只保存在当前浏览器或 APK 的本地存储中。
-- 从 v0.0.1 升级时会自动迁移原有数据，并初始化空的今夜酒单。
+- 从 v0.0.1 或 v0.0.2 升级到 v0.2 时会自动迁移原有数据，并保留今夜酒单。
 - 清理应用数据、卸载 APK、清理浏览器数据或更换设备可能导致数据丢失。
-- 建议定期导出 JSON；v0.0.1 导出的 JSON 仍可导入 v0.0.2。
+- 建议定期导出 JSON；v0.0.1 导出的 JSON 仍可导入 v0.2。
 
 ## 项目结构
 
@@ -147,7 +148,7 @@ Dawnsdew-WonderfulDrinking/
 │     └─ app.js
 ├─ android/                    # Capacitor Android 工程
 ├─ packages/
-│  └─ DawnsDew-v0.0.2-Beta-Standalone/
+│  └─ README.md                 # 安装包从 Releases 下载
 ├─ tools/
 │  ├─ build-mobile.js
 │  └─ build-standalone.js
@@ -173,7 +174,7 @@ Dawnsdew-WonderfulDrinking/
 - 浮生一酌
 - 破晓酒笺
 
-## v0.0.2 Beta 已知限制
+## v0.2 Beta 已知限制
 
 - 数据仅在单个浏览器或 APK 本地保存，暂不支持账号和多设备自动同步。
 - 更换 APK 签名或卸载应用后，本机数据可能无法保留，请先导出备份。

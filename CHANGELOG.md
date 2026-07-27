@@ -2,7 +2,9 @@
 
 本项目采用接近语义化版本的版本号，并在正式稳定前使用 Beta 标记。
 
-## [0.0.2-beta] - 2026-07-26
+## [0.2-beta] - 2026-07-27
+
+- 将个人开发版本格式由三段式 `v0.0.2` 简化为 `v0.2`，功能与数据继续兼容旧版。
 
 ### 新增
 
@@ -13,14 +15,14 @@
 - 新增 Capacitor Android 工程，应用 ID 为 `com.zalandunk.dawnsdew`。
 - 新增 Android 图标、启动页、离线资源与返回键导航处理。
 - Android 版导出 JSON 时写入缓存并调起系统分享面板。
-- 新增移动端资源构建脚本与 v0.0.2 单文件封装版。
+- 新增移动端资源构建脚本与 v0.2 单文件封装版。
 - 新增 PWA 安装支持：提供 Web App Manifest、Service Worker、离线应用外壳与金黑主题桌面图标。
 - 新增 iPhone Safari“添加到主屏幕”引导，安装后可从桌面全屏启动。
 - 新增独立的 iPhone PWA 安装与数据说明文档。
 
 ### 改进
 
-- 本地存储升级为 `dawnsdew.v0.0.2.state`，并新增 `tonightMenu` 数据。
+- 本地存储升级为 `dawnsdew.v0.2.state`，并新增 `tonightMenu` 数据。
 - 自动迁移 v0.0.1 的酒柜、收藏、自定义配方、最近查看和聚会历史。
 - v0.0.1 JSON 备份继续兼容导入。
 - 自定义配方被删除时，会同步从今夜酒单移除。
@@ -32,7 +34,7 @@
 ### Android 测试包
 
 - `versionCode`: `2`
-- `versionName`: `0.0.2-beta`
+- `versionName`: `0.2-beta`
 - 最低系统：Android 7.0（API 24）
 - 当前提供 debug APK，适合直接安装测试；正式发布需使用私有密钥签名 release 包。
 

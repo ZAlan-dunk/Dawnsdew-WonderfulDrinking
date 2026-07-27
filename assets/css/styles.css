@@ -348,7 +348,7 @@ textarea { resize: vertical; line-height: 1.6; }
 }
 
 
-/* v0.0.2 — Tonight's Menu */
+/* v0.2 — Tonight's Menu */
 .section-subtitle { margin: 7px 0 0; color: var(--muted); font-size: .86rem; line-height: 1.6; }
 .tonight-heading { margin-top: 42px; }
 .tonight-home-grid { margin-bottom: 50px; }
@@ -375,7 +375,7 @@ body.capacitor-native .app-shell { padding-top: env(safe-area-inset-top); }
   .tonight-card-button { max-width: calc(100% - 58px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 }
 
-/* v0.0.2 — Installable web app (PWA / iPhone Home Screen) */
+/* v0.2 — Installable web app (PWA / iPhone Home Screen) */
 .pwa-install-card {
   margin: 22px 0 28px;
   padding: 18px 20px;
