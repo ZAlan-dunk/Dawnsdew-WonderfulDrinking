@@ -14,8 +14,12 @@ class AppStateStore(context: Context) {
 
     fun load(): AppState {
         val stored = preferences.getString(STATE_KEY, null)
+            ?: LEGACY_STATE_KEYS.firstNotNullOfOrNull { preferences.getString(it, null) }
         if (!stored.isNullOrBlank()) {
-            runCatching { return parseState(JSONObject(stored)) }
+            runCatching {
+                val migrated = parseState(JSONObject(stored))
+                return save(migrated)
+            }
         }
         val migrated = AppState(
             settings = AppSettings(language = preferences.getString("language", "zh") ?: "zh"),
@@ -84,7 +88,10 @@ class AppStateStore(context: Context) {
                     language = settingsJson.optString("lang", settingsJson.optString("language", "zh")),
                     glassCapacity = settingsJson.optDouble("glassCapacity", 300.0),
                     icedLiquidCapacity = settingsJson.optDouble("icedLiquidCapacity", 150.0),
-                    currency = settingsJson.optString("currency", "¥")
+                    currency = settingsJson.optString("currency", "¥"),
+                    themeMode = settingsJson.optString("themeMode", "light"),
+                    accent = settingsJson.optString("accent", "gold"),
+                    fontScale = settingsJson.optDouble("fontScale", 1.0).toFloat()
                 ),
                 pantry = pantry,
                 favoriteIds = (json.optJSONArray("favorites") ?: json.optJSONArray("favoriteIds")).stringList().toSet(),
@@ -105,6 +112,9 @@ class AppStateStore(context: Context) {
             put("glassCapacity", state.settings.glassCapacity)
             put("icedLiquidCapacity", state.settings.icedLiquidCapacity)
             put("currency", state.settings.currency)
+            put("themeMode", state.settings.themeMode)
+            put("accent", state.settings.accent)
+            put("fontScale", state.settings.fontScale.toDouble())
         })
         put("pantry", JSONObject().apply {
             state.pantry.forEach { (id, item) ->
@@ -129,7 +139,10 @@ class AppStateStore(context: Context) {
             language = if (state.settings.language == "en") "en" else "zh",
             glassCapacity = state.settings.glassCapacity.coerceAtLeast(30.0),
             icedLiquidCapacity = state.settings.icedLiquidCapacity.coerceAtLeast(30.0),
-            currency = state.settings.currency.ifBlank { "¥" }.take(4)
+            currency = state.settings.currency.ifBlank { "¥" }.take(4),
+            themeMode = state.settings.themeMode.takeIf { it in setOf("light", "dark", "system") } ?: "light",
+            accent = state.settings.accent.takeIf { it in setOf("gold", "coral", "sage") } ?: "gold",
+            fontScale = state.settings.fontScale.coerceIn(0.9f, 1.3f)
         ),
         pantry = state.pantry.filterKeys(String::isNotBlank),
         favoriteIds = state.favoriteIds.filter(String::isNotBlank).toSet(),
@@ -144,12 +157,13 @@ class AppStateStore(context: Context) {
             recipe.ingredients.isNotEmpty() && recipe.steps.zh.isNotEmpty() && recipe.steps.en.isNotEmpty()
 
     companion object {
-        const val SCHEMA_VERSION = "0.3.1"
+        const val SCHEMA_VERSION = "0.3.2"
         private const val WEB_COMPAT_SCHEMA_VERSION = "0.2"
         private const val PREFERENCES = "dawnsdew.native.preferences"
-        private const val STATE_KEY = "state.v0.3.1"
+        private const val STATE_KEY = "state.v0.3.2"
         private const val BACKUP_KEY = "state.backup"
-        private val SUPPORTED_IMPORT_VERSIONS = setOf("0.0.1", "0.0.2", "0.2", "0.3", SCHEMA_VERSION)
+        private val LEGACY_STATE_KEYS = listOf("state.v0.3.1")
+        private val SUPPORTED_IMPORT_VERSIONS = setOf("0.0.1", "0.0.2", "0.2", "0.3", "0.3.1", SCHEMA_VERSION)
     }
 }
 

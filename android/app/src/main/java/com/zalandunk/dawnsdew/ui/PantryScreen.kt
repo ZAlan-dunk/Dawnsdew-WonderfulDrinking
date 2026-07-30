@@ -18,13 +18,13 @@ import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.Switch
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,7 +38,6 @@ import androidx.compose.ui.unit.dp
 import com.zalandunk.dawnsdew.data.Ingredient
 import com.zalandunk.dawnsdew.data.PantryEntry
 import com.zalandunk.dawnsdew.data.RecipeCalculator
-import com.zalandunk.dawnsdew.ui.theme.DawnPalette
 
 @Composable
 internal fun PantryScreen(controller: AppController, onMessage: (String) -> Unit) {
@@ -61,18 +60,18 @@ internal fun PantryScreen(controller: AppController, onMessage: (String) -> Unit
     ) {
         item {
             Column(Modifier.padding(top = 12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                Text(if (language == "zh") "我的酒柜" else "My pantry", style = MaterialTheme.typography.headlineSmall, color = DawnPalette.Paper, fontWeight = FontWeight.Bold)
+                Text(if (language == "zh") "我的酒柜" else "My pantry", style = MaterialTheme.typography.headlineSmall, color = MaterialTheme.colorScheme.onSurface, fontWeight = FontWeight.Bold)
                 Text(
                     if (language == "zh") "记下手边的酒与材料，配方会自动告诉你此刻能调什么。" else "Track what is on hand and discover what you can make now.",
-                    color = DawnPalette.Muted,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     style = MaterialTheme.typography.bodySmall
                 )
             }
         }
         item {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                PantrySummary(Modifier.weight(1f), ownedCount.toString(), if (language == "zh") "已有材料" else "Owned", DawnPalette.Gold)
-                PantrySummary(Modifier.weight(1f), makeableCount.toString(), if (language == "zh") "此刻可调" else "Makeable", DawnPalette.Sage)
+                PantrySummary(Modifier.weight(1f), ownedCount.toString(), if (language == "zh") "已有材料" else "Owned", MaterialTheme.colorScheme.primary)
+                PantrySummary(Modifier.weight(1f), makeableCount.toString(), if (language == "zh") "此刻可调" else "Makeable", MaterialTheme.colorScheme.tertiary)
             }
         }
         item {
@@ -107,7 +106,7 @@ internal fun PantryScreen(controller: AppController, onMessage: (String) -> Unit
                 Text(
                     categoryLabel(category, language),
                     style = MaterialTheme.typography.titleMedium,
-                    color = DawnPalette.Gold,
+                    color = MaterialTheme.colorScheme.primary,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(top = 8.dp, bottom = 2.dp)
                 )
@@ -127,10 +126,10 @@ internal fun PantryScreen(controller: AppController, onMessage: (String) -> Unit
 
 @Composable
 private fun PantrySummary(modifier: Modifier, value: String, label: String, color: androidx.compose.ui.graphics.Color) {
-    Surface(modifier, color = DawnPalette.Surface, contentColor = DawnPalette.Paper, shape = RoundedCornerShape(8.dp)) {
+    Surface(modifier, color = MaterialTheme.colorScheme.surface, contentColor = MaterialTheme.colorScheme.onSurface, shape = RoundedCornerShape(8.dp)) {
         Column(Modifier.padding(14.dp)) {
             Text(value, style = MaterialTheme.typography.headlineSmall, color = color, fontWeight = FontWeight.Black)
-            Text(label, style = MaterialTheme.typography.labelMedium, color = DawnPalette.Muted)
+            Text(label, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
 }
@@ -143,18 +142,18 @@ private fun PantryIngredientCard(
     onChange: (PantryEntry) -> Unit
 ) {
     Card(
-        colors = CardDefaults.cardColors(containerColor = DawnPalette.Surface, contentColor = DawnPalette.Paper),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface, contentColor = MaterialTheme.colorScheme.onSurface),
         shape = RoundedCornerShape(8.dp)
     ) {
         Column(Modifier.fillMaxWidth().padding(12.dp), verticalArrangement = Arrangement.spacedBy(9.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Checkbox(checked = entry.owned, onCheckedChange = { onChange(entry.copy(owned = it)) })
+                Switch(checked = entry.owned, onCheckedChange = { onChange(entry.copy(owned = it)) })
                 Column(Modifier.weight(1f)) {
-                    Text(ingredient.name.value(language), fontWeight = FontWeight.Bold, color = DawnPalette.Paper)
-                    Text(ingredient.name.secondary(language), style = MaterialTheme.typography.labelSmall, color = DawnPalette.Muted)
+                    Text(ingredient.name.value(language), fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+                    Text(ingredient.name.secondary(language), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
                 ingredient.abv.takeIf { it > 0.0 }?.let {
-                    Text("${formatNumber(it)}%", color = DawnPalette.Gold, style = MaterialTheme.typography.labelMedium)
+                    Text("${formatNumber(it)}%", color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.labelMedium)
                 }
             }
             if (entry.owned) {

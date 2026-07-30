@@ -121,7 +121,7 @@
       [ml("vodka", 45), ml("yakult", 100), fill("grape_juice", 0.8)],
       ["杯中加入伏特加与一瓶养乐多。", "加入葡萄汁至八分满。", "充分搅匀，按需加冰。"],
       ["Add vodka and one bottle of Yakult.", "Pour grape juice to eight-tenths full.", "Mix thoroughly and add ice if desired."],
-      "乳酸甜感与葡萄果味组成一杯颜色浓郁的便利店魔法。", "A convenience-store spell of tangy cultured milk and rich grape fruitiness.",
+      "乳酸甜感与葡萄果味在杯中铺开，像一封写给夜色的紫色短笺。", "Tangy cultured milk and rich grape fruit unfold like a violet note written to the night.",
       "养乐多一瓶，葡萄汁八分，伏特加45ml"),
 
     R("peach-blossom-luck", "", "桃花运", "Peach Blossom Luck", ["vodka"], ["sweet", "creamy", "fruity"], "easy", ["#dc708a", "#f0b4b4"],

@@ -4,33 +4,44 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInVertically
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ClearAll
+import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.DeleteSweep
+import androidx.compose.material.icons.rounded.ExpandMore
 import androidx.compose.material.icons.rounded.FilterList
-import androidx.compose.material.icons.rounded.RestartAlt
 import androidx.compose.material.icons.rounded.Search
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.AssistChip
+import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -41,11 +52,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.zalandunk.dawnsdew.data.Recipe
 import com.zalandunk.dawnsdew.data.RecipeCalculator
-import com.zalandunk.dawnsdew.ui.theme.DawnPalette
 import kotlinx.coroutines.delay
 
 data class RecipeFilters(
@@ -87,114 +101,115 @@ internal fun RecipeCollectionScreen(
                 (!filters.favoriteOnly || recipe.id in controller.state.favoriteIds)
         }
     }
-    Column(Modifier.fillMaxSize().padding(horizontal = 16.dp)) {
-        Row(
-            Modifier.fillMaxWidth().padding(top = 12.dp, bottom = 4.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column(Modifier.weight(1f)) {
-                Text(screenTitle(mode, language), style = MaterialTheme.typography.headlineSmall, color = DawnPalette.Paper, fontWeight = FontWeight.Bold)
-                Text(screenSubtitle(mode, source.size, language), style = MaterialTheme.typography.bodySmall, color = DawnPalette.Muted)
-            }
-            if (mode == Destination.Tonight && source.isNotEmpty()) {
-                TextButton(onClick = {
-                    controller.clearTonight()
-                    onMessage(if (language == "zh") "今夜酒单已清空" else "Tonight's menu cleared")
-                }) {
-                    Icon(Icons.Rounded.ClearAll, null)
-                    Text(if (language == "zh") "清空" else "Clear")
+    val detailedFilterCount = listOf(filters.origin, filters.base, filters.taste, filters.difficulty).count(String::isNotBlank)
+
+    BoxWithConstraints(Modifier.fillMaxSize()) {
+        val fontScale = LocalDensity.current.fontScale * controller.state.settings.fontScale
+        val compactGrid = maxWidth >= 350.dp && fontScale <= 1.2f
+        Column(Modifier.fillMaxSize().padding(horizontal = 12.dp)) {
+            Row(
+                Modifier.fillMaxWidth().padding(top = 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                CompactSearchField(
+                    query = query,
+                    placeholder = if (language == "zh") "搜索酒名、基酒或材料" else "Search drinks or ingredients",
+                    onQueryChange = { query = it },
+                    modifier = Modifier.weight(1f)
+                )
+                RoundToolButton(
+                    contentDescription = if (language == "zh") "详细筛选" else "Detailed filters",
+                    count = detailedFilterCount,
+                    onClick = { showFilters = true }
+                ) {
+                    Icon(Icons.Rounded.FilterList, null)
+                }
+                if (mode == Destination.Tonight && source.isNotEmpty()) {
+                    RoundToolButton(
+                        contentDescription = if (language == "zh") "清空今夜酒单" else "Clear tonight",
+                        onClick = {
+                            controller.clearTonight()
+                            onMessage(if (language == "zh") "今夜酒单已清空" else "Tonight's menu cleared")
+                        }
+                    ) { Icon(Icons.Rounded.DeleteSweep, null) }
                 }
             }
-        }
-        OutlinedTextField(
-            value = query,
-            onValueChange = { query = it },
-            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
-            singleLine = true,
-            leadingIcon = { Icon(Icons.Rounded.Search, contentDescription = null) },
-            label = { Text(if (language == "zh") "搜索名称、基酒或材料" else "Search names, bases or ingredients") }
-        )
-        Row(
-            Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(bottom = 9.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            AssistChip(
-                onClick = { showFilters = true },
-                label = { Text(if (language == "zh") "筛选" else "Filters") },
-                leadingIcon = { Icon(Icons.Rounded.FilterList, null) }
-            )
-            FilterChip(
-                selected = filters.makeableOnly,
-                onClick = { filters = filters.copy(makeableOnly = !filters.makeableOnly) },
-                label = { Text(if (language == "zh") "此刻可调" else "Makeable") }
-            )
-            FilterChip(
-                selected = filters.favoriteOnly,
-                onClick = { filters = filters.copy(favoriteOnly = !filters.favoriteOnly) },
-                label = { Text(if (language == "zh") "只看收藏" else "Favorites") }
-            )
-            if (filters != RecipeFilters()) {
-                AssistChip(
-                    onClick = { filters = RecipeFilters() },
-                    label = { Text(if (language == "zh") "重置" else "Reset") },
-                    leadingIcon = { Icon(Icons.Rounded.RestartAlt, null) }
-                )
-            }
-        }
-        Text(
-            if (language == "zh") "找到 ${filtered.size} 杯" else "${filtered.size} recipes",
-            style = MaterialTheme.typography.labelMedium,
-            color = DawnPalette.Muted,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
-        if (filtered.isEmpty()) {
-            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text(
-                    if (mode == Destination.Tonight && source.isEmpty()) {
-                        if (language == "zh") "今夜酒单还是空的\n在配方卡片上点亮酒杯，把它留给今晚。" else "Tonight's menu is empty.\nAdd a drink from any recipe card."
-                    } else {
-                        if (language == "zh") "没有符合条件的配方" else "No matching recipes"
-                    },
-                    color = DawnPalette.Muted
-                )
-            }
-        } else {
-            LazyVerticalGrid(
-                columns = GridCells.Adaptive(260.dp),
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(bottom = 28.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+            Row(
+                Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(vertical = 7.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                itemsIndexed(filtered, key = { _, recipe -> recipe.id }) { index, recipe ->
-                    var visible by remember(recipe.id, mode) { mutableStateOf(!motion.enabled) }
-                    LaunchedEffect(recipe.id, motion.enabled) {
-                        if (motion.enabled) delay(index.coerceAtMost(7) * 46L)
-                        visible = true
-                    }
-                    AnimatedVisibility(
-                        visible = visible,
-                        enter = fadeIn(tween(motionDuration(motion, 280))) +
-                            slideInVertically(initialOffsetY = { it / 5 }, animationSpec = tween(motionDuration(motion, 360)))
-                    ) {
-                        RecipeCard(
-                            recipe = recipe,
-                            ingredientMap = controller.ingredientMap,
-                            state = controller.state,
-                            language = language,
-                            motion = motion,
-                            onOpen = controller::openRecipe,
-                            onToggleFavorite = controller::toggleFavorite,
-                            onToggleTonight = controller::toggleTonight
-                        )
+                FilterChip(
+                    selected = !filters.makeableOnly && !filters.favoriteOnly,
+                    onClick = { filters = filters.copy(makeableOnly = false, favoriteOnly = false) },
+                    label = { Text(if (language == "zh") "全部 ${filtered.size}" else "All ${filtered.size}") }
+                )
+                FilterChip(
+                    selected = filters.makeableOnly,
+                    onClick = { filters = filters.copy(makeableOnly = !filters.makeableOnly, favoriteOnly = false) },
+                    label = { Text(if (language == "zh") "此刻可调" else "Makeable") }
+                )
+                FilterChip(
+                    selected = filters.favoriteOnly,
+                    onClick = { filters = filters.copy(favoriteOnly = !filters.favoriteOnly, makeableOnly = false) },
+                    label = { Text(if (language == "zh") "收藏" else "Favorites") }
+                )
+                if (filters != RecipeFilters()) {
+                    FilterChip(
+                        selected = false,
+                        onClick = { filters = RecipeFilters() },
+                        leadingIcon = { Icon(Icons.Rounded.Close, null, modifier = Modifier.size(17.dp)) },
+                        label = { Text(if (language == "zh") "清除" else "Clear") }
+                    )
+                }
+            }
+            if (filtered.isEmpty()) {
+                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(
+                        if (mode == Destination.Tonight && source.isEmpty()) {
+                            if (language == "zh") "今夜酒单还是空的" else "Tonight's menu is empty"
+                        } else if (language == "zh") "没有符合条件的配方" else "No matching recipes",
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            } else {
+                LazyVerticalGrid(
+                    columns = if (compactGrid) GridCells.Fixed(2) else GridCells.Adaptive(260.dp),
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(bottom = 28.dp),
+                    horizontalArrangement = Arrangement.spacedBy(9.dp),
+                    verticalArrangement = Arrangement.spacedBy(9.dp)
+                ) {
+                    itemsIndexed(filtered, key = { _, recipe -> recipe.id }) { index, recipe ->
+                        var visible by remember(recipe.id, mode) { mutableStateOf(!motion.enabled) }
+                        LaunchedEffect(recipe.id, motion.enabled) {
+                            if (motion.enabled) delay(index.coerceAtMost(5) * 38L)
+                            visible = true
+                        }
+                        AnimatedVisibility(
+                            visible = visible,
+                            enter = fadeIn(tween(motionDuration(motion, 220))) +
+                                slideInVertically(initialOffsetY = { it / 7 }, animationSpec = tween(motionDuration(motion, 260)))
+                        ) {
+                            RecipeCard(
+                                recipe = recipe,
+                                ingredientMap = controller.ingredientMap,
+                                state = controller.state,
+                                language = language,
+                                motion = motion,
+                                compact = compactGrid,
+                                onOpen = controller::openRecipe,
+                                onToggleFavorite = controller::toggleFavorite,
+                                onToggleTonight = controller::toggleTonight
+                            )
+                        }
                     }
                 }
             }
         }
     }
     if (showFilters) {
-        RecipeFilterDialog(
+        RecipeFilterSheet(
             recipes = source,
             controller = controller,
             current = filters,
@@ -205,7 +220,81 @@ internal fun RecipeCollectionScreen(
 }
 
 @Composable
-private fun RecipeFilterDialog(
+private fun CompactSearchField(
+    query: String,
+    placeholder: String,
+    onQueryChange: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        modifier = modifier.height(48.dp),
+        color = MaterialTheme.colorScheme.surfaceVariant,
+        contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        shape = MaterialTheme.shapes.medium
+    ) {
+        Row(
+            Modifier.fillMaxSize().padding(start = 13.dp, end = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(9.dp)
+        ) {
+            Icon(Icons.Rounded.Search, null, modifier = Modifier.size(20.dp))
+            BasicTextField(
+                value = query,
+                onValueChange = onQueryChange,
+                modifier = Modifier.weight(1f),
+                singleLine = true,
+                textStyle = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurface),
+                cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+                decorationBox = { inner ->
+                    Box {
+                        if (query.isBlank()) Text(placeholder, color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodyMedium)
+                        inner()
+                    }
+                }
+            )
+            if (query.isNotBlank()) {
+                IconButton(onClick = { onQueryChange("") }) {
+                    Icon(Icons.Rounded.Close, if (placeholder.startsWith("搜索")) "清除搜索" else "Clear search")
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun RoundToolButton(
+    contentDescription: String,
+    count: Int = 0,
+    onClick: () -> Unit,
+    content: @Composable () -> Unit
+) {
+    Surface(
+        modifier = Modifier.size(48.dp).semantics { this.contentDescription = contentDescription }.clickable(onClick = onClick),
+        shape = CircleShape,
+        color = MaterialTheme.colorScheme.surfaceVariant,
+        contentColor = MaterialTheme.colorScheme.onSurfaceVariant
+    ) {
+        Box(contentAlignment = Alignment.Center) {
+            content()
+            if (count > 0) {
+                Surface(
+                    modifier = Modifier.align(Alignment.TopEnd).size(18.dp),
+                    shape = CircleShape,
+                    color = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary
+                ) {
+                    Box(contentAlignment = Alignment.Center) {
+                        Text(count.toString(), style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold)
+                    }
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun RecipeFilterSheet(
     recipes: List<Recipe>,
     controller: AppController,
     current: RecipeFilters,
@@ -218,39 +307,40 @@ private fun RecipeFilterDialog(
     val bases = recipes.flatMap { it.base }.distinct().sortedBy { controller.ingredientMap[it]?.name?.value(language) }
     val tastes = recipes.flatMap { it.taste }.distinct().sorted()
     val difficulties = recipes.map { it.difficulty }.distinct()
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(if (language == "zh") "筛选配方" else "Filter recipes") },
-        text = {
-            Column(verticalArrangement = Arrangement.spacedBy(11.dp)) {
-                OptionChooser(
-                    if (language == "zh") "来源" else "Origin",
-                    draft.origin,
-                    listOf("" to if (language == "zh") "全部来源" else "All origins") + origins.map { it to originLabel(it, language) }
-                ) { draft = draft.copy(origin = it) }
-                OptionChooser(
-                    if (language == "zh") "基酒" else "Base",
-                    draft.base,
-                    listOf("" to if (language == "zh") "全部基酒" else "All bases") + bases.map { id -> id to (controller.ingredientMap[id]?.name?.value(language) ?: id) }
-                ) { draft = draft.copy(base = it) }
-                OptionChooser(
-                    if (language == "zh") "口味" else "Taste",
-                    draft.taste,
-                    listOf("" to if (language == "zh") "全部口味" else "All tastes") + tastes.map { it to tasteLabel(it, language) }
-                ) { draft = draft.copy(taste = it) }
-                OptionChooser(
-                    if (language == "zh") "难度" else "Difficulty",
-                    draft.difficulty,
-                    listOf("" to if (language == "zh") "全部难度" else "All difficulties") + difficulties.map { it to difficultyLabel(it, language) }
-                ) { draft = draft.copy(difficulty = it) }
+    ModalBottomSheet(onDismissRequest = onDismiss) {
+        Column(
+            Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(horizontal = 20.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Text(if (language == "zh") "筛选配方" else "Filter recipes", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+            OptionChooser(
+                if (language == "zh") "来源" else "Origin",
+                draft.origin,
+                listOf("" to if (language == "zh") "全部来源" else "All origins") + origins.map { it to originLabel(it, language) }
+            ) { draft = draft.copy(origin = it) }
+            OptionChooser(
+                if (language == "zh") "基酒" else "Base",
+                draft.base,
+                listOf("" to if (language == "zh") "全部基酒" else "All bases") + bases.map { id -> id to (controller.ingredientMap[id]?.name?.value(language) ?: id) }
+            ) { draft = draft.copy(base = it) }
+            OptionChooser(
+                if (language == "zh") "口味" else "Taste",
+                draft.taste,
+                listOf("" to if (language == "zh") "全部口味" else "All tastes") + tastes.map { it to tasteLabel(it, language) }
+            ) { draft = draft.copy(taste = it) }
+            OptionChooser(
+                if (language == "zh") "难度" else "Difficulty",
+                draft.difficulty,
+                listOf("" to if (language == "zh") "全部难度" else "All difficulties") + difficulties.map { it to difficultyLabel(it, language) }
+            ) { draft = draft.copy(difficulty = it) }
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                TextButton(onClick = { draft = RecipeFilters() }) { Text(if (language == "zh") "清除" else "Clear") }
+                Spacer(Modifier.weight(1f))
+                Button(onClick = { onApply(draft) }) { Text(if (language == "zh") "应用筛选" else "Apply filters") }
             }
-        },
-        confirmButton = { TextButton(onClick = { onApply(draft) }) { Text(if (language == "zh") "应用" else "Apply") } },
-        dismissButton = {
-            TextButton(onClick = { draft = RecipeFilters() }) { Text(if (language == "zh") "清除" else "Clear") }
-            TextButton(onClick = onDismiss) { Text(if (language == "zh") "取消" else "Cancel") }
+            Spacer(Modifier.height(18.dp))
         }
-    )
+    }
 }
 
 @Composable
@@ -266,6 +356,7 @@ internal fun OptionChooser(
     Box(modifier.fillMaxWidth()) {
         OutlinedButton(onClick = { expanded = true }, modifier = Modifier.fillMaxWidth()) {
             Text("$label：$selectedLabel", modifier = Modifier.weight(1f))
+            Icon(Icons.Rounded.ExpandMore, null)
         }
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             options.forEach { option ->
@@ -276,18 +367,4 @@ internal fun OptionChooser(
             }
         }
     }
-}
-
-private fun screenTitle(mode: Destination, language: String): String = when (mode) {
-    Destination.Tonight -> if (language == "zh") "今夜酒单" else "Tonight's menu"
-    Destination.Favorites -> if (language == "zh") "我的收藏" else "Favorites"
-    Destination.Recent -> if (language == "zh") "最近查看" else "Recently viewed"
-    else -> if (language == "zh") "配方酒笺" else "Recipe collection"
-}
-
-private fun screenSubtitle(mode: Destination, count: Int, language: String): String = when (mode) {
-    Destination.Tonight -> if (language == "zh") "$count 杯候选，按今晚的心情慢慢挑。" else "$count drinks saved for tonight."
-    Destination.Favorites -> if (language == "zh") "$count 杯被你留下的味道。" else "$count saved favorites."
-    Destination.Recent -> if (language == "zh") "最近翻阅的 $count 杯配方。" else "$count recently viewed recipes."
-    else -> if (language == "zh") "私人记录、经典配方与灵感特调，共 $count 杯。" else "Personal notes, classics and inspired mixes. $count recipes."
 }

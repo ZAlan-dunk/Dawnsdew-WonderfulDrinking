@@ -14,13 +14,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowForward
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.Close
@@ -40,17 +40,20 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -64,13 +67,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.zalandunk.dawnsdew.data.AppSettings
 import com.zalandunk.dawnsdew.data.LocalizedList
 import com.zalandunk.dawnsdew.data.LocalizedText
 import com.zalandunk.dawnsdew.data.Recipe
 import com.zalandunk.dawnsdew.data.RecipeIngredient
-import com.zalandunk.dawnsdew.ui.theme.DawnPalette
 import java.util.UUID
+import kotlin.math.roundToInt
 
 @Composable
 internal fun MoreScreen(controller: AppController, onMessage: (String) -> Unit) {
@@ -82,27 +84,27 @@ internal fun MoreScreen(controller: AppController, onMessage: (String) -> Unit) 
     ) {
         item {
             Column(Modifier.padding(top = 12.dp, bottom = 4.dp)) {
-                Text(if (language == "zh") "更多" else "More", style = MaterialTheme.typography.headlineSmall, color = DawnPalette.Paper, fontWeight = FontWeight.Bold)
-                Text(if (language == "zh") "把酒柜、灵感和本地数据都收在这里。" else "Pantry, ideas and local data in one place.", color = DawnPalette.Muted)
+                Text(if (language == "zh") "更多" else "More", style = MaterialTheme.typography.headlineSmall, color = MaterialTheme.colorScheme.onSurface, fontWeight = FontWeight.Bold)
+                Text(if (language == "zh") "把酒柜、灵感和本地数据都收在这里。" else "Pantry, ideas and local data in one place.", color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
         item {
-            MoreAction(Icons.Rounded.Favorite, if (language == "zh") "我的收藏" else "Favorites", "${controller.state.favoriteIds.size}", DawnPalette.Coral) {
+            MoreAction(Icons.Rounded.Favorite, if (language == "zh") "我的收藏" else "Favorites", "${controller.state.favoriteIds.size}", MaterialTheme.colorScheme.secondary) {
                 controller.navigate(Destination.Favorites)
             }
         }
         item {
-            MoreAction(Icons.Rounded.EditNote, if (language == "zh") "自定义配方" else "Custom recipes", "${controller.state.customRecipes.size}", DawnPalette.Gold) {
+            MoreAction(Icons.Rounded.EditNote, if (language == "zh") "自定义配方" else "Custom recipes", "${controller.state.customRecipes.size}", MaterialTheme.colorScheme.primary) {
                 controller.navigate(Destination.Custom)
             }
         }
         item {
-            MoreAction(Icons.Rounded.History, if (language == "zh") "最近查看" else "Recently viewed", "${recent.size}", DawnPalette.Sage) {
+            MoreAction(Icons.Rounded.History, if (language == "zh") "最近查看" else "Recently viewed", "${recent.size}", MaterialTheme.colorScheme.tertiary) {
                 controller.navigate(Destination.Recent)
             }
         }
         item {
-            MoreAction(Icons.Rounded.Settings, if (language == "zh") "数据与估算设置" else "Data and estimates", if (language == "zh") "导入 · 导出" else "Import · Export", DawnPalette.Paper) {
+            MoreAction(Icons.Rounded.Settings, if (language == "zh") "数据与估算设置" else "Data and estimates", if (language == "zh") "导入 · 导出" else "Import · Export", MaterialTheme.colorScheme.onSurface) {
                 controller.navigate(Destination.Data)
             }
         }
@@ -130,19 +132,18 @@ internal fun MoreScreen(controller: AppController, onMessage: (String) -> Unit) 
             items(recent.take(4), key = { "recent-${it.id}" }) { recipe ->
                 Surface(
                     onClick = { controller.openRecipe(recipe) },
-                    color = DawnPalette.Surface,
-                    contentColor = DawnPalette.Paper,
+                    color = MaterialTheme.colorScheme.surface,
+                    contentColor = MaterialTheme.colorScheme.onSurface,
                     shape = RoundedCornerShape(8.dp)
                 ) {
                     Row(Modifier.fillMaxWidth().padding(13.dp), verticalAlignment = Alignment.CenterVertically) {
-                        Surface(shape = CircleShape, color = DawnPalette.Raised) {
-                            Icon(Icons.Rounded.AutoAwesome, null, tint = DawnPalette.Gold, modifier = Modifier.padding(9.dp).size(20.dp))
+                        Surface(shape = CircleShape, color = MaterialTheme.colorScheme.surfaceVariant) {
+                            Icon(Icons.Rounded.AutoAwesome, null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(9.dp).size(20.dp))
                         }
                         Column(Modifier.weight(1f).padding(horizontal = 11.dp)) {
                             Text(recipe.name.value(language), fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                            Text(recipe.name.secondary(language), style = MaterialTheme.typography.labelSmall, color = DawnPalette.Muted, maxLines = 1)
+                            Text(recipe.name.secondary(language), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1)
                         }
-                        Icon(Icons.AutoMirrored.Rounded.ArrowForward, null, tint = DawnPalette.Muted)
                     }
                 }
             }
@@ -155,7 +156,7 @@ internal fun MoreScreen(controller: AppController, onMessage: (String) -> Unit) 
 private fun MoreAction(icon: ImageVector, title: String, value: String, accent: Color, onClick: () -> Unit) {
     Card(
         onClick = onClick,
-        colors = CardDefaults.cardColors(containerColor = DawnPalette.Surface, contentColor = DawnPalette.Paper),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface, contentColor = MaterialTheme.colorScheme.onSurface),
         shape = RoundedCornerShape(8.dp)
     ) {
         Row(Modifier.fillMaxWidth().padding(15.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -163,9 +164,7 @@ private fun MoreAction(icon: ImageVector, title: String, value: String, accent: 
                 Icon(icon, null, tint = accent, modifier = Modifier.padding(10.dp).size(22.dp))
             }
             Text(title, modifier = Modifier.weight(1f).padding(horizontal = 12.dp), fontWeight = FontWeight.Bold)
-            Text(value, color = DawnPalette.Muted, style = MaterialTheme.typography.labelMedium)
-            Spacer(Modifier.width(6.dp))
-            Icon(Icons.AutoMirrored.Rounded.ArrowForward, null, tint = DawnPalette.Muted)
+            Text(value, color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.labelMedium)
         }
     }
 }
@@ -182,8 +181,8 @@ internal fun CustomRecipeScreen(controller: AppController, motion: MotionPolicy,
         item {
             Row(Modifier.fillMaxWidth().padding(top = 12.dp), verticalAlignment = Alignment.CenterVertically) {
                 Column(Modifier.weight(1f)) {
-                    Text(if (language == "zh") "自定义配方" else "Custom recipes", style = MaterialTheme.typography.headlineSmall, color = DawnPalette.Paper, fontWeight = FontWeight.Bold)
-                    Text(if (language == "zh") "把自己的味道写进酒笺，也加入搜索、收藏和今夜酒单。" else "Your own drinks join search, favorites and tonight's menu.", color = DawnPalette.Muted, style = MaterialTheme.typography.bodySmall)
+                Text(if (language == "zh") "自定义配方" else "Custom recipes", style = MaterialTheme.typography.headlineSmall, color = MaterialTheme.colorScheme.onSurface, fontWeight = FontWeight.Bold)
+                Text(if (language == "zh") "把自己的味道写进酒笺，也加入搜索、收藏和今夜酒单。" else "Your own drinks join search, favorites and tonight's menu.", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
                 }
                 Button(onClick = { showEditor = true }) {
                     Icon(Icons.Rounded.Add, null)
@@ -193,11 +192,11 @@ internal fun CustomRecipeScreen(controller: AppController, motion: MotionPolicy,
         }
         if (controller.state.customRecipes.isEmpty()) {
             item {
-                Surface(color = DawnPalette.Surface, contentColor = DawnPalette.Paper, shape = RoundedCornerShape(8.dp)) {
+                Surface(color = MaterialTheme.colorScheme.surface, contentColor = MaterialTheme.colorScheme.onSurface, shape = RoundedCornerShape(8.dp)) {
                     Text(
                         if (language == "zh") "还没有自定义配方。第一杯，可以从今晚的心情开始。" else "No custom recipes yet. Begin with tonight's mood.",
                         modifier = Modifier.fillMaxWidth().padding(20.dp),
-                        color = DawnPalette.Muted
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }
@@ -270,15 +269,15 @@ private fun CustomRecipeEditor(controller: AppController, onDismiss: () -> Unit,
     Dialog(onDismissRequest = onDismiss, properties = DialogProperties(usePlatformDefaultWidth = false)) {
         Surface(
             modifier = Modifier.fillMaxWidth(0.96f).fillMaxHeight(0.94f),
-            color = DawnPalette.Surface,
-            contentColor = DawnPalette.Paper,
+            color = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.onSurface,
             shape = RoundedCornerShape(12.dp)
         ) {
             Column(Modifier.fillMaxSize()) {
                 Row(Modifier.fillMaxWidth().padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) {
                         Text(if (language == "zh") "写一杯自己的酒" else "Write your own drink", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
-                        Text(if (language == "zh") "每行一步，让这杯酒以后还能被准确重现。" else "Use one line per step so the drink can be recreated.", color = DawnPalette.Muted, style = MaterialTheme.typography.bodySmall)
+                        Text(if (language == "zh") "每行一步，让这杯酒以后还能被准确重现。" else "Use one line per step so the drink can be recreated.", color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
                     }
                     IconButton(onClick = onDismiss) { Icon(Icons.Rounded.Close, if (language == "zh") "关闭" else "Close") }
                 }
@@ -313,7 +312,7 @@ private fun CustomRecipeEditor(controller: AppController, onDismiss: () -> Unit,
                     )
                     SectionTitle(if (language == "zh") "材料" else "Ingredients")
                     rows.forEachIndexed { index, row ->
-                        Surface(color = DawnPalette.Raised, contentColor = DawnPalette.Paper, shape = RoundedCornerShape(8.dp)) {
+                        Surface(color = MaterialTheme.colorScheme.surfaceVariant, contentColor = MaterialTheme.colorScheme.onSurface, shape = RoundedCornerShape(8.dp)) {
                             Column(Modifier.padding(10.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                                 OptionChooser(if (language == "zh") "材料" else "Ingredient", row.id, ingredientOptions) { selected ->
                                     rows = rows.toMutableList().also { it[index] = row.copy(id = selected) }
@@ -427,27 +426,80 @@ internal fun DataScreen(
     var glassCapacity by remember(controller.state.settings) { mutableStateOf(formatNumber(controller.state.settings.glassCapacity)) }
     var icedCapacity by remember(controller.state.settings) { mutableStateOf(formatNumber(controller.state.settings.icedLiquidCapacity)) }
     var currency by remember(controller.state.settings) { mutableStateOf(controller.state.settings.currency) }
+    var fontScale by remember(controller.state.settings.fontScale) { mutableFloatStateOf(controller.state.settings.fontScale) }
     var confirmReset by remember { mutableStateOf(false) }
     Column(
         Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(14.dp)
     ) {
-        Text(if (language == "zh") "数据与估算" else "Data and estimates", style = MaterialTheme.typography.headlineSmall, color = DawnPalette.Paper, fontWeight = FontWeight.Bold)
+        Text(if (language == "zh") "数据与估算" else "Data and estimates", style = MaterialTheme.typography.headlineSmall, color = MaterialTheme.colorScheme.onSurface, fontWeight = FontWeight.Bold)
         Text(
             if (language == "zh") "所有数据保存在本机。通过 JSON 备份，可在 Web v0.2 与原生版之间手动迁移。" else "Data stays on this device. JSON backups support manual migration from Web v0.2.",
-            color = DawnPalette.Muted
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        Surface(color = DawnPalette.Surface, contentColor = DawnPalette.Paper, shape = RoundedCornerShape(8.dp)) {
+        SectionTitle(if (language == "zh") "外观" else "Appearance")
+        Text(if (language == "zh") "主题" else "Theme", fontWeight = FontWeight.Bold)
+        Row(
+            Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            listOf(
+                "light" to if (language == "zh") "朝露白" else "Dawn light",
+                "dark" to if (language == "zh") "夜酿墨" else "Night ink",
+                "system" to if (language == "zh") "跟随系统" else "System"
+            ).forEach { (mode, label) ->
+                FilterChip(
+                    selected = controller.state.settings.themeMode == mode,
+                    onClick = { controller.saveSettings(controller.state.settings.copy(themeMode = mode)) },
+                    label = { Text(label) }
+                )
+            }
+        }
+        Text(if (language == "zh") "强调色" else "Accent", fontWeight = FontWeight.Bold)
+        Row(
+            Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            listOf(
+                Triple("gold", if (language == "zh") "黎明金" else "Dawn gold", Color(0xFFF0C978)),
+                Triple("coral", if (language == "zh") "珊瑚红" else "Coral", Color(0xFFF18B69)),
+                Triple("sage", if (language == "zh") "月光青绿" else "Moon sage", Color(0xFFA5D0C0))
+            ).forEach { (accent, label, color) ->
+                FilterChip(
+                    selected = controller.state.settings.accent == accent,
+                    onClick = { controller.saveSettings(controller.state.settings.copy(accent = accent)) },
+                    leadingIcon = { Surface(color = color, shape = CircleShape, modifier = Modifier.size(14.dp)) {} },
+                    label = { Text(label) }
+                )
+            }
+        }
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            Text(if (language == "zh") "字体大小" else "Text size", fontWeight = FontWeight.Bold)
+            Text("${(fontScale * 100).roundToInt()}%", color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+        Slider(
+            value = fontScale,
+            onValueChange = { fontScale = it },
+            onValueChangeFinished = {
+                val snapped = (fontScale * 10).roundToInt() / 10f
+                fontScale = snapped
+                controller.saveSettings(controller.state.settings.copy(fontScale = snapped))
+            },
+            valueRange = 0.9f..1.3f,
+            steps = 3
+        )
+        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+        Surface(color = MaterialTheme.colorScheme.surface, contentColor = MaterialTheme.colorScheme.onSurface, shape = RoundedCornerShape(8.dp)) {
             Column(Modifier.padding(15.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 Text(if (language == "zh") "本地状态" else "Local state", fontWeight = FontWeight.Bold)
                 Text(
                     if (language == "zh") "酒柜 ${controller.state.pantry.count { it.value.owned }} · 收藏 ${controller.state.favoriteIds.size} · 自定义 ${controller.state.customRecipes.size}" else "Pantry ${controller.state.pantry.count { it.value.owned }} · Favorites ${controller.state.favoriteIds.size} · Custom ${controller.state.customRecipes.size}",
-                    color = DawnPalette.Muted
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Text(
                     if (controller.state.savedAt.isBlank()) if (language == "zh") "尚未保存" else "Not saved yet" else "${if (language == "zh") "上次保存" else "Last saved"}：${controller.state.savedAt}",
                     style = MaterialTheme.typography.labelSmall,
-                    color = DawnPalette.Muted
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }
@@ -469,8 +521,7 @@ internal fun DataScreen(
         Button(
             onClick = {
                 controller.saveSettings(
-                    AppSettings(
-                        language = language,
+                    controller.state.settings.copy(
                         glassCapacity = (glassCapacity.toDoubleOrNull() ?: 300.0).coerceAtLeast(30.0),
                         icedLiquidCapacity = (icedCapacity.toDoubleOrNull() ?: 150.0).coerceAtLeast(30.0),
                         currency = currency.ifBlank { "¥" }.take(4)
@@ -485,7 +536,7 @@ internal fun DataScreen(
         }
         HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
         SectionTitle(if (language == "zh") "重置本地数据" else "Reset local data")
-        Text(if (language == "zh") "清空酒柜、收藏、今夜酒单、自定义配方和设置，不影响内置配方。" else "Clear pantry, favorites, tonight, custom recipes and settings.", color = DawnPalette.Muted)
+        Text(if (language == "zh") "清空酒柜、收藏、今夜酒单、自定义配方和设置，不影响内置配方。" else "Clear pantry, favorites, tonight, custom recipes and settings.", color = MaterialTheme.colorScheme.onSurfaceVariant)
         OutlinedButton(onClick = { confirmReset = true }, modifier = Modifier.fillMaxWidth()) {
             Icon(Icons.Rounded.RestartAlt, null)
             Text(if (language == "zh") "清空全部本地数据" else "Clear all local data")

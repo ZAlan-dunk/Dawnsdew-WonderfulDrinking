@@ -11,12 +11,27 @@
   const map = data.ingredientMap;
   const tasteKeys = ["sweet", "creamy", "fresh", "citrus", "fruity", "sparkling", "strong", "coconut", "bitter", "herbal", "dry", "spicy", "coffee"];
   const commonIngredients = ["white_rum", "vodka", "brandy", "baileys", "blue_curacao", "cola", "sprite", "soda_water", "orange_juice", "grape_juice", "lemon_juice", "lime_juice"];
+  const brandProfiles = {
+    vodka: [["Absolut", "原味伏特加", "干净、中性", "Clean and neutral"], ["Smirnoff", "No.21", "轻盈直接", "Light and direct"], ["Finlandia", "Classic", "干爽利落", "Dry and crisp"]],
+    white_rum: [["Bacardi", "Carta Blanca", "清爽甘蔗香", "Light sugarcane"], ["Havana Club", "3 Años", "甘蔗与轻橡木", "Sugarcane and light oak"], ["Planteray", "3 Stars", "热带果香", "Tropical fruit"]],
+    tequila: [["Olmeca", "Blanco", "龙舌兰与青柑橘", "Agave and green citrus"], ["Espolòn", "Blanco", "植物感清爽", "Botanical and fresh"], ["José Cuervo", "Especial Silver", "直接易搭配", "Approachable and mixable"]],
+    bourbon: [["Jim Beam", "White Label", "焦糖、香草和橡木", "Caramel, vanilla and oak"]],
+    whiskey: [["Jim Beam", "White Label", "焦糖波本风格", "Caramel-led bourbon"], ["Jameson", "Irish Whiskey", "柔和谷物感", "Soft and grain-forward"], ["Johnnie Walker", "Black Label", "烟熏与果干", "Smoke and dried fruit"]],
+    gin: [["Beefeater", "London Dry", "经典杜松子", "Classic juniper"], ["Tanqueray", "London Dry", "强植物感", "Bold botanicals"], ["Bombay Sapphire", "London Dry", "柑橘与香料", "Citrus and spice"]],
+    brandy: [["St-Rémy", "VSOP", "成熟果香与橡木", "Ripe fruit and oak"], ["Martell", "VS", "明亮果香", "Bright fruit"]],
+    triple_sec: [["Cointreau", "L'Unique", "干净橙皮香", "Clean orange peel"]], coffee_liqueur: [["Kahlúa", "Coffee Liqueur", "咖啡、焦糖和可可", "Coffee, caramel and cocoa"]],
+    dry_vermouth: [["Martini", "Extra Dry", "草本干爽", "Herbal and dry"]], sweet_vermouth: [["Cinzano", "Rosso", "甜香料与红果", "Sweet spice and red fruit"]], prosecco: [["Mionetto", "Prosecco Brut", "青苹果与白花", "Green apple and white flowers"]],
+    blue_curacao: [["Bols", "Blue Curaçao", "橙皮香", "Orange peel"]], baileys: [["Baileys", "Original", "奶油与可可", "Cream and cocoa"]],
+    aperol: [["Aperol", "Aperitivo", "轻苦橙皮", "Light bitter orange"]], campari: [["Campari", "Bitter", "苦橙与草本", "Bitter orange and herbs"]],
+    jagermeister: [["Jägermeister", "Herbal Liqueur", "深色草本与香料", "Dark herbs and spice"]], angostura: [["Angostura", "Aromatic Bitters", "香料与烘烤感", "Spice and toast"]]
+  };
   let state = storage.load();
   let featuredId = null;
   let activeView = "home";
   let modalReturnFocus = null;
   let modalCloseTimer = null;
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const systemDark = window.matchMedia("(prefers-color-scheme: dark)");
 
   function t(key, values) { return i18n.t(key, state.settings.lang, values); }
   function langValue(value) {
@@ -47,6 +62,9 @@
   }
   function isFavorite(id) { return state.favorites.includes(id); }
   function isInTonightMenu(id) { return state.tonightMenu.includes(id); }
+  function brandSuggestions(recipe) {
+    return (recipe.base || []).flatMap(id => brandProfiles[id] || []).slice(0, 3);
+  }
 
   function toast(message) {
     const node = document.createElement("div");
@@ -97,12 +115,13 @@
     const favoriteLabel = isFavorite(recipe.id) ? t("unfavorite") : t("favorite");
     const tags = (recipe.taste || []).slice(0, compact ? 1 : 2).map(tag => `<span class="tag">${esc(tasteName(tag))}</span>`).join("");
     const rating = recipe.rating ? `<span class="rating">${esc(recipe.rating)}</span>` : "";
+    const brand = brandSuggestions(recipe)[0];
     return `<article class="recipe-card" data-recipe-card="${esc(recipe.id)}">
       ${renderArt(recipe.colors, "recipe-art")}
       <div class="card-body">
         <div class="card-topline"><span>${esc(originName(recipe.origin))}</span>${rating}</div>
         <button class="recipe-card-button" type="button" data-open-recipe="${esc(recipe.id)}">
-          <h3>${esc(langValue(recipe.name))}</h3><p class="english-name">${esc(state.settings.lang === "zh" ? recipe.name.en : recipe.name.zh)}</p>
+          <h3>${esc(langValue(recipe.name))}</h3>${brand ? `<p class="brand-line">${esc(brand[0])} · ${esc(brand[1])}</p>` : ""}<p class="english-name">${esc(state.settings.lang === "zh" ? recipe.name.en : recipe.name.zh)}</p>
         </button>
         <div class="meta-row">${tags}${matchBadge(recipe)}</div>
         <div class="card-metrics"><span>${esc(difficultyName(recipe.difficulty))}</span><span>${formatNumber(abv.abv, 1)}% ABV</span></div>
@@ -180,7 +199,9 @@
   function renderRecipes() {
     renderFilterOptions();
     const recipes = filteredRecipes();
-    $("#recipeResultCount").textContent = t("searchResults", { count: recipes.length });
+    $("#recipeResultCount").textContent = ` · ${recipes.length}`;
+    const detailedCount = ["originFilter", "baseFilter", "tasteFilter", "difficultyFilter"].filter(id => $(`#${id}`).value).length;
+    $("#activeFilterCount").textContent = detailedCount ? ` ${detailedCount}` : "";
     renderRecipeCollection("#recipeGrid", recipes, false, "");
     $("#recipeEmpty").classList.toggle("hidden", recipes.length > 0);
   }
@@ -287,8 +308,9 @@
     const ingredients = volume.amounts.map(item => `<li><span>${esc(ingredientName(item.id))}${item.optional ? ` <small>(${esc(t("optional"))})</small>` : ""}</span><b>${esc(amountLabel(item, item.estimatedMl))}</b></li>`).join("");
     const steps = (recipe.steps && (recipe.steps[state.settings.lang] || recipe.steps.zh) || []).map(step => `<li>${esc(step)}</li>`).join("");
     const costLabel = cost.hasCost ? `${esc(state.settings.currency)}${formatNumber(cost.cost, 2)}${cost.coverage < 0.99 ? "*" : ""}` : t("unknownCost");
+    const brandHtml = brandSuggestions(recipe).map(profile => `<article class="brand-suggestion"><b>${esc(profile[0])}</b><span>${esc(profile[1])}</span><small>${esc(state.settings.lang === "en" ? profile[3] : profile[2])}</small></article>`).join("");
     $("#modalContent").innerHTML = `<div class="modal-hero" style="--c1:${esc(colors[0])};--c2:${esc(colors[1])}"><div><div class="meta-row"><span class="tag">${esc(originName(recipe.origin))}</span>${recipe.rating ? `<span class="rating">${esc(recipe.rating)}</span>` : ""}${matchBadge(recipe)}</div><h2 id="modalTitle">${esc(langValue(recipe.name))}</h2><p class="english-name">${esc(state.settings.lang === "zh" ? recipe.name.en : recipe.name.zh)}</p></div><div class="art-glass"></div></div>
-      <div class="modal-body"><p class="modal-summary">${esc(langValue(recipe.description))}</p>
+      <div class="modal-body"><p class="modal-summary">${esc(langValue(recipe.description))}</p>${brandHtml ? `<div class="brand-suggestions"><h3>${esc(t("baseSuggestions"))}</h3><div>${brandHtml}</div></div>` : ""}
       <div class="detail-grid"><div class="metric"><span>${esc(t("estimatedAbv"))}</span><strong>${formatNumber(abv.abv, 1)}%</strong></div><div class="metric"><span>${esc(t("estimatedCost"))}</span><strong>${costLabel}</strong></div><div class="metric"><span>${esc(t("totalVolume"))}</span><strong>${formatNumber(volume.total, 1)} ml</strong></div><div class="metric"><span>${esc(t("method"))}</span><strong>${esc(methodName(recipe.method))}</strong></div></div>
       <div class="detail-section"><h3>${esc(t("recipeIngredients"))}</h3><ul class="ingredient-list">${ingredients}</ul></div>
       <div class="detail-section"><h3>${esc(t("recipeSteps"))}</h3><ol class="step-list">${steps}</ol></div>
@@ -374,6 +396,20 @@
     $("#settingGlassCapacity").value = state.settings.glassCapacity;
     $("#settingIcedCapacity").value = state.settings.icedLiquidCapacity;
     $("#settingCurrency").value = state.settings.currency;
+    $("#settingTheme").value = state.settings.themeMode;
+    $("#settingFontScale").value = state.settings.fontScale;
+    $("#fontScaleOutput").textContent = `${Math.round(state.settings.fontScale * 100)}%`;
+    $$("[data-accent-choice]").forEach(button => button.classList.toggle("active", button.dataset.accentChoice === state.settings.accent));
+  }
+
+  function applyAppearance() {
+    const requested = state.settings.themeMode;
+    const resolved = requested === "system" ? (systemDark.matches ? "dark" : "light") : requested;
+    document.documentElement.dataset.theme = resolved;
+    document.documentElement.dataset.accent = state.settings.accent;
+    document.documentElement.style.setProperty("--font-scale", state.settings.fontScale);
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.content = resolved === "dark" ? "#171417" : "#f7f6f2";
   }
 
   function applyLanguage() {
@@ -385,6 +421,7 @@
   }
 
   function renderAll() {
+    applyAppearance();
     applyLanguage();
     renderHome();
     renderTonightMenu();
@@ -404,6 +441,12 @@
   }
 
   document.addEventListener("click", event => {
+    const accentChoice = event.target.closest("[data-accent-choice]");
+    if (accentChoice) {
+      state.settings.accent = accentChoice.dataset.accentChoice;
+      save(); applyAppearance(); renderStorageStatus();
+      return;
+    }
     const nav = event.target.closest("[data-nav]");
     if (nav) { navigate(nav.dataset.nav, nav.dataset.filterMode); return; }
     const open = event.target.closest("[data-open-recipe]");
@@ -450,8 +493,25 @@
   $("#partyRandomButton").addEventListener("click", () => randomRecipe(true));
   $("#refreshFeatured").addEventListener("click", () => { const recipes = allRecipes().filter(recipe => recipe.id !== featuredId); featuredId = recipes[Math.floor(Math.random() * recipes.length)].id; renderHome(); });
   $("#clearFilters").addEventListener("click", clearFilters);
+  $("#webFilterToggle").addEventListener("click", () => {
+    const filters = $("#recipeFilters");
+    const open = filters.classList.toggle("hidden") === false;
+    $("#webFilterToggle").setAttribute("aria-expanded", String(open));
+  });
   $("#recipeSearch").addEventListener("input", renderRecipes);
   ["originFilter", "baseFilter", "tasteFilter", "difficultyFilter", "makeableFilter", "favoriteFilter"].forEach(id => $(`#${id}`).addEventListener("change", renderRecipes));
+  $("#settingTheme").addEventListener("change", event => {
+    state.settings.themeMode = event.target.value;
+    save(); applyAppearance(); renderStorageStatus();
+  });
+  $("#settingFontScale").addEventListener("input", event => {
+    const value = Number(event.target.value);
+    state.settings.fontScale = value;
+    $("#fontScaleOutput").textContent = `${Math.round(value * 100)}%`;
+    applyAppearance();
+  });
+  $("#settingFontScale").addEventListener("change", () => { save(); renderAll(); });
+  systemDark.addEventListener("change", () => { if (state.settings.themeMode === "system") { applyAppearance(); renderStorageStatus(); } });
   $("#pantrySearch").addEventListener("input", renderPantry);
   $("#pantryGroups").addEventListener("input", event => {
     const field = event.target.dataset.pantryField;

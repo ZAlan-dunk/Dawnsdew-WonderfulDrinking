@@ -8,7 +8,7 @@
   const defaults = {
     version: VERSION,
     savedAt: null,
-    settings: { lang: "zh", glassCapacity: 300, icedLiquidCapacity: 150, currency: "¥" },
+    settings: { lang: "zh", glassCapacity: 300, icedLiquidCapacity: 150, currency: "¥", themeMode: "light", accent: "gold", fontScale: 1 },
     pantry: {},
     favorites: [],
     customRecipes: [],
@@ -43,6 +43,9 @@
     state.settings.glassCapacity = Math.max(30, Number(state.settings.glassCapacity) || 300);
     state.settings.icedLiquidCapacity = Math.max(30, Number(state.settings.icedLiquidCapacity) || 150);
     state.settings.currency = String(state.settings.currency || "¥").slice(0, 4);
+    state.settings.themeMode = ["light", "dark", "system"].includes(state.settings.themeMode) ? state.settings.themeMode : "light";
+    state.settings.accent = ["gold", "coral", "sage"].includes(state.settings.accent) ? state.settings.accent : "gold";
+    state.settings.fontScale = Math.max(0.9, Math.min(1.3, Number(state.settings.fontScale) || 1));
     state.pantry = source.pantry && typeof source.pantry === "object" && !Array.isArray(source.pantry) ? source.pantry : {};
     state.favorites = uniqueIds(source.favorites);
     state.customRecipes = Array.isArray(source.customRecipes) ? source.customRecipes.filter(recipe => recipe && typeof recipe === "object" && recipe.id && recipe.name) : [];

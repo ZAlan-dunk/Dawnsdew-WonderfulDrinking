@@ -62,7 +62,10 @@ data class AppSettings(
     val language: String = "zh",
     val glassCapacity: Double = 300.0,
     val icedLiquidCapacity: Double = 150.0,
-    val currency: String = "¥"
+    val currency: String = "¥",
+    val themeMode: String = "light",
+    val accent: String = "gold",
+    val fontScale: Float = 1.0f
 )
 
 data class PantryEntry(

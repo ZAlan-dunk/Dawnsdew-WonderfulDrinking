@@ -99,7 +99,7 @@
       ["Shake all ingredients thoroughly with ice.", "Strain into a chilled glass."],
       "白兰地的圆润与橙香、柠檬酸度形成清晰对比。", "Rounded brandy contrasts cleanly with orange and lemon acidity.", { method: "shake" }),
 
-    recipe("corner-store-highball", "convenience", "便利店威士忌高球", "Corner-Store Highball", ["whiskey"], ["fresh", "sparkling"], "easy", ["#4c3526", "#c69051"],
+    recipe("corner-store-highball", "convenience", "月下威士忌高球", "Moonlit Whiskey Highball", ["whiskey"], ["fresh", "sparkling"], "easy", ["#4c3526", "#c69051"],
       [ml("whiskey", 40), top("soda_water"), piece("lemon", 1, true)],
       ["杯中装满冰块，加入威士忌。", "用冰镇气泡水补满，轻搅，可挤入少量柠檬。"],
       ["Fill the glass with ice and add whiskey.", "Top with chilled soda water, stir gently, and optionally squeeze in lemon."],
@@ -115,7 +115,7 @@
       [ml("baileys", 30), ml("assam_jasmine_milk_tea", 100)],
       ["杯中加入冰块和百利甜。", "倒入奶茶并轻轻搅匀。"],
       ["Add ice and Baileys to the glass.", "Pour in milk tea and stir gently."],
-      "便利店奶茶与百利甜组成柔滑、低门槛的甜口组合。", "Convenience-store milk tea and Baileys make a smooth, approachable sweet serve.", { ice: "full" }),
+      "奶茶与百利甜交叠出柔滑甜香，像灯影落进一杯温柔的夜。", "Milk tea and Baileys meet in a smooth, gentle serve made for a quiet night.", { ice: "full" }),
 
     recipe("grapefruit-rum-fizz", "convenience", "西柚朗姆气泡", "Grapefruit Dawn Fizz", ["white_rum"], ["citrus", "fresh", "sparkling"], "easy", ["#d26b51", "#f2b28d"],
       [ml("white_rum", 30), ml("waterc_grapefruit", 90), top("soda_water")],

@@ -1,5 +1,5 @@
 /* Dawn's Dew service worker — offline app shell for the GitHub Pages PWA. */
-const CACHE_NAME = "dawnsdew-pwa-v0.2";
+const CACHE_NAME = "dawnsdew-pwa-v0.3.2-beta";
 const APP_SHELL = [
   "./",
   "./index.html",

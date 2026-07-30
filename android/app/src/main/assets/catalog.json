@@ -1418,8 +1418,8 @@
         ]
       },
       "description": {
-        "zh": "乳酸甜感与葡萄果味组成一杯颜色浓郁的便利店魔法。",
-        "en": "A convenience-store spell of tangy cultured milk and rich grape fruitiness."
+        "zh": "乳酸甜感与葡萄果味在杯中铺开，像一封写给夜色的紫色短笺。",
+        "en": "Tangy cultured milk and rich grape fruit unfold like a violet note written to the night."
       },
       "sourceText": "养乐多一瓶，葡萄汁八分，伏特加45ml"
     },
@@ -2891,8 +2891,8 @@
       "id": "corner-store-highball",
       "rating": "",
       "name": {
-        "zh": "便利店威士忌高球",
-        "en": "Corner-Store Highball"
+        "zh": "月下威士忌高球",
+        "en": "Moonlit Whiskey Highball"
       },
       "origin": "convenience",
       "base": [
@@ -3050,8 +3050,8 @@
         ]
       },
       "description": {
-        "zh": "便利店奶茶与百利甜组成柔滑、低门槛的甜口组合。",
-        "en": "Convenience-store milk tea and Baileys make a smooth, approachable sweet serve."
+        "zh": "奶茶与百利甜交叠出柔滑甜香，像灯影落进一杯温柔的夜。",
+        "en": "Milk tea and Baileys meet in a smooth, gentle serve made for a quiet night."
       },
       "ice": "full"
     },

@@ -1,6 +1,7 @@
 package com.zalandunk.dawnsdew.data
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class ModelsTest {
@@ -26,5 +27,16 @@ class ModelsTest {
         val list = LocalizedList(zh = listOf("加冰"), en = emptyList())
 
         assertEquals(listOf("加冰"), list.value("en"))
+    }
+
+    @Test
+    fun everyAlcoholicCatalogCategoryHasBrandGuidance() {
+        val alcoholIds = setOf(
+            "aperol", "baileys", "triple_sec", "dry_vermouth", "campari", "coffee_liqueur",
+            "blue_curacao", "sweet_vermouth", "jagermeister", "angostura", "brandy", "white_rum",
+            "bourbon", "vodka", "gin", "tequila", "prosecco", "whiskey"
+        )
+
+        assertTrue(alcoholIds.all { BrandProfiles.forIngredient(it).isNotEmpty() })
     }
 }

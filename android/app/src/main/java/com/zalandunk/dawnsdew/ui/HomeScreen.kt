@@ -50,7 +50,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.zalandunk.dawnsdew.data.Recipe
 import com.zalandunk.dawnsdew.data.RecipeCalculator
-import com.zalandunk.dawnsdew.ui.theme.DawnPalette
 import kotlinx.coroutines.delay
 
 @Composable
@@ -147,7 +146,7 @@ private fun PoeticHero(controller: AppController, motion: MotionPolicy) {
     BoxWithConstraints(
         Modifier.fillMaxWidth().background(
             Brush.verticalGradient(
-                listOf(Color(0xFF321C2A), Color(0xFF18141A), DawnPalette.Ink)
+                listOf(MaterialTheme.colorScheme.primaryContainer, MaterialTheme.colorScheme.surfaceVariant, MaterialTheme.colorScheme.background)
             )
         )
     ) {
@@ -168,13 +167,13 @@ private fun PoeticHero(controller: AppController, motion: MotionPolicy) {
             Text(
                 if (language == "zh") "今夜酒单 · TONIGHT'S POUR" else "TONIGHT'S POUR · 今夜酒单",
                 style = MaterialTheme.typography.labelMedium,
-                color = DawnPalette.Gold,
+                color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Bold
             )
             Text(
                 if (language == "zh") "把今夜的心绪，斟成一杯" else "Pour tonight's mood into a glass",
                 style = MaterialTheme.typography.headlineLarge,
-                color = DawnPalette.Paper,
+                color = MaterialTheme.colorScheme.onSurface,
                 fontWeight = FontWeight.SemiBold
             )
             Text(
@@ -184,7 +183,7 @@ private fun PoeticHero(controller: AppController, motion: MotionPolicy) {
                     "From dusk to morning dew, gather the drinks and memories meant for tonight, then begin with one glass."
                 },
                 style = MaterialTheme.typography.bodyLarge,
-                color = DawnPalette.Muted
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 Button(onClick = { controller.navigate(Destination.Tonight) }) {
@@ -212,16 +211,16 @@ private fun HomeStats(controller: AppController) {
         val compact = maxWidth < 520.dp
         if (compact) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                StatTile(Modifier.weight(1f), controller.state.tonightIds.size.toString(), if (language == "zh") "今夜" else "Tonight", DawnPalette.Coral)
-                StatTile(Modifier.weight(1f), makeable.toString(), if (language == "zh") "可调" else "Ready", DawnPalette.Sage)
-                StatTile(Modifier.weight(1f), controller.state.favoriteIds.size.toString(), if (language == "zh") "收藏" else "Saved", DawnPalette.Gold)
+                StatTile(Modifier.weight(1f), controller.state.tonightIds.size.toString(), if (language == "zh") "今夜" else "Tonight", MaterialTheme.colorScheme.secondary)
+                StatTile(Modifier.weight(1f), makeable.toString(), if (language == "zh") "可调" else "Ready", MaterialTheme.colorScheme.tertiary)
+                StatTile(Modifier.weight(1f), controller.state.favoriteIds.size.toString(), if (language == "zh") "收藏" else "Saved", MaterialTheme.colorScheme.primary)
             }
         } else {
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                StatTile(Modifier.weight(1f), controller.allRecipes.size.toString(), if (language == "zh") "全部配方" else "Recipes", DawnPalette.Paper)
-                StatTile(Modifier.weight(1f), controller.state.tonightIds.size.toString(), if (language == "zh") "今夜候选" else "Tonight", DawnPalette.Coral)
-                StatTile(Modifier.weight(1f), makeable.toString(), if (language == "zh") "此刻可调" else "Ready", DawnPalette.Sage)
-                StatTile(Modifier.weight(1f), controller.state.favoriteIds.size.toString(), if (language == "zh") "已收藏" else "Saved", DawnPalette.Gold)
+                StatTile(Modifier.weight(1f), controller.allRecipes.size.toString(), if (language == "zh") "全部配方" else "Recipes", MaterialTheme.colorScheme.onSurface)
+                StatTile(Modifier.weight(1f), controller.state.tonightIds.size.toString(), if (language == "zh") "今夜候选" else "Tonight", MaterialTheme.colorScheme.secondary)
+                StatTile(Modifier.weight(1f), makeable.toString(), if (language == "zh") "此刻可调" else "Ready", MaterialTheme.colorScheme.tertiary)
+                StatTile(Modifier.weight(1f), controller.state.favoriteIds.size.toString(), if (language == "zh") "已收藏" else "Saved", MaterialTheme.colorScheme.primary)
             }
         }
     }
@@ -229,10 +228,10 @@ private fun HomeStats(controller: AppController) {
 
 @Composable
 private fun StatTile(modifier: Modifier, value: String, label: String, accent: Color) {
-    Surface(modifier, color = DawnPalette.Surface, contentColor = DawnPalette.Paper, shape = RoundedCornerShape(8.dp)) {
+    Surface(modifier, color = MaterialTheme.colorScheme.surface, contentColor = MaterialTheme.colorScheme.onSurface, shape = RoundedCornerShape(8.dp)) {
         Column(Modifier.padding(horizontal = 12.dp, vertical = 13.dp)) {
             Text(value, style = MaterialTheme.typography.headlineSmall, color = accent, fontWeight = FontWeight.Black)
-            Text(label, style = MaterialTheme.typography.labelSmall, color = DawnPalette.Muted, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Text(label, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
     }
 }
@@ -267,7 +266,7 @@ private fun TonightPreview(controller: AppController) {
 private fun TonightMiniCard(recipe: Recipe, language: String, onClick: () -> Unit) {
     Card(
         modifier = Modifier.width(176.dp).clickable(onClick = onClick),
-        colors = CardDefaults.cardColors(containerColor = DawnPalette.Raised, contentColor = DawnPalette.Paper),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant, contentColor = MaterialTheme.colorScheme.onSurface),
         shape = RoundedCornerShape(8.dp)
     ) {
         Box(Modifier.fillMaxWidth().height(76.dp).background(Brush.linearGradient(recipe.gradientColors()))) {
@@ -276,7 +275,7 @@ private fun TonightMiniCard(recipe: Recipe, language: String, onClick: () -> Uni
         }
         Column(Modifier.padding(11.dp)) {
             Text(recipe.name.value(language), fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)
-            Text(recipe.name.secondary(language), style = MaterialTheme.typography.labelSmall, color = DawnPalette.Muted, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Text(recipe.name.secondary(language), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
     }
 }

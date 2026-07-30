@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -32,6 +33,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -75,6 +78,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.core.graphics.toColorInt
 import com.zalandunk.dawnsdew.data.AppState
+import com.zalandunk.dawnsdew.data.BrandProfiles
 import com.zalandunk.dawnsdew.data.Ingredient
 import com.zalandunk.dawnsdew.data.Recipe
 import com.zalandunk.dawnsdew.data.RecipeCalculator
@@ -82,16 +86,11 @@ import com.zalandunk.dawnsdew.ui.theme.DawnPalette
 
 @Composable
 internal fun AmbientBackdrop() {
+    val wash = MaterialTheme.colorScheme.primary.copy(alpha = 0.035f)
     Canvas(Modifier.fillMaxWidth().fillMaxHeight()) {
-        drawCircle(
-            color = DawnPalette.Coral.copy(alpha = 0.07f),
-            radius = size.minDimension * 0.40f,
-            center = Offset(size.width * 0.94f, size.height * 0.05f)
-        )
-        drawCircle(
-            color = DawnPalette.Sage.copy(alpha = 0.045f),
-            radius = size.minDimension * 0.48f,
-            center = Offset(size.width * 0.03f, size.height * 0.92f)
+        drawRect(
+            brush = Brush.verticalGradient(listOf(wash, Color.Transparent, wash.copy(alpha = 0.018f))),
+            size = size
         )
     }
 }
@@ -107,11 +106,11 @@ internal fun SectionTitle(title: String, subtitle: String? = null, action: (@Com
             Text(
                 title,
                 style = MaterialTheme.typography.titleLarge,
-                color = DawnPalette.Paper,
+                color = MaterialTheme.colorScheme.onSurface,
                 fontWeight = FontWeight.Bold
             )
             subtitle?.let {
-                Text(it, style = MaterialTheme.typography.bodySmall, color = DawnPalette.Muted)
+                Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
         action?.invoke()
@@ -199,6 +198,7 @@ internal fun RecipeCard(
     language: String,
     motion: MotionPolicy,
     modifier: Modifier = Modifier,
+    compact: Boolean = false,
     onOpen: (Recipe) -> Unit,
     onToggleFavorite: (String) -> Unit,
     onToggleTonight: (String) -> Unit
@@ -219,30 +219,30 @@ internal fun RecipeCard(
         onClick = { onOpen(recipe) },
         modifier = modifier.fillMaxWidth().graphicsLayer { scaleX = scale; scaleY = scale },
         shape = RoundedCornerShape(8.dp),
-        colors = CardDefaults.cardColors(containerColor = DawnPalette.Surface, contentColor = DawnPalette.Paper),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface, contentColor = MaterialTheme.colorScheme.onSurface),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp, pressedElevation = 0.dp),
         interactionSource = interactionSource
     ) {
         Box(
             Modifier
                 .fillMaxWidth()
-                .height(226.dp)
+                .height(if (compact) 194.dp else 226.dp)
                 .background(Brush.linearGradient(colors))
         ) {
-            MiniGlassArt(Modifier.align(Alignment.Center).size(152.dp), colors)
+            MiniGlassArt(Modifier.align(Alignment.Center).size(if (compact) 122.dp else 152.dp), colors)
             Box(
                 Modifier.matchParentSize().background(
                     Brush.verticalGradient(listOf(Color.Transparent, Color(0x33000000), Color(0xE00A090C)))
                 )
             )
             Surface(
-                color = if (match.status == "makeable") DawnPalette.Sage.copy(alpha = 0.94f) else Color(0xD92A252B),
-                contentColor = if (match.status == "makeable") Color(0xFF10271F) else DawnPalette.Paper,
+                color = if (match.status == "makeable") MaterialTheme.colorScheme.tertiaryContainer else Color(0xD92A252B),
+                contentColor = if (match.status == "makeable") MaterialTheme.colorScheme.onTertiaryContainer else Color.White,
                 shape = RoundedCornerShape(6.dp),
-                modifier = Modifier.align(Alignment.TopStart).padding(10.dp)
+                modifier = Modifier.align(Alignment.TopStart).padding(if (compact) 7.dp else 10.dp)
             ) {
                 Text(
-                    matchLabel(match.status, match.missing.size, language),
+                    if (compact) compactMatchLabel(match.status, match.missing.size, language) else matchLabel(match.status, match.missing.size, language),
                     modifier = Modifier.padding(horizontal = 9.dp, vertical = 5.dp),
                     style = MaterialTheme.typography.labelSmall,
                     fontWeight = FontWeight.Bold
@@ -268,30 +268,47 @@ internal fun RecipeCard(
                     onClick = { onToggleFavorite(recipe.id) }
                 )
             }
-            Column(Modifier.align(Alignment.BottomStart).padding(16.dp).fillMaxWidth()) {
+            Column(Modifier.align(Alignment.BottomStart).padding(if (compact) 11.dp else 16.dp).fillMaxWidth()) {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
                     Text(originLabel(recipe.origin, language), style = MaterialTheme.typography.labelMedium, color = Color.White.copy(alpha = 0.86f))
                     Text("·", color = Color.White.copy(alpha = 0.60f))
-                    Text("${formatNumber(estimate.abv)}% ABV", style = MaterialTheme.typography.labelMedium, color = DawnPalette.Gold)
+                    Text("${formatNumber(estimate.abv)}% ABV", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
+                }
+                BrandProfiles.primary(recipe)?.let { profile ->
+                    Text(
+                        "${profile.brand} · ${profile.product}",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = Color.White.copy(alpha = 0.72f),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
                 Text(
                     recipe.name.value(language),
-                    style = MaterialTheme.typography.titleLarge,
+                    style = if (compact) MaterialTheme.typography.titleMedium else MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Black,
                     color = Color.White,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
-                Text(
-                    recipe.name.secondary(language),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = Color.White.copy(alpha = 0.78f),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
+                if (!compact) {
+                    Text(
+                        recipe.name.secondary(language),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = Color.White.copy(alpha = 0.78f),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
             }
         }
     }
+}
+
+private fun compactMatchLabel(status: String, missing: Int, language: String): String = when (status) {
+    "makeable" -> if (language == "zh") "可调" else "Ready"
+    "almost" -> if (language == "zh") "差1" else "-1"
+    else -> if (language == "zh") "缺$missing" else "-$missing"
 }
 
 @Composable
@@ -305,7 +322,7 @@ private fun ToggleIconButton(
     onClick: () -> Unit
 ) {
     val tint by animateColorAsState(
-        if (active) DawnPalette.Gold else Color.White,
+        if (active) MaterialTheme.colorScheme.primary else Color.White,
         tween(motionDuration(motion, 180)),
         label = "toggleTint"
     )
@@ -327,7 +344,7 @@ private fun ToggleIconButton(
                 Icon(
                     if (selected) activeIcon else inactiveIcon,
                     contentDescription = if (selected) activeDescription else inactiveDescription,
-                    tint = tint,
+            tint = tint,
                     modifier = Modifier.graphicsLayer { scaleX = scale; scaleY = scale }
                 )
             }
@@ -384,13 +401,19 @@ internal fun RecipeDetailDialog(
     }
     val match = remember(recipe, state.pantry) { RecipeCalculator.match(recipe, state.pantry) }
     Dialog(onDismissRequest = onDismiss, properties = DialogProperties(usePlatformDefaultWidth = false)) {
-        Surface(
-            modifier = Modifier.fillMaxWidth(0.95f).fillMaxHeight(0.93f).widthIn(max = 760.dp),
-            shape = RoundedCornerShape(12.dp),
-            color = DawnPalette.Surface,
-            contentColor = DawnPalette.Paper,
-            tonalElevation = 8.dp
-        ) {
+        BoxWithConstraints(Modifier.fillMaxSize()) {
+            val compact = maxWidth < 600.dp
+            Surface(
+                modifier = if (compact) {
+                    Modifier.fillMaxSize()
+                } else {
+                    Modifier.align(Alignment.Center).fillMaxWidth(0.95f).fillMaxHeight(0.93f).widthIn(max = 760.dp)
+                },
+                shape = if (compact) RoundedCornerShape(0.dp) else RoundedCornerShape(18.dp),
+                color = MaterialTheme.colorScheme.surface,
+                contentColor = MaterialTheme.colorScheme.onSurface,
+                tonalElevation = 8.dp
+            ) {
             LazyColumn {
                 item {
                     Box(
@@ -417,7 +440,8 @@ internal fun RecipeDetailDialog(
                 }
                 item {
                     Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
-                        Text(recipe.description.value(language), style = MaterialTheme.typography.bodyLarge, color = DawnPalette.Paper)
+                        Text(recipe.description.value(language), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+                        BrandSuggestions(recipe, language)
                         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             MetricTile(Modifier.weight(1f), "${formatNumber(estimate.abv)}%", "ABV")
                             MetricTile(Modifier.weight(1f), "${formatNumber(estimate.totalMl)} ml", if (language == "zh") "酒液" else "Volume")
@@ -441,15 +465,15 @@ internal fun RecipeDetailDialog(
                         }
                         if (match.missing.isNotEmpty()) {
                             Surface(
-                                color = DawnPalette.Raised,
-                                contentColor = DawnPalette.Paper,
+                                color = MaterialTheme.colorScheme.surfaceVariant,
+                                contentColor = MaterialTheme.colorScheme.onSurface,
                                 shape = RoundedCornerShape(8.dp)
                             ) {
                                 Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                                     Text(matchLabel(match.status, match.missing.size, language), fontWeight = FontWeight.Bold)
                                     Text(
                                         match.missing.joinToString("、") { ingredientMap[it]?.name?.value(language) ?: it },
-                                        color = DawnPalette.Muted,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                                         style = MaterialTheme.typography.bodySmall
                                     )
                                     TextButton(onClick = onAddMissing) {
@@ -471,12 +495,12 @@ internal fun RecipeDetailDialog(
                 items(recipe.ingredients) { item ->
                     val ingredient = ingredientMap[item.id]
                     ListItem(
-                        headlineContent = { Text(ingredient?.name?.value(language) ?: item.id, color = DawnPalette.Paper) },
+                        headlineContent = { Text(ingredient?.name?.value(language) ?: item.id, color = MaterialTheme.colorScheme.onSurface) },
                         supportingContent = if (item.optional) {
-                            { Text(if (language == "zh") "可选" else "Optional", color = DawnPalette.Muted) }
+                            { Text(if (language == "zh") "可选" else "Optional", color = MaterialTheme.colorScheme.onSurfaceVariant) }
                         } else null,
-                        trailingContent = { Text(amountLabel(item, language), fontWeight = FontWeight.Bold, color = DawnPalette.Gold) },
-                        colors = androidx.compose.material3.ListItemDefaults.colors(containerColor = DawnPalette.Surface)
+                        trailingContent = { Text(amountLabel(item, language), fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary) },
+                        colors = androidx.compose.material3.ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface)
                     )
                     HorizontalDivider(Modifier.padding(horizontal = 20.dp), color = MaterialTheme.colorScheme.outlineVariant)
                 }
@@ -499,7 +523,7 @@ internal fun RecipeDetailDialog(
                                 color = MaterialTheme.colorScheme.onPrimaryContainer
                             )
                         }
-                        Text(indexed.value, modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodyLarge, color = DawnPalette.Paper)
+                        Text(indexed.value, modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
                     }
                 }
                 item {
@@ -507,14 +531,14 @@ internal fun RecipeDetailDialog(
                         Text(
                             if (language == "zh") "原始记录：$it" else "Original note: $it",
                             modifier = Modifier.padding(20.dp),
-                            color = DawnPalette.Muted,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                             style = MaterialTheme.typography.bodySmall
                         )
                     }
                     Text(
                         if (language == "zh") "酒精度、容量和成本均为估算值。" else "ABV, volume and cost are estimates.",
                         modifier = Modifier.padding(horizontal = 20.dp),
-                        color = DawnPalette.Muted,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         style = MaterialTheme.typography.labelSmall
                     )
                     TextButton(onClick = onDismiss, modifier = Modifier.fillMaxWidth().padding(14.dp)) {
@@ -522,16 +546,49 @@ internal fun RecipeDetailDialog(
                     }
                 }
             }
+            }
         }
     }
 }
 
 @Composable
 private fun MetricTile(modifier: Modifier, value: String, label: String) {
-    Surface(modifier, color = DawnPalette.Raised, contentColor = DawnPalette.Paper, shape = RoundedCornerShape(8.dp)) {
+    Surface(modifier, color = MaterialTheme.colorScheme.surfaceVariant, contentColor = MaterialTheme.colorScheme.onSurface, shape = RoundedCornerShape(8.dp)) {
         Column(Modifier.padding(10.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             Text(value, fontWeight = FontWeight.Black, maxLines = 1, overflow = TextOverflow.Ellipsis)
-            Text(label, style = MaterialTheme.typography.labelSmall, color = DawnPalette.Muted, maxLines = 1)
+            Text(label, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1)
+        }
+    }
+}
+
+@Composable
+private fun BrandSuggestions(recipe: Recipe, language: String) {
+    val suggestions = BrandProfiles.suggestions(recipe)
+    if (suggestions.isEmpty()) return
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text(
+            if (language == "zh") "基酒建议" else "Base suggestions",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold
+        )
+        Row(
+            Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            suggestions.forEach { profile ->
+                Surface(
+                    modifier = Modifier.widthIn(min = 150.dp, max = 210.dp),
+                    color = MaterialTheme.colorScheme.surfaceVariant,
+                    contentColor = MaterialTheme.colorScheme.onSurface,
+                    shape = RoundedCornerShape(8.dp)
+                ) {
+                    Column(Modifier.padding(11.dp), verticalArrangement = Arrangement.spacedBy(3.dp)) {
+                        Text(profile.brand, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+                        Text(profile.product, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
+                        Text(profile.flavor(language), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                    }
+                }
+            }
         }
     }
 }

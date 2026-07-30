@@ -48,7 +48,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -57,7 +56,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.zalandunk.dawnsdew.data.AppStateStore
 import com.zalandunk.dawnsdew.data.CatalogRepository
-import com.zalandunk.dawnsdew.ui.theme.DawnPalette
+import com.zalandunk.dawnsdew.ui.theme.DawnsDewTheme
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -71,9 +70,9 @@ fun DawnsDewApp() {
     val catalog = catalogResult.getOrNull()
     val motion = rememberMotionPolicy()
     if (catalog == null) {
-        Box(Modifier.fillMaxSize().background(DawnPalette.Ink), contentAlignment = Alignment.Center) {
+        Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background), contentAlignment = Alignment.Center) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("配方数据加载失败", style = MaterialTheme.typography.titleLarge, color = DawnPalette.Paper)
+                Text("配方数据加载失败", style = MaterialTheme.typography.titleLarge)
                 Text(catalogResult.exceptionOrNull()?.message.orEmpty(), color = MaterialTheme.colorScheme.error)
             }
         }
@@ -81,6 +80,15 @@ fun DawnsDewApp() {
     }
 
     val controller = remember(catalog, context) { AppController(catalog, AppStateStore(context)) }
+    DawnsDewTheme(controller.state.settings) {
+        DawnsDewThemedApp(controller, motion)
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun DawnsDewThemedApp(controller: AppController, motion: MotionPolicy) {
+    val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     fun message(value: String) {
@@ -122,11 +130,7 @@ fun DawnsDewApp() {
         if (controller.selectedRecipe != null) controller.closeRecipe() else controller.navigate(Destination.Home)
     }
 
-    Box(
-        Modifier.fillMaxSize().background(
-            Brush.verticalGradient(listOf(DawnPalette.Ink, Color(0xFF100D12), DawnPalette.Ink))
-        )
-    ) {
+    Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         AmbientBackdrop()
         BoxWithConstraints(Modifier.fillMaxSize()) {
             val expanded = maxWidth >= 840.dp
@@ -138,38 +142,32 @@ fun DawnsDewApp() {
                 topBar = {
                     TopAppBar(
                         title = {
-                            Column {
-                                Text(
-                                    if (controller.language == "zh") "朝露酒笺" else "Dawn's Dew",
-                                    color = DawnPalette.Paper,
-                                    fontWeight = FontWeight.Black
-                                )
-                                Text(
-                                    "Native · 0.3.1 Beta",
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = DawnPalette.Muted
-                                )
+                            val pageTitle = when (controller.destination) {
+                                Destination.Home -> if (controller.language == "zh") "朝露酒笺" else "Dawn's Dew"
+                                Destination.Recipes -> "${controller.destination.label(controller.language)} · ${controller.allRecipes.size}"
+                                else -> controller.destination.label(controller.language)
                             }
+                            Text(pageTitle, fontWeight = FontWeight.Black)
                         },
                         actions = {
                             IconButton(onClick = controller::switchLanguage) {
                                 Icon(
                                     Icons.Rounded.Language,
                                     contentDescription = if (controller.language == "zh") "Switch to English" else "切换到中文",
-                                    tint = DawnPalette.Paper
+                                    tint = MaterialTheme.colorScheme.onSurface
                                 )
                             }
                         },
                         colors = TopAppBarDefaults.topAppBarColors(
-                            containerColor = DawnPalette.Ink.copy(alpha = 0.96f),
-                            titleContentColor = DawnPalette.Paper,
-                            actionIconContentColor = DawnPalette.Paper
+                            containerColor = MaterialTheme.colorScheme.surface,
+                            titleContentColor = MaterialTheme.colorScheme.onSurface,
+                            actionIconContentColor = MaterialTheme.colorScheme.onSurface
                         )
                     )
                 },
                 bottomBar = {
                     if (!expanded) {
-                        NavigationBar(containerColor = Color(0xFA151218), contentColor = DawnPalette.Paper) {
+                        NavigationBar(containerColor = MaterialTheme.colorScheme.surface, contentColor = MaterialTheme.colorScheme.onSurface) {
                             primaryDestinations.forEach { item ->
                                 NavigationBarItem(
                                     selected = activePrimary == item,
@@ -187,7 +185,7 @@ fun DawnsDewApp() {
             ) { innerPadding ->
                 Row(Modifier.fillMaxSize().padding(innerPadding)) {
                     if (expanded) {
-                        NavigationRail(containerColor = Color(0xE8151218), contentColor = DawnPalette.Paper) {
+                        NavigationRail(containerColor = MaterialTheme.colorScheme.surface, contentColor = MaterialTheme.colorScheme.onSurface) {
                             Spacer(Modifier.height(12.dp))
                             primaryDestinations.forEach { item ->
                                 NavigationRailItem(
@@ -216,7 +214,7 @@ fun DawnsDewApp() {
                             onExport = {
                                 pendingExport = controller.exportJson()
                                 val date = SimpleDateFormat("yyyy-MM-dd", Locale.ROOT).format(Date())
-                                exportLauncher.launch("dawnsdew-v0.3.1-backup-$date.json")
+                                exportLauncher.launch("dawnsdew-v0.3.2-backup-$date.json")
                             },
                             onImport = { importLauncher.launch(arrayOf("application/json", "text/plain")) }
                         )

@@ -10,9 +10,18 @@ class ThemeContrastTest {
     @Test
     fun primaryReadingPairsMeetWcagAa() {
         assertTrue(contrast(0xFFF0C978, 0xFF291B05) >= 4.5)
-        assertTrue(contrast(0xFFFFF8ED, 0xFF0B0A0D) >= 4.5)
-        assertTrue(contrast(0xFFD8CEC4, 0xFF17151A) >= 4.5)
+        assertTrue(contrast(0xFFFFF8F1, 0xFF171417) >= 4.5)
+        assertTrue(contrast(0xFFD0C6C8, 0xFF211E21) >= 4.5)
         assertTrue(contrast(0xFFA5D0C0, 0xFF10271F) >= 4.5)
+    }
+
+    @Test
+    fun lightThemeReadingAndAccentPairsMeetWcagAa() {
+        assertTrue(contrast(0xFF242124, 0xFFF7F6F2) >= 4.5)
+        assertTrue(contrast(0xFF625C61, 0xFFFFFBFF) >= 4.5)
+        assertTrue(contrast(0xFFFFFFFF, 0xFF745B12) >= 4.5)
+        assertTrue(contrast(0xFFFFFFFF, 0xFF9B3F27) >= 4.5)
+        assertTrue(contrast(0xFFFFFFFF, 0xFF286657) >= 4.5)
     }
 
     private fun contrast(foreground: Long, background: Long): Double {
