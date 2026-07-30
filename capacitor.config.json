@@ -1,8 +1,0 @@
-{
-  "appId": "com.zalandunk.dawnsdew",
-  "appName": "朝露酒笺",
-  "webDir": "www",
-  "android": {
-    "backgroundColor": "#090a0d"
-  }
-}

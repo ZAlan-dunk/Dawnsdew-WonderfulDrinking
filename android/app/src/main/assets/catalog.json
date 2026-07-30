@@ -1,0 +1,3181 @@
+{
+  "schemaVersion": "0.3-native-alpha01",
+  "generatedFrom": [
+    "assets/data/ingredients.js",
+    "assets/data/personal-recipes.js",
+    "assets/data/classic-recipes.js"
+  ],
+  "ingredients": [
+    {
+      "id": "baileys",
+      "zh": "百利甜",
+      "en": "Baileys Irish Cream",
+      "category": "liqueur",
+      "abv": 17,
+      "pack": 700
+    },
+    {
+      "id": "brandy",
+      "zh": "白兰地",
+      "en": "Brandy",
+      "category": "spirit",
+      "abv": 40,
+      "pack": 700
+    },
+    {
+      "id": "jagermeister",
+      "zh": "野格",
+      "en": "Jägermeister",
+      "category": "liqueur",
+      "abv": 35,
+      "pack": 700
+    },
+    {
+      "id": "white_rum",
+      "zh": "白朗姆",
+      "en": "White Rum",
+      "category": "spirit",
+      "abv": 40,
+      "pack": 700
+    },
+    {
+      "id": "vodka",
+      "zh": "伏特加",
+      "en": "Vodka",
+      "category": "spirit",
+      "abv": 40,
+      "pack": 700
+    },
+    {
+      "id": "gin",
+      "zh": "金酒",
+      "en": "Gin",
+      "category": "spirit",
+      "abv": 40,
+      "pack": 700
+    },
+    {
+      "id": "tequila",
+      "zh": "龙舌兰",
+      "en": "Tequila",
+      "category": "spirit",
+      "abv": 40,
+      "pack": 700
+    },
+    {
+      "id": "whiskey",
+      "zh": "威士忌",
+      "en": "Whiskey",
+      "category": "spirit",
+      "abv": 40,
+      "pack": 700
+    },
+    {
+      "id": "bourbon",
+      "zh": "波本威士忌",
+      "en": "Bourbon",
+      "category": "spirit",
+      "abv": 40,
+      "pack": 700
+    },
+    {
+      "id": "blue_curacao",
+      "zh": "蓝橙力娇酒",
+      "en": "Blue Curaçao",
+      "category": "liqueur",
+      "abv": 20,
+      "pack": 700
+    },
+    {
+      "id": "triple_sec",
+      "zh": "橙味力娇酒",
+      "en": "Triple Sec",
+      "category": "liqueur",
+      "abv": 30,
+      "pack": 700
+    },
+    {
+      "id": "coffee_liqueur",
+      "zh": "咖啡力娇酒",
+      "en": "Coffee Liqueur",
+      "category": "liqueur",
+      "abv": 20,
+      "pack": 700
+    },
+    {
+      "id": "campari",
+      "zh": "金巴利",
+      "en": "Campari",
+      "category": "liqueur",
+      "abv": 25,
+      "pack": 750
+    },
+    {
+      "id": "aperol",
+      "zh": "阿佩罗",
+      "en": "Aperol",
+      "category": "liqueur",
+      "abv": 11,
+      "pack": 750
+    },
+    {
+      "id": "sweet_vermouth",
+      "zh": "甜味美思",
+      "en": "Sweet Vermouth",
+      "category": "liqueur",
+      "abv": 16,
+      "pack": 750
+    },
+    {
+      "id": "dry_vermouth",
+      "zh": "干味美思",
+      "en": "Dry Vermouth",
+      "category": "liqueur",
+      "abv": 18,
+      "pack": 750
+    },
+    {
+      "id": "prosecco",
+      "zh": "普罗塞克起泡酒",
+      "en": "Prosecco",
+      "category": "spirit",
+      "abv": 11,
+      "pack": 750
+    },
+    {
+      "id": "assam_jasmine_milk_tea",
+      "zh": "阿萨姆茉莉奶绿",
+      "en": "Assam Jasmine Milk Tea",
+      "category": "tea",
+      "abv": 0,
+      "pack": 500
+    },
+    {
+      "id": "cola",
+      "zh": "可乐",
+      "en": "Cola",
+      "category": "soda",
+      "abv": 0,
+      "pack": 500
+    },
+    {
+      "id": "waterc_green_kumquat",
+      "zh": "水溶C青桔",
+      "en": "Water-C Green Kumquat",
+      "category": "juice",
+      "abv": 0,
+      "pack": 500
+    },
+    {
+      "id": "grape_juice",
+      "zh": "葡萄汁",
+      "en": "Grape Juice",
+      "category": "juice",
+      "abv": 0,
+      "pack": 1000
+    },
+    {
+      "id": "orange_juice",
+      "zh": "橙汁",
+      "en": "Orange Juice",
+      "category": "juice",
+      "abv": 0,
+      "pack": 1000
+    },
+    {
+      "id": "grape_soda",
+      "zh": "葡萄味汽水",
+      "en": "Grape Soda",
+      "category": "soda",
+      "abv": 0,
+      "pack": 500
+    },
+    {
+      "id": "waterc_grapefruit",
+      "zh": "水溶C西柚",
+      "en": "Water-C Grapefruit",
+      "category": "juice",
+      "abv": 0,
+      "pack": 500
+    },
+    {
+      "id": "jasmine_peach_fanta",
+      "zh": "芬达茉莉蜜桃",
+      "en": "Jasmine Peach Fanta",
+      "category": "soda",
+      "abv": 0,
+      "pack": 500
+    },
+    {
+      "id": "waterc_lemon",
+      "zh": "水溶C柠檬",
+      "en": "Water-C Lemon",
+      "category": "juice",
+      "abv": 0,
+      "pack": 500
+    },
+    {
+      "id": "waterc_green_orange",
+      "zh": "水溶C青皮橘",
+      "en": "Water-C Green Orange",
+      "category": "juice",
+      "abv": 0,
+      "pack": 500
+    },
+    {
+      "id": "berry_peach",
+      "zh": "莓莓桃桃",
+      "en": "Berry Peach Drink",
+      "category": "juice",
+      "abv": 0,
+      "pack": 500
+    },
+    {
+      "id": "soda_water",
+      "zh": "气泡水",
+      "en": "Soda Water",
+      "category": "soda",
+      "abv": 0,
+      "pack": 500
+    },
+    {
+      "id": "lime_juice",
+      "zh": "青柠汁",
+      "en": "Lime Juice",
+      "category": "juice",
+      "abv": 0,
+      "pack": 500
+    },
+    {
+      "id": "waterc_blood_orange",
+      "zh": "水溶C血橙",
+      "en": "Water-C Blood Orange",
+      "category": "juice",
+      "abv": 0,
+      "pack": 500
+    },
+    {
+      "id": "sprite",
+      "zh": "雪碧",
+      "en": "Sprite",
+      "category": "soda",
+      "abv": 0,
+      "pack": 500
+    },
+    {
+      "id": "coconut_milk",
+      "zh": "椰汁",
+      "en": "Coconut Drink",
+      "category": "dairy",
+      "abv": 0,
+      "pack": 1000
+    },
+    {
+      "id": "green_apple_fanta",
+      "zh": "青苹果美年达",
+      "en": "Green Apple Mirinda",
+      "category": "soda",
+      "abv": 0,
+      "pack": 500
+    },
+    {
+      "id": "yakult",
+      "zh": "益力多 / 养乐多",
+      "en": "Yakult",
+      "category": "dairy",
+      "abv": 0,
+      "pack": 100
+    },
+    {
+      "id": "coconut_water",
+      "zh": "椰子水",
+      "en": "Coconut Water",
+      "category": "dairy",
+      "abv": 0,
+      "pack": 500
+    },
+    {
+      "id": "peach_sparkling_water",
+      "zh": "蜜桃气泡水",
+      "en": "Peach Sparkling Water",
+      "category": "soda",
+      "abv": 0,
+      "pack": 500
+    },
+    {
+      "id": "tonic_water",
+      "zh": "汤力水",
+      "en": "Tonic Water",
+      "category": "soda",
+      "abv": 0,
+      "pack": 500
+    },
+    {
+      "id": "ginger_beer",
+      "zh": "姜汁啤酒",
+      "en": "Ginger Beer",
+      "category": "soda",
+      "abv": 0,
+      "pack": 330
+    },
+    {
+      "id": "cranberry_juice",
+      "zh": "蔓越莓汁",
+      "en": "Cranberry Juice",
+      "category": "juice",
+      "abv": 0,
+      "pack": 1000
+    },
+    {
+      "id": "pineapple_juice",
+      "zh": "菠萝汁",
+      "en": "Pineapple Juice",
+      "category": "juice",
+      "abv": 0,
+      "pack": 1000
+    },
+    {
+      "id": "lemon_juice",
+      "zh": "柠檬汁",
+      "en": "Lemon Juice",
+      "category": "juice",
+      "abv": 0,
+      "pack": 500
+    },
+    {
+      "id": "simple_syrup",
+      "zh": "糖浆",
+      "en": "Simple Syrup",
+      "category": "other",
+      "abv": 0,
+      "pack": 500
+    },
+    {
+      "id": "cream",
+      "zh": "淡奶油",
+      "en": "Cream",
+      "category": "dairy",
+      "abv": 0,
+      "pack": 250
+    },
+    {
+      "id": "coffee",
+      "zh": "咖啡",
+      "en": "Coffee",
+      "category": "other",
+      "abv": 0,
+      "pack": 500
+    },
+    {
+      "id": "lemon",
+      "zh": "柠檬",
+      "en": "Lemon",
+      "category": "fruit",
+      "abv": 0,
+      "pack": 1,
+      "unit": "piece"
+    },
+    {
+      "id": "lime",
+      "zh": "青柠",
+      "en": "Lime",
+      "category": "fruit",
+      "abv": 0,
+      "pack": 1,
+      "unit": "piece"
+    },
+    {
+      "id": "mint",
+      "zh": "薄荷叶",
+      "en": "Mint Leaves",
+      "category": "fruit",
+      "abv": 0,
+      "pack": 10,
+      "unit": "piece"
+    },
+    {
+      "id": "frozen_grapes",
+      "zh": "葡萄冰",
+      "en": "Frozen Grapes",
+      "category": "fruit",
+      "abv": 0,
+      "pack": 20,
+      "unit": "piece"
+    },
+    {
+      "id": "olive",
+      "zh": "橄榄",
+      "en": "Olive",
+      "category": "fruit",
+      "abv": 0,
+      "pack": 1,
+      "unit": "piece"
+    },
+    {
+      "id": "orange_slice",
+      "zh": "橙片",
+      "en": "Orange Slice",
+      "category": "fruit",
+      "abv": 0,
+      "pack": 1,
+      "unit": "piece"
+    },
+    {
+      "id": "salt",
+      "zh": "盐",
+      "en": "Salt",
+      "category": "other",
+      "abv": 0,
+      "pack": 500,
+      "unit": "g"
+    },
+    {
+      "id": "sugar_cube",
+      "zh": "方糖",
+      "en": "Sugar Cube",
+      "category": "other",
+      "abv": 0,
+      "pack": 1,
+      "unit": "piece"
+    },
+    {
+      "id": "angostura",
+      "zh": "安格斯特拉苦精",
+      "en": "Angostura Bitters",
+      "category": "other",
+      "abv": 44.7,
+      "pack": 200
+    },
+    {
+      "id": "egg_white",
+      "zh": "蛋清",
+      "en": "Egg White",
+      "category": "other",
+      "abv": 0,
+      "pack": 30
+    },
+    {
+      "id": "ice",
+      "zh": "冰块",
+      "en": "Ice",
+      "category": "other",
+      "abv": 0,
+      "pack": 1,
+      "unit": "portion"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "warmth-snowy-night",
+      "rating": "S",
+      "name": {
+        "zh": "雪夜温情",
+        "en": "Warmth on a Snowy Night"
+      },
+      "origin": "personal",
+      "base": [
+        "baileys"
+      ],
+      "taste": [
+        "sweet",
+        "creamy"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#39252b",
+        "#b88c69"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "baileys",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "assam_jasmine_milk_tea",
+          "amount": 90,
+          "unit": "ml",
+          "optional": false
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中加入百利甜。",
+          "加入阿萨姆茉莉奶绿，轻轻搅匀后饮用。"
+        ],
+        "en": [
+          "Add Baileys to the glass.",
+          "Pour in the Assam jasmine milk tea and stir gently."
+        ]
+      },
+      "description": {
+        "zh": "奶香与茶香交叠，像雪夜里的一盏暖灯。",
+        "en": "Creamy, tea-forward and comforting—like a warm light on a snowy night."
+      },
+      "sourceText": "百利甜30+阿萨姆茉莉奶绿90"
+    },
+    {
+      "id": "brandy-cola",
+      "rating": "D",
+      "name": {
+        "zh": "可乐白兰地",
+        "en": "Brandy & Cola"
+      },
+      "origin": "personal",
+      "base": [
+        "brandy"
+      ],
+      "taste": [
+        "sweet",
+        "fresh"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#241515",
+        "#8b542f"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "brandy",
+          "amount": 50,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "cola",
+          "topUp": true,
+          "unit": "top"
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中装入冰块并加入白兰地。",
+          "用可乐补满，轻轻搅拌。"
+        ],
+        "en": [
+          "Fill the glass with ice and add brandy.",
+          "Top with cola and stir gently."
+        ]
+      },
+      "description": {
+        "zh": "直接、浓郁，适合想要快速完成的一杯。",
+        "en": "A direct, rich highball for an effortless home pour."
+      },
+      "sourceText": "白兰地50+可乐补满",
+      "ice": "full"
+    },
+    {
+      "id": "green-kumquat-brandy",
+      "rating": "S",
+      "name": {
+        "zh": "青桔白兰地",
+        "en": "Green Kumquat Brandy"
+      },
+      "origin": "personal",
+      "base": [
+        "brandy"
+      ],
+      "taste": [
+        "citrus",
+        "fresh"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#273326",
+        "#b89144"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "brandy",
+          "amount": 35,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "waterc_green_kumquat",
+          "amount": 100,
+          "unit": "ml",
+          "optional": false
+        }
+      ],
+      "steps": {
+        "zh": [
+          "加入白兰地与冰块。",
+          "倒入水溶C青桔，轻轻搅匀。"
+        ],
+        "en": [
+          "Add brandy and ice.",
+          "Pour in Water-C green kumquat and stir gently."
+        ]
+      },
+      "description": {
+        "zh": "青桔的清亮酸香，让白兰地更轻快。",
+        "en": "Bright kumquat acidity gives brandy a lighter, fresher profile."
+      },
+      "sourceText": "白兰地35+水溶C青桔100",
+      "ice": "full"
+    },
+    {
+      "id": "crimson-mary-dawn",
+      "rating": "S",
+      "name": {
+        "zh": "血腥玛丽（破晓特调版）",
+        "en": "Crimson Mary · Dawn's Special"
+      },
+      "origin": "personal",
+      "base": [
+        "jagermeister"
+      ],
+      "taste": [
+        "sweet",
+        "fruity",
+        "strong"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#401421",
+        "#a54258"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "jagermeister",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "grape_juice",
+          "amount": 90,
+          "unit": "ml",
+          "optional": false
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中加入野格和冰块。",
+          "倒入葡萄汁并搅匀。"
+        ],
+        "en": [
+          "Add Jägermeister and ice to the glass.",
+          "Pour in grape juice and stir."
+        ]
+      },
+      "description": {
+        "zh": "不是传统番茄版，而是野格与葡萄汁构成的破晓原创版本。",
+        "en": "A Dawn's Dew original—Jägermeister and grape juice rather than the classic tomato profile."
+      },
+      "sourceText": "野格30+葡萄汁90",
+      "ice": "full",
+      "aliases": [
+        "血腥玛丽"
+      ]
+    },
+    {
+      "id": "sunset-drive",
+      "rating": "",
+      "name": {
+        "zh": "落日飞车",
+        "en": "Sunset Drive"
+      },
+      "origin": "personal",
+      "base": [
+        "white_rum"
+      ],
+      "taste": [
+        "fruity",
+        "sparkling"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#da6b43",
+        "#83365d"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "white_rum",
+          "amount": 50,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "orange_juice",
+          "fillTo": 0.8,
+          "unit": "fill"
+        },
+        {
+          "id": "grape_soda",
+          "topUp": true,
+          "unit": "top"
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中装满冰块，加入白朗姆。",
+          "加入橙汁至约八分满。",
+          "用葡萄味汽水补满，轻轻提拉混合。"
+        ],
+        "en": [
+          "Fill the glass with ice and add white rum.",
+          "Pour orange juice to roughly eight-tenths full.",
+          "Top with grape soda and lift gently to mix."
+        ]
+      },
+      "description": {
+        "zh": "橙色落日与紫色气泡相遇，是一杯有速度感的果香高球。",
+        "en": "Orange sunset meets purple fizz in a fast, fruit-forward highball."
+      },
+      "sourceText": "橙汁八分，白朗姆50，葡萄味汽水补满",
+      "ice": "full"
+    },
+    {
+      "id": "mirror-of-sky",
+      "rating": "",
+      "name": {
+        "zh": "天空之境",
+        "en": "Mirror of the Sky"
+      },
+      "origin": "personal",
+      "base": [
+        "white_rum"
+      ],
+      "taste": [
+        "citrus",
+        "sparkling",
+        "fresh"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#3c88a2",
+        "#9e7cc2"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "white_rum",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "waterc_grapefruit",
+          "fillTo": 0.8,
+          "unit": "fill"
+        },
+        {
+          "id": "jasmine_peach_fanta",
+          "topUp": true,
+          "unit": "top"
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中加入满冰和白朗姆。",
+          "加入水溶C西柚至八分满。",
+          "用芬达茉莉蜜桃补满。"
+        ],
+        "en": [
+          "Add a full glass of ice and white rum.",
+          "Pour Water-C grapefruit to eight-tenths full.",
+          "Top with jasmine peach Fanta."
+        ]
+      },
+      "description": {
+        "zh": "西柚的微苦与蜜桃茉莉气泡交织，呈现清透天空感。",
+        "en": "Grapefruit bitterness and peach-jasmine fizz create a clear, sky-like finish."
+      },
+      "sourceText": "白朗姆30ml，水溶C西柚八分，茉莉蜜桃芬达补满",
+      "ice": "full"
+    },
+    {
+      "id": "first-love",
+      "rating": "",
+      "name": {
+        "zh": "初恋",
+        "en": "First Love"
+      },
+      "origin": "personal",
+      "base": [
+        "white_rum"
+      ],
+      "taste": [
+        "citrus",
+        "sweet",
+        "sparkling"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#f2c48d",
+        "#a55c8d"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "white_rum",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "waterc_lemon",
+          "fillTo": 0.6,
+          "unit": "fill"
+        },
+        {
+          "id": "grape_soda",
+          "topUp": true,
+          "unit": "top"
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中加入冰块与白朗姆。",
+          "加入水溶C柠檬至六分满。",
+          "用葡萄味汽水补满。"
+        ],
+        "en": [
+          "Add ice and white rum.",
+          "Pour Water-C lemon to six-tenths full.",
+          "Top with grape soda."
+        ]
+      },
+      "description": {
+        "zh": "酸甜轻盈，紫色气泡带来初次心动般的明快。",
+        "en": "Lightly sweet and tart, with purple fizz and a first-flutter brightness."
+      },
+      "sourceText": "水溶C柠檬六分，白朗姆30ml，葡萄味气泡补满",
+      "ice": "full"
+    },
+    {
+      "id": "evening-glow",
+      "rating": "",
+      "name": {
+        "zh": "晚霞",
+        "en": "Evening Glow"
+      },
+      "origin": "personal",
+      "base": [
+        "white_rum"
+      ],
+      "taste": [
+        "fruity",
+        "citrus"
+      ],
+      "difficulty": "beginner",
+      "colors": [
+        "#d75e4e",
+        "#ecaa6c"
+      ],
+      "glassCapacity": 300,
+      "method": "shake",
+      "ingredients": [
+        {
+          "id": "waterc_green_orange",
+          "fillTo": 0.8,
+          "unit": "fill"
+        },
+        {
+          "id": "white_rum",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "berry_peach",
+          "amount": 60,
+          "unit": "ml",
+          "optional": false
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中加入冰块和水溶C青皮橘至八分满。",
+          "将白朗姆与莓莓桃桃加冰摇匀。",
+          "把摇匀后的酒液加入杯中，形成晚霞层次。"
+        ],
+        "en": [
+          "Add ice and Water-C green orange to eight-tenths full.",
+          "Shake white rum and berry peach drink with ice.",
+          "Pour the shaken mixture into the glass for a layered sunset effect."
+        ]
+      },
+      "description": {
+        "zh": "橘色基底与莓桃色泽交叠，像天边缓慢铺开的晚霞。",
+        "en": "Orange citrus and berry-peach tones layer like a slowly spreading evening sky."
+      },
+      "sourceText": "水溶C青皮橘八分，白朗姆30ml莓莓桃桃60 shake加入",
+      "ice": "full"
+    },
+    {
+      "id": "california-love",
+      "rating": "",
+      "name": {
+        "zh": "加州之恋",
+        "en": "California Love"
+      },
+      "origin": "personal",
+      "base": [
+        "white_rum"
+      ],
+      "taste": [
+        "citrus",
+        "fresh",
+        "sparkling"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#e38b46",
+        "#efc267"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "white_rum",
+          "amount": 45,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "orange_juice",
+          "amount": 90,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "lemon_juice",
+          "amount": 10,
+          "unit": "ml",
+          "optional": true
+        },
+        {
+          "id": "soda_water",
+          "topUp": true,
+          "unit": "top"
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中加满冰块，加入白朗姆和橙汁。",
+          "按口味挤入少量柠檬汁。",
+          "用气泡水补满并轻搅。"
+        ],
+        "en": [
+          "Fill the glass with ice, then add white rum and orange juice.",
+          "Add a little lemon juice to taste.",
+          "Top with soda water and stir gently."
+        ]
+      },
+      "description": {
+        "zh": "明亮柑橘与气泡感，像加州午后的阳光。",
+        "en": "Bright citrus and bubbles with the warmth of a California afternoon."
+      },
+      "sourceText": "橙汁90，白朗姆45，柠檬，气泡水补满",
+      "ice": "full"
+    },
+    {
+      "id": "cuba-libre-dawn",
+      "rating": "",
+      "name": {
+        "zh": "自由古巴（破晓特调版）",
+        "en": "Cuba Libre · Dawn's Special"
+      },
+      "origin": "personal",
+      "base": [
+        "white_rum"
+      ],
+      "taste": [
+        "citrus",
+        "sweet",
+        "sparkling"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#231611",
+        "#9b5333"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "white_rum",
+          "amount": 50,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "lime_juice",
+          "amount": 15,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "cola",
+          "amount": 180,
+          "unit": "ml",
+          "optional": false
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中加满冰块，倒入白朗姆和青柠汁。",
+          "加入可乐，轻轻搅拌。"
+        ],
+        "en": [
+          "Fill the glass with ice and add white rum and lime juice.",
+          "Add cola and stir gently."
+        ]
+      },
+      "description": {
+        "zh": "更明确的青柠比例，让经典组合更鲜明。",
+        "en": "A lime-forward personal take on the familiar rum-and-cola classic."
+      },
+      "sourceText": "可乐180，青柠15，白朗姆50",
+      "ice": "full",
+      "aliases": [
+        "自由古巴",
+        "Cuba Libre"
+      ]
+    },
+    {
+      "id": "amnesia",
+      "rating": "",
+      "name": {
+        "zh": "失忆",
+        "en": "Amnesia"
+      },
+      "origin": "personal",
+      "base": [
+        "white_rum",
+        "blue_curacao"
+      ],
+      "taste": [
+        "citrus",
+        "fruity",
+        "strong"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#18788e",
+        "#cd5a3d"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "white_rum",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "blue_curacao",
+          "amount": 15,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "waterc_blood_orange",
+          "fillTo": 0.8,
+          "unit": "fill"
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中加入冰块、白朗姆和蓝橙力娇酒。",
+          "加入水溶C血橙至八分满，轻轻搅匀。"
+        ],
+        "en": [
+          "Add ice, white rum and blue curaçao.",
+          "Pour Water-C blood orange to eight-tenths full and stir gently."
+        ]
+      },
+      "description": {
+        "zh": "蓝橙与血橙在杯中交错，色彩醒目、果香直接。",
+        "en": "Blue curaçao and blood orange collide in a vivid, fruit-forward pour."
+      },
+      "sourceText": "白朗姆30，蓝橙15，水溶C血橙八分",
+      "ice": "full"
+    },
+    {
+      "id": "waters-oblivion",
+      "rating": "",
+      "name": {
+        "zh": "忘川水",
+        "en": "Waters of Oblivion"
+      },
+      "origin": "personal",
+      "base": [
+        "white_rum",
+        "vodka"
+      ],
+      "taste": [
+        "fruity",
+        "sparkling",
+        "strong"
+      ],
+      "difficulty": "beginner",
+      "colors": [
+        "#754e95",
+        "#db6a69"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "white_rum",
+          "amount": 15,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "vodka",
+          "amount": 15,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "jasmine_peach_fanta",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "sprite",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "waterc_blood_orange",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        }
+      ],
+      "steps": {
+        "zh": [
+          "加入白朗姆、伏特加和冰块。",
+          "依次加入芬达茉莉蜜桃、雪碧与水溶C血橙。",
+          "轻轻搅匀后饮用。"
+        ],
+        "en": [
+          "Add white rum, vodka and ice.",
+          "Pour in jasmine peach Fanta, Sprite and Water-C blood orange.",
+          "Stir gently."
+        ]
+      },
+      "description": {
+        "zh": "多种果味与双基酒交织，入口轻快但酒体不可低估。",
+        "en": "Layered fruit flavors hide a dual-spirit base—bright, but not lightweight."
+      },
+      "sourceText": "白朗姆15，伏特加15，芬达茉莉蜜桃+雪碧+水溶C血橙各30",
+      "ice": "full"
+    },
+    {
+      "id": "untitled-blue-coconut",
+      "rating": "",
+      "name": {
+        "zh": "未命名",
+        "en": "Untitled"
+      },
+      "origin": "personal",
+      "base": [
+        "white_rum",
+        "blue_curacao"
+      ],
+      "taste": [
+        "creamy",
+        "sweet"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#2e87a2",
+        "#e7e3d6"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "white_rum",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "blue_curacao",
+          "amount": 15,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "coconut_milk",
+          "fillTo": 0.8,
+          "unit": "fill"
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中加入冰块、白朗姆和蓝橙力娇酒。",
+          "加入椰汁至八分满并轻轻搅匀。"
+        ],
+        "en": [
+          "Add ice, white rum and blue curaçao.",
+          "Pour coconut drink to eight-tenths full and stir gently."
+        ]
+      },
+      "description": {
+        "zh": "蓝色热带感与柔和椰香结合，暂时保留它的未命名状态。",
+        "en": "A blue tropical pour softened by coconut, deliberately left untitled for now."
+      },
+      "sourceText": "椰汁八分，蓝橙15+白朗姆30",
+      "ice": "full"
+    },
+    {
+      "id": "absolute-sunset",
+      "rating": "S+",
+      "name": {
+        "zh": "绝对日落",
+        "en": "Absolute Sunset"
+      },
+      "origin": "personal",
+      "base": [
+        "vodka"
+      ],
+      "taste": [
+        "fruity",
+        "sparkling"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#f19a4c",
+        "#713a86"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "vodka",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "orange_juice",
+          "amount": 60,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "grape_soda",
+          "topUp": true,
+          "unit": "top"
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中加冰并倒入伏特加。",
+          "加入橙汁，再用葡萄味汽水补满。",
+          "轻轻提拉一次，让颜色自然交融。"
+        ],
+        "en": [
+          "Add ice and vodka.",
+          "Pour in orange juice and top with grape soda.",
+          "Lift once gently to let the colors meet naturally."
+        ]
+      },
+      "description": {
+        "zh": "橙紫渐变鲜明，是个人评级最高的一杯之一。",
+        "en": "A vivid orange-to-purple gradient and one of the highest-rated personal pours."
+      },
+      "sourceText": "伏特加30，橙汁60，葡萄味汽水补满",
+      "ice": "full"
+    },
+    {
+      "id": "verdant-ballad",
+      "rating": "",
+      "name": {
+        "zh": "青青子吟",
+        "en": "Verdant Ballad"
+      },
+      "origin": "personal",
+      "base": [
+        "vodka"
+      ],
+      "taste": [
+        "citrus",
+        "fresh",
+        "sparkling"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#9cbf4e",
+        "#e4d66b"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "vodka",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "waterc_lemon",
+          "fillTo": 0.6,
+          "unit": "fill"
+        },
+        {
+          "id": "green_apple_fanta",
+          "topUp": true,
+          "unit": "top"
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中加入冰块和伏特加。",
+          "加入水溶C柠檬至六分满。",
+          "用青苹果美年达补满。"
+        ],
+        "en": [
+          "Add ice and vodka.",
+          "Pour Water-C lemon to six-tenths full.",
+          "Top with green apple Mirinda."
+        ]
+      },
+      "description": {
+        "zh": "柠檬与青苹果形成清脆明亮的绿色果香。",
+        "en": "Lemon and green apple create a crisp, bright green-fruit profile."
+      },
+      "sourceText": "伏特加30ml，水溶C柠檬六分，青苹果美年达补满",
+      "ice": "full"
+    },
+    {
+      "id": "magic-potion",
+      "rating": "B",
+      "name": {
+        "zh": "魔法药水",
+        "en": "Magic Potion"
+      },
+      "origin": "personal",
+      "base": [
+        "vodka"
+      ],
+      "taste": [
+        "sweet",
+        "creamy",
+        "fruity"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#6d2e7b",
+        "#d489b3"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "vodka",
+          "amount": 45,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "yakult",
+          "amount": 100,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "grape_juice",
+          "fillTo": 0.8,
+          "unit": "fill"
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中加入伏特加与一瓶养乐多。",
+          "加入葡萄汁至八分满。",
+          "充分搅匀，按需加冰。"
+        ],
+        "en": [
+          "Add vodka and one bottle of Yakult.",
+          "Pour grape juice to eight-tenths full.",
+          "Mix thoroughly and add ice if desired."
+        ]
+      },
+      "description": {
+        "zh": "乳酸甜感与葡萄果味组成一杯颜色浓郁的便利店魔法。",
+        "en": "A convenience-store spell of tangy cultured milk and rich grape fruitiness."
+      },
+      "sourceText": "养乐多一瓶，葡萄汁八分，伏特加45ml"
+    },
+    {
+      "id": "peach-blossom-luck",
+      "rating": "",
+      "name": {
+        "zh": "桃花运",
+        "en": "Peach Blossom Luck"
+      },
+      "origin": "personal",
+      "base": [
+        "vodka"
+      ],
+      "taste": [
+        "sweet",
+        "creamy",
+        "fruity"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#dc708a",
+        "#f0b4b4"
+      ],
+      "glassCapacity": 300,
+      "method": "shake",
+      "ingredients": [
+        {
+          "id": "vodka",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "yakult",
+          "amount": 100,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "berry_peach",
+          "amount": 50,
+          "unit": "ml",
+          "optional": false
+        }
+      ],
+      "steps": {
+        "zh": [
+          "加入伏特加、益力多和莓莓桃桃。",
+          "加冰后充分搅匀，或短暂摇和后倒入杯中。"
+        ],
+        "en": [
+          "Combine vodka, Yakult and berry peach drink.",
+          "Stir well over ice, or shake briefly and strain into the glass."
+        ]
+      },
+      "description": {
+        "zh": "桃香、莓果和乳酸甜感，柔和讨喜。",
+        "en": "Peach, berry and cultured-milk sweetness in a soft, crowd-friendly mix."
+      },
+      "sourceText": "益力多100，莓桃汁50，伏特加30"
+    },
+    {
+      "id": "violet-hibiscus",
+      "rating": "",
+      "name": {
+        "zh": "紫韵芙蓉",
+        "en": "Violet Hibiscus"
+      },
+      "origin": "personal",
+      "base": [
+        "vodka"
+      ],
+      "taste": [
+        "creamy",
+        "fruity",
+        "sweet"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#6d3f76",
+        "#dfc5cc"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "vodka",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "coconut_milk",
+          "amount": 100,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "grape_juice",
+          "amount": 100,
+          "unit": "ml",
+          "optional": false
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中加入伏特加、椰汁与葡萄汁。",
+          "加入冰块并充分搅匀。"
+        ],
+        "en": [
+          "Combine vodka, coconut drink and grape juice.",
+          "Add ice and mix thoroughly."
+        ]
+      },
+      "description": {
+        "zh": "椰香柔化葡萄的深色果味，口感饱满。",
+        "en": "Coconut softens deep grape fruit, creating a round and full-bodied drink."
+      },
+      "sourceText": "伏特加30，椰汁100，葡萄汁100"
+    },
+    {
+      "id": "longing-to-see-you",
+      "rating": "",
+      "name": {
+        "zh": "想见你",
+        "en": "Longing to See You"
+      },
+      "origin": "personal",
+      "base": [
+        "vodka"
+      ],
+      "taste": [
+        "fruity",
+        "citrus",
+        "sparkling"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#745191",
+        "#db8f75"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "vodka",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "grape_soda",
+          "amount": 100,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "waterc_grapefruit",
+          "amount": 50,
+          "unit": "ml",
+          "optional": false
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中加冰并倒入伏特加。",
+          "加入葡萄味汽水与水溶C西柚，轻轻搅匀。"
+        ],
+        "en": [
+          "Add ice and vodka.",
+          "Pour in grape soda and Water-C grapefruit, then stir gently."
+        ]
+      },
+      "description": {
+        "zh": "葡萄的甜与西柚的微苦，像想念里并存的甜涩。",
+        "en": "Sweet grape and bittersweet grapefruit echo the mixed edges of longing."
+      },
+      "sourceText": "伏特加30，葡萄味汽水100，水溶C西柚50",
+      "ice": "full"
+    },
+    {
+      "id": "possession",
+      "rating": "",
+      "name": {
+        "zh": "占有欲",
+        "en": "Possession"
+      },
+      "origin": "personal",
+      "base": [
+        "vodka"
+      ],
+      "taste": [
+        "fruity",
+        "citrus",
+        "strong"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#812f49",
+        "#dfb35e"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "vodka",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "grape_juice",
+          "amount": 50,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "waterc_lemon",
+          "amount": 100,
+          "unit": "ml",
+          "optional": false
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中加入伏特加与冰块。",
+          "加入葡萄汁和水溶C柠檬，搅匀。"
+        ],
+        "en": [
+          "Add vodka and ice.",
+          "Pour in grape juice and Water-C lemon, then stir."
+        ]
+      },
+      "description": {
+        "zh": "葡萄的浓甜被柠檬酸感紧紧收住，轮廓清晰。",
+        "en": "Rich grape sweetness is held tightly by lemon acidity for a sharply defined profile."
+      },
+      "sourceText": "伏特加30，葡萄汁50，水溶C柠檬100",
+      "ice": "full"
+    },
+    {
+      "id": "emerald-wonderland",
+      "rating": "",
+      "name": {
+        "zh": "绿野仙踪",
+        "en": "Emerald Wonderland"
+      },
+      "origin": "personal",
+      "base": [
+        "vodka"
+      ],
+      "taste": [
+        "citrus",
+        "fresh",
+        "fruity"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#526d42",
+        "#b7cf68"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "vodka",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "frozen_grapes",
+          "amount": 6,
+          "unit": "piece",
+          "optional": false
+        },
+        {
+          "id": "waterc_lemon",
+          "amount": 100,
+          "unit": "ml",
+          "optional": false
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中放入六颗葡萄冰。",
+          "加入伏特加与水溶C柠檬，轻轻搅动。"
+        ],
+        "en": [
+          "Place six frozen grapes in the glass.",
+          "Add vodka and Water-C lemon, then stir gently."
+        ]
+      },
+      "description": {
+        "zh": "葡萄冰代替普通冰块，随着融化逐渐增加果味。",
+        "en": "Frozen grapes replace ordinary ice, slowly deepening the fruit character as they soften."
+      },
+      "sourceText": "伏特加30，葡萄冰6颗，水溶C柠檬100"
+    },
+    {
+      "id": "orange-sea",
+      "rating": "",
+      "name": {
+        "zh": "橘子海",
+        "en": "Orange Sea"
+      },
+      "origin": "personal",
+      "base": [
+        "vodka"
+      ],
+      "taste": [
+        "fruity",
+        "fresh",
+        "coconut"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#dc7742",
+        "#f1cb84"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "vodka",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "orange_juice",
+          "amount": 60,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "coconut_water",
+          "amount": 60,
+          "unit": "ml",
+          "optional": false
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中加入冰块和伏特加。",
+          "加入橙汁与椰子水，轻轻搅匀。"
+        ],
+        "en": [
+          "Add ice and vodka.",
+          "Pour in orange juice and coconut water, then stir gently."
+        ]
+      },
+      "description": {
+        "zh": "橙香与椰子水清爽融合，像阳光落在海面。",
+        "en": "Orange and coconut water meet in a light, sunlit seaside profile."
+      },
+      "sourceText": "橙汁60，椰子水60，伏特加30",
+      "ice": "full"
+    },
+    {
+      "id": "heartbeat",
+      "rating": "",
+      "name": {
+        "zh": "怦然心动",
+        "en": "Heartbeat"
+      },
+      "origin": "personal",
+      "base": [
+        "vodka"
+      ],
+      "taste": [
+        "sweet",
+        "fruity",
+        "sparkling"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#d9647f",
+        "#f1aa97"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "vodka",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "berry_peach",
+          "fillTo": 0.5,
+          "unit": "fill"
+        },
+        {
+          "id": "peach_sparkling_water",
+          "topUp": true,
+          "unit": "top"
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中加入冰块与伏特加。",
+          "加入莓莓桃桃至五分满。",
+          "用蜜桃气泡水补满。"
+        ],
+        "en": [
+          "Add ice and vodka.",
+          "Pour berry peach drink to halfway.",
+          "Top with peach sparkling water."
+        ]
+      },
+      "description": {
+        "zh": "轻柔莓桃果香配上细密气泡，是一杯没有压力的心动。",
+        "en": "Soft berry-peach fruit and fine bubbles make an easygoing first flutter."
+      },
+      "sourceText": "伏特加30，莓莓桃桃五分，蜜桃气泡水补满",
+      "ice": "full"
+    },
+    {
+      "id": "manchester-by-sea",
+      "rating": "",
+      "name": {
+        "zh": "海边的曼切斯特",
+        "en": "Manchester by the Sea"
+      },
+      "origin": "personal",
+      "base": [
+        "vodka",
+        "blue_curacao"
+      ],
+      "taste": [
+        "fresh",
+        "citrus",
+        "sparkling"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#176f91",
+        "#79bed1"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "vodka",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "blue_curacao",
+          "amount": 25,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "soda_water",
+          "topUp": true,
+          "unit": "top"
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中加满冰块，倒入伏特加和蓝橙力娇酒。",
+          "用气泡水补满，轻轻搅匀。"
+        ],
+        "en": [
+          "Fill the glass with ice and add vodka and blue curaçao.",
+          "Top with soda water and stir gently."
+        ]
+      },
+      "description": {
+        "zh": "蓝色酒液、清透气泡与克制甜度，带着冷静的海岸感。",
+        "en": "Blue spirit, clear bubbles and restrained sweetness evoke a cool, quiet coast."
+      },
+      "sourceText": "伏特加30，蓝橙25，气泡水补满",
+      "ice": "full"
+    },
+    {
+      "id": "poison",
+      "rating": "",
+      "name": {
+        "zh": "毒药",
+        "en": "Poison"
+      },
+      "origin": "personal",
+      "base": [
+        "vodka",
+        "blue_curacao"
+      ],
+      "taste": [
+        "sweet",
+        "fruity",
+        "strong"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#26317d",
+        "#7e274c"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "vodka",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "blue_curacao",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "grape_juice",
+          "amount": 15,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "sprite",
+          "fillTo": 0.8,
+          "unit": "fill"
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中加入冰块、伏特加、蓝橙力娇酒和葡萄汁。",
+          "加入雪碧至八分满，轻轻搅匀。"
+        ],
+        "en": [
+          "Add ice, vodka, blue curaçao and grape juice.",
+          "Pour Sprite to eight-tenths full and stir gently."
+        ]
+      },
+      "description": {
+        "zh": "颜色迷人、甜味易饮，但双重酒基需要慢饮。",
+        "en": "Visually inviting and easy to sip, but its dual alcoholic base deserves a slower pace."
+      },
+      "sourceText": "伏特加30+蓝橙30+葡萄汁15+雪碧八分",
+      "ice": "full"
+    },
+    {
+      "id": "classic-mojito",
+      "rating": "",
+      "name": {
+        "zh": "莫吉托",
+        "en": "Mojito"
+      },
+      "origin": "classic",
+      "base": [
+        "white_rum"
+      ],
+      "taste": [
+        "citrus",
+        "fresh",
+        "sparkling"
+      ],
+      "difficulty": "beginner",
+      "colors": [
+        "#466a42",
+        "#b6ce78"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "white_rum",
+          "amount": 45,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "lime_juice",
+          "amount": 20,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "simple_syrup",
+          "amount": 15,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "mint",
+          "amount": 8,
+          "unit": "piece",
+          "optional": false
+        },
+        {
+          "id": "soda_water",
+          "topUp": true,
+          "unit": "top"
+        }
+      ],
+      "steps": {
+        "zh": [
+          "轻拍薄荷后放入杯中，加入青柠汁与糖浆。",
+          "加入白朗姆和碎冰，搅匀后用气泡水补满。"
+        ],
+        "en": [
+          "Gently clap the mint and add it with lime juice and syrup.",
+          "Add white rum and crushed ice, stir, then top with soda water."
+        ]
+      },
+      "description": {
+        "zh": "薄荷、青柠与朗姆构成清爽明亮的经典长饮。",
+        "en": "Mint, lime and rum form a bright, refreshing classic long drink."
+      },
+      "ice": "full"
+    },
+    {
+      "id": "classic-daiquiri",
+      "rating": "",
+      "name": {
+        "zh": "得其利",
+        "en": "Daiquiri"
+      },
+      "origin": "classic",
+      "base": [
+        "white_rum"
+      ],
+      "taste": [
+        "citrus",
+        "fresh",
+        "strong"
+      ],
+      "difficulty": "beginner",
+      "colors": [
+        "#d7c46d",
+        "#eff0bd"
+      ],
+      "glassCapacity": 300,
+      "method": "shake",
+      "ingredients": [
+        {
+          "id": "white_rum",
+          "amount": 60,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "lime_juice",
+          "amount": 25,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "simple_syrup",
+          "amount": 15,
+          "unit": "ml",
+          "optional": false
+        }
+      ],
+      "steps": {
+        "zh": [
+          "所有材料加入装冰的摇酒壶。",
+          "充分摇匀后滤入冰镇杯中。"
+        ],
+        "en": [
+          "Add all ingredients to an ice-filled shaker.",
+          "Shake well and strain into a chilled glass."
+        ]
+      },
+      "description": {
+        "zh": "结构简洁，却能清楚展现朗姆、酸度与甜度的平衡。",
+        "en": "A concise balance of rum, acidity and sweetness."
+      }
+    },
+    {
+      "id": "classic-margarita",
+      "rating": "",
+      "name": {
+        "zh": "玛格丽特",
+        "en": "Margarita"
+      },
+      "origin": "classic",
+      "base": [
+        "tequila",
+        "triple_sec"
+      ],
+      "taste": [
+        "citrus",
+        "strong"
+      ],
+      "difficulty": "beginner",
+      "colors": [
+        "#b9a94c",
+        "#e7dd91"
+      ],
+      "glassCapacity": 300,
+      "method": "shake",
+      "ingredients": [
+        {
+          "id": "tequila",
+          "amount": 50,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "triple_sec",
+          "amount": 25,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "lime_juice",
+          "amount": 25,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "salt",
+          "amount": 1,
+          "unit": "piece",
+          "optional": true
+        }
+      ],
+      "steps": {
+        "zh": [
+          "可选：用青柠湿润杯口并蘸盐。",
+          "其余材料加冰摇匀，滤入杯中。"
+        ],
+        "en": [
+          "Optional: moisten the rim with lime and coat it with salt.",
+          "Shake the remaining ingredients with ice and strain."
+        ]
+      },
+      "description": {
+        "zh": "龙舌兰、橙香与青柠组成鲜明有力的酸甜骨架。",
+        "en": "Tequila, orange and lime create a vivid, assertive sour profile."
+      }
+    },
+    {
+      "id": "classic-whiskey-sour",
+      "rating": "",
+      "name": {
+        "zh": "威士忌酸",
+        "en": "Whiskey Sour"
+      },
+      "origin": "classic",
+      "base": [
+        "whiskey"
+      ],
+      "taste": [
+        "citrus",
+        "sweet",
+        "strong"
+      ],
+      "difficulty": "beginner",
+      "colors": [
+        "#a85f2a",
+        "#e8c57c"
+      ],
+      "glassCapacity": 300,
+      "method": "shake",
+      "ingredients": [
+        {
+          "id": "whiskey",
+          "amount": 60,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "lemon_juice",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "simple_syrup",
+          "amount": 20,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "egg_white",
+          "amount": 20,
+          "unit": "ml",
+          "optional": true
+        }
+      ],
+      "steps": {
+        "zh": [
+          "可选蛋清与其余材料先无冰摇匀。",
+          "加入冰块再次摇匀，滤入装冰杯中。"
+        ],
+        "en": [
+          "If using egg white, dry-shake it with the other ingredients first.",
+          "Add ice, shake again, and strain over fresh ice."
+        ]
+      },
+      "description": {
+        "zh": "酸甜柔化威士忌棱角，可选蛋清带来绵密口感。",
+        "en": "Sweet and sour soften the whiskey; optional egg white adds a silky texture."
+      }
+    },
+    {
+      "id": "classic-old-fashioned",
+      "rating": "",
+      "name": {
+        "zh": "古典",
+        "en": "Old Fashioned"
+      },
+      "origin": "classic",
+      "base": [
+        "bourbon"
+      ],
+      "taste": [
+        "strong",
+        "bitter",
+        "sweet"
+      ],
+      "difficulty": "beginner",
+      "colors": [
+        "#6d321b",
+        "#d38a3f"
+      ],
+      "glassCapacity": 300,
+      "method": "stir",
+      "ingredients": [
+        {
+          "id": "bourbon",
+          "amount": 60,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "sugar_cube",
+          "amount": 1,
+          "unit": "piece",
+          "optional": false
+        },
+        {
+          "id": "angostura",
+          "amount": 3,
+          "unit": "piece",
+          "optional": false
+        },
+        {
+          "id": "orange_slice",
+          "amount": 1,
+          "unit": "piece",
+          "optional": true
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中放入方糖和苦精，压碎混合。",
+          "加入大冰块与波本，缓慢搅拌，可用橙片装饰。"
+        ],
+        "en": [
+          "Muddle the sugar cube with bitters in the glass.",
+          "Add a large ice cube and bourbon, stir slowly, and optionally garnish with orange."
+        ]
+      },
+      "description": {
+        "zh": "用糖与苦精轻微修饰威士忌本身，是经典短饮。",
+        "en": "Sugar and bitters lightly frame the whiskey in this classic short drink."
+      }
+    },
+    {
+      "id": "classic-negroni",
+      "rating": "",
+      "name": {
+        "zh": "尼格罗尼",
+        "en": "Negroni"
+      },
+      "origin": "classic",
+      "base": [
+        "gin",
+        "campari",
+        "sweet_vermouth"
+      ],
+      "taste": [
+        "bitter",
+        "strong",
+        "herbal"
+      ],
+      "difficulty": "beginner",
+      "colors": [
+        "#8b1f1f",
+        "#df5b34"
+      ],
+      "glassCapacity": 300,
+      "method": "stir",
+      "ingredients": [
+        {
+          "id": "gin",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "campari",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "sweet_vermouth",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "orange_slice",
+          "amount": 1,
+          "unit": "piece",
+          "optional": true
+        }
+      ],
+      "steps": {
+        "zh": [
+          "所有酒液加入装冰的杯中。",
+          "充分搅拌，可用橙片装饰。"
+        ],
+        "en": [
+          "Add all liquid ingredients to an ice-filled glass.",
+          "Stir well and optionally garnish with orange."
+        ]
+      },
+      "description": {
+        "zh": "等比例带来浓郁苦甜、草本和柑橘层次。",
+        "en": "Equal parts deliver a bold bittersweet, herbal and citrus profile."
+      }
+    },
+    {
+      "id": "classic-gin-tonic",
+      "rating": "",
+      "name": {
+        "zh": "金汤力",
+        "en": "Gin & Tonic"
+      },
+      "origin": "classic",
+      "base": [
+        "gin"
+      ],
+      "taste": [
+        "bitter",
+        "fresh",
+        "sparkling"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#48665f",
+        "#b8d2c8"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "gin",
+          "amount": 50,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "tonic_water",
+          "amount": 120,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "lime",
+          "amount": 1,
+          "unit": "piece",
+          "optional": true
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中装满冰块并加入金酒。",
+          "沿杯壁加入汤力水，轻搅，可用青柠装饰。"
+        ],
+        "en": [
+          "Fill the glass with ice and add gin.",
+          "Pour in tonic water, stir gently, and optionally garnish with lime."
+        ]
+      },
+      "description": {
+        "zh": "清爽、微苦且香气突出，是容易上手的经典高球。",
+        "en": "Crisp, lightly bitter and aromatic—an approachable classic highball."
+      },
+      "ice": "full"
+    },
+    {
+      "id": "classic-dry-martini",
+      "rating": "",
+      "name": {
+        "zh": "干马天尼",
+        "en": "Dry Martini"
+      },
+      "origin": "classic",
+      "base": [
+        "gin",
+        "dry_vermouth"
+      ],
+      "taste": [
+        "dry",
+        "strong",
+        "herbal"
+      ],
+      "difficulty": "advanced",
+      "colors": [
+        "#a8aa91",
+        "#e7e8cf"
+      ],
+      "glassCapacity": 300,
+      "method": "stir",
+      "ingredients": [
+        {
+          "id": "gin",
+          "amount": 60,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "dry_vermouth",
+          "amount": 10,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "olive",
+          "amount": 1,
+          "unit": "piece",
+          "optional": true
+        }
+      ],
+      "steps": {
+        "zh": [
+          "金酒与干味美思加冰搅拌至充分冰镇。",
+          "滤入冰镇杯中，可用橄榄装饰。"
+        ],
+        "en": [
+          "Stir gin and dry vermouth with ice until thoroughly chilled.",
+          "Strain into a chilled glass and optionally garnish with an olive."
+        ]
+      },
+      "description": {
+        "zh": "干爽、利落，以冰镇和稀释控制决定完成度。",
+        "en": "Dry and precise, with chilling and dilution defining the result."
+      }
+    },
+    {
+      "id": "classic-moscow-mule",
+      "rating": "",
+      "name": {
+        "zh": "莫斯科骡子",
+        "en": "Moscow Mule"
+      },
+      "origin": "classic",
+      "base": [
+        "vodka"
+      ],
+      "taste": [
+        "citrus",
+        "spicy",
+        "sparkling"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#806148",
+        "#d19b61"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "vodka",
+          "amount": 45,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "lime_juice",
+          "amount": 15,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "ginger_beer",
+          "amount": 120,
+          "unit": "ml",
+          "optional": false
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中装冰，加入伏特加与青柠汁。",
+          "加入姜汁啤酒并轻轻搅匀。"
+        ],
+        "en": [
+          "Fill the glass with ice and add vodka and lime juice.",
+          "Add ginger beer and stir gently."
+        ]
+      },
+      "description": {
+        "zh": "青柠的酸与姜的辛香让伏特加高球更有轮廓。",
+        "en": "Lime acidity and ginger spice give this vodka highball a clear edge."
+      },
+      "ice": "full"
+    },
+    {
+      "id": "classic-tequila-sunrise",
+      "rating": "",
+      "name": {
+        "zh": "龙舌兰日出",
+        "en": "Tequila Sunrise"
+      },
+      "origin": "classic",
+      "base": [
+        "tequila"
+      ],
+      "taste": [
+        "fruity",
+        "sweet"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#d64c32",
+        "#f5b24a"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "tequila",
+          "amount": 45,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "orange_juice",
+          "amount": 90,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "simple_syrup",
+          "amount": 10,
+          "unit": "ml",
+          "optional": false
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中加冰，加入龙舌兰与橙汁。",
+          "沿杯壁缓慢加入糖浆，保留自然渐层。"
+        ],
+        "en": [
+          "Add ice, tequila and orange juice to the glass.",
+          "Slowly pour syrup down the side to preserve a sunrise gradient."
+        ]
+      },
+      "description": {
+        "zh": "橙汁与渐层色彩带来直观的日出意象。",
+        "en": "Orange juice and a natural gradient create an immediate sunrise image."
+      },
+      "ice": "full"
+    },
+    {
+      "id": "classic-pina-colada",
+      "rating": "",
+      "name": {
+        "zh": "椰林飘香",
+        "en": "Piña Colada"
+      },
+      "origin": "classic",
+      "base": [
+        "white_rum"
+      ],
+      "taste": [
+        "sweet",
+        "creamy",
+        "coconut"
+      ],
+      "difficulty": "beginner",
+      "colors": [
+        "#d8b74f",
+        "#f4e5a5"
+      ],
+      "glassCapacity": 300,
+      "method": "shake",
+      "ingredients": [
+        {
+          "id": "white_rum",
+          "amount": 50,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "pineapple_juice",
+          "amount": 90,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "coconut_milk",
+          "amount": 40,
+          "unit": "ml",
+          "optional": false
+        }
+      ],
+      "steps": {
+        "zh": [
+          "所有材料与冰块加入摇酒壶或搅拌机。",
+          "摇匀或搅打后倒入杯中。"
+        ],
+        "en": [
+          "Add all ingredients and ice to a shaker or blender.",
+          "Shake or blend, then pour into the glass."
+        ]
+      },
+      "description": {
+        "zh": "菠萝与椰香浓郁柔滑，带有明确的热带气息。",
+        "en": "Pineapple and coconut create a rich, smooth tropical profile."
+      }
+    },
+    {
+      "id": "classic-cosmopolitan",
+      "rating": "",
+      "name": {
+        "zh": "大都会",
+        "en": "Cosmopolitan"
+      },
+      "origin": "classic",
+      "base": [
+        "vodka",
+        "triple_sec"
+      ],
+      "taste": [
+        "citrus",
+        "fruity",
+        "strong"
+      ],
+      "difficulty": "beginner",
+      "colors": [
+        "#a42d4f",
+        "#e87991"
+      ],
+      "glassCapacity": 300,
+      "method": "shake",
+      "ingredients": [
+        {
+          "id": "vodka",
+          "amount": 40,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "triple_sec",
+          "amount": 20,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "cranberry_juice",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "lime_juice",
+          "amount": 10,
+          "unit": "ml",
+          "optional": false
+        }
+      ],
+      "steps": {
+        "zh": [
+          "所有材料加冰充分摇匀。",
+          "滤入冰镇杯中。"
+        ],
+        "en": [
+          "Shake all ingredients thoroughly with ice.",
+          "Strain into a chilled glass."
+        ]
+      },
+      "description": {
+        "zh": "蔓越莓色泽明亮，酸甜与橙香包裹伏特加。",
+        "en": "Bright cranberry color, tart fruit and orange wrap around vodka."
+      }
+    },
+    {
+      "id": "classic-white-russian",
+      "rating": "",
+      "name": {
+        "zh": "白俄罗斯",
+        "en": "White Russian"
+      },
+      "origin": "classic",
+      "base": [
+        "vodka",
+        "coffee_liqueur"
+      ],
+      "taste": [
+        "sweet",
+        "creamy",
+        "coffee"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#4b342b",
+        "#ded2bd"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "vodka",
+          "amount": 40,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "coffee_liqueur",
+          "amount": 20,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "cream",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中加冰，加入伏特加与咖啡力娇酒。",
+          "缓慢加入淡奶油，饮用前按喜好搅匀。"
+        ],
+        "en": [
+          "Add ice, vodka and coffee liqueur to the glass.",
+          "Float in cream and stir to your preference before drinking."
+        ]
+      },
+      "description": {
+        "zh": "咖啡、奶油与伏特加构成浓郁顺滑的餐后风格。",
+        "en": "Coffee, cream and vodka make a rich, smooth after-dinner drink."
+      },
+      "ice": "full"
+    },
+    {
+      "id": "classic-manhattan",
+      "rating": "",
+      "name": {
+        "zh": "曼哈顿",
+        "en": "Manhattan"
+      },
+      "origin": "classic",
+      "base": [
+        "whiskey",
+        "sweet_vermouth"
+      ],
+      "taste": [
+        "strong",
+        "herbal",
+        "sweet"
+      ],
+      "difficulty": "advanced",
+      "colors": [
+        "#6d2920",
+        "#b75838"
+      ],
+      "glassCapacity": 300,
+      "method": "stir",
+      "ingredients": [
+        {
+          "id": "whiskey",
+          "amount": 60,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "sweet_vermouth",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "angostura",
+          "amount": 2,
+          "unit": "piece",
+          "optional": false
+        }
+      ],
+      "steps": {
+        "zh": [
+          "所有材料加冰搅拌至冰镇。",
+          "滤入冰镇杯中。"
+        ],
+        "en": [
+          "Stir all ingredients with ice until chilled.",
+          "Strain into a chilled glass."
+        ]
+      },
+      "description": {
+        "zh": "威士忌与甜味美思形成厚实、香料感明显的经典结构。",
+        "en": "Whiskey and sweet vermouth form a robust, spice-led classic."
+      }
+    },
+    {
+      "id": "classic-sidecar",
+      "rating": "",
+      "name": {
+        "zh": "边车",
+        "en": "Sidecar"
+      },
+      "origin": "classic",
+      "base": [
+        "brandy",
+        "triple_sec"
+      ],
+      "taste": [
+        "citrus",
+        "strong"
+      ],
+      "difficulty": "beginner",
+      "colors": [
+        "#a6552b",
+        "#e6aa5e"
+      ],
+      "glassCapacity": 300,
+      "method": "shake",
+      "ingredients": [
+        {
+          "id": "brandy",
+          "amount": 50,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "triple_sec",
+          "amount": 25,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "lemon_juice",
+          "amount": 25,
+          "unit": "ml",
+          "optional": false
+        }
+      ],
+      "steps": {
+        "zh": [
+          "所有材料加冰充分摇匀。",
+          "滤入冰镇杯中。"
+        ],
+        "en": [
+          "Shake all ingredients thoroughly with ice.",
+          "Strain into a chilled glass."
+        ]
+      },
+      "description": {
+        "zh": "白兰地的圆润与橙香、柠檬酸度形成清晰对比。",
+        "en": "Rounded brandy contrasts cleanly with orange and lemon acidity."
+      }
+    },
+    {
+      "id": "corner-store-highball",
+      "rating": "",
+      "name": {
+        "zh": "便利店威士忌高球",
+        "en": "Corner-Store Highball"
+      },
+      "origin": "convenience",
+      "base": [
+        "whiskey"
+      ],
+      "taste": [
+        "fresh",
+        "sparkling"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#4c3526",
+        "#c69051"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "whiskey",
+          "amount": 40,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "soda_water",
+          "topUp": true,
+          "unit": "top"
+        },
+        {
+          "id": "lemon",
+          "amount": 1,
+          "unit": "piece",
+          "optional": true
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中装满冰块，加入威士忌。",
+          "用冰镇气泡水补满，轻搅，可挤入少量柠檬。"
+        ],
+        "en": [
+          "Fill the glass with ice and add whiskey.",
+          "Top with chilled soda water, stir gently, and optionally squeeze in lemon."
+        ]
+      },
+      "description": {
+        "zh": "只需常见气泡水即可完成的清爽威士忌长饮。",
+        "en": "A refreshing whiskey long drink made with widely available soda water."
+      },
+      "ice": "full"
+    },
+    {
+      "id": "apple-vodka-fizz",
+      "rating": "",
+      "name": {
+        "zh": "青苹果伏特加气泡",
+        "en": "Green Apple Spark"
+      },
+      "origin": "convenience",
+      "base": [
+        "vodka"
+      ],
+      "taste": [
+        "fruity",
+        "sweet",
+        "sparkling"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#4f8a43",
+        "#bdda71"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "vodka",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "green_apple_fanta",
+          "amount": 120,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "lemon_juice",
+          "amount": 10,
+          "unit": "ml",
+          "optional": true
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中装冰并加入伏特加。",
+          "加入青苹果美年达，可选少量柠檬汁，轻搅。"
+        ],
+        "en": [
+          "Add ice and vodka to the glass.",
+          "Pour in green apple soda, optionally add lemon juice, and stir gently."
+        ]
+      },
+      "description": {
+        "zh": "青苹果汽水让伏特加变得直观、轻松，适合聚会快速制作。",
+        "en": "Green apple soda makes vodka bright, simple and party-friendly."
+      },
+      "ice": "full"
+    },
+    {
+      "id": "baileys-milk-tea",
+      "rating": "",
+      "name": {
+        "zh": "百利甜奶茶",
+        "en": "Velvet Tea at Dusk"
+      },
+      "origin": "convenience",
+      "base": [
+        "baileys"
+      ],
+      "taste": [
+        "sweet",
+        "creamy"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#5a3a35",
+        "#bc8d69"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "baileys",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "assam_jasmine_milk_tea",
+          "amount": 100,
+          "unit": "ml",
+          "optional": false
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中加入冰块和百利甜。",
+          "倒入奶茶并轻轻搅匀。"
+        ],
+        "en": [
+          "Add ice and Baileys to the glass.",
+          "Pour in milk tea and stir gently."
+        ]
+      },
+      "description": {
+        "zh": "便利店奶茶与百利甜组成柔滑、低门槛的甜口组合。",
+        "en": "Convenience-store milk tea and Baileys make a smooth, approachable sweet serve."
+      },
+      "ice": "full"
+    },
+    {
+      "id": "grapefruit-rum-fizz",
+      "rating": "",
+      "name": {
+        "zh": "西柚朗姆气泡",
+        "en": "Grapefruit Dawn Fizz"
+      },
+      "origin": "convenience",
+      "base": [
+        "white_rum"
+      ],
+      "taste": [
+        "citrus",
+        "fresh",
+        "sparkling"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#d26b51",
+        "#f2b28d"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "white_rum",
+          "amount": 30,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "waterc_grapefruit",
+          "amount": 90,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "soda_water",
+          "topUp": true,
+          "unit": "top"
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中加满冰块并加入白朗姆。",
+          "加入西柚饮料，用气泡水补满。"
+        ],
+        "en": [
+          "Fill the glass with ice and add white rum.",
+          "Add grapefruit drink and top with soda water."
+        ]
+      },
+      "description": {
+        "zh": "西柚的酸苦与轻盈气泡适合家庭随手调制。",
+        "en": "Grapefruit's tart bitterness and light bubbles suit an easy home mix."
+      },
+      "ice": "full"
+    },
+    {
+      "id": "coconut-rum-cooler",
+      "rating": "",
+      "name": {
+        "zh": "椰子朗姆酷饮",
+        "en": "Coconut Moon Cooler"
+      },
+      "origin": "convenience",
+      "base": [
+        "white_rum"
+      ],
+      "taste": [
+        "coconut",
+        "fresh",
+        "sparkling"
+      ],
+      "difficulty": "easy",
+      "colors": [
+        "#567d86",
+        "#ded6b3"
+      ],
+      "glassCapacity": 300,
+      "method": "build",
+      "ingredients": [
+        {
+          "id": "white_rum",
+          "amount": 35,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "coconut_water",
+          "amount": 90,
+          "unit": "ml",
+          "optional": false
+        },
+        {
+          "id": "sprite",
+          "topUp": true,
+          "unit": "top"
+        },
+        {
+          "id": "lime_juice",
+          "amount": 10,
+          "unit": "ml",
+          "optional": true
+        }
+      ],
+      "steps": {
+        "zh": [
+          "杯中装冰，加入白朗姆和椰子水。",
+          "用雪碧补满，可选加入青柠汁，轻搅。"
+        ],
+        "en": [
+          "Add ice, white rum and coconut water to the glass.",
+          "Top with Sprite, optionally add lime juice, and stir gently."
+        ]
+      },
+      "description": {
+        "zh": "椰子水让朗姆更清透，少量汽水提供轻快甜感。",
+        "en": "Coconut water keeps rum light while a little soda adds an easy sweetness."
+      },
+      "ice": "full"
+    }
+  ]
+}

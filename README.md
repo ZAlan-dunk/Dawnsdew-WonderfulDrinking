@@ -1,191 +1,200 @@
 # 朝露酒笺 · Dawn's Dew
 
-> 面向家庭调酒爱好者的本地优先调酒助手。当前版本：**v0.2 Beta**。
+> 面向家庭调酒爱好者的本地优先调酒助手。当前采用双轨发行：**Web/PWA v0.2 Beta** 与 **Android 原生 v0.3.0-alpha01**。
 
-[🍎 **iPhone 网页 App 安装指南**](docs/iphone-pwa-guide.md) · [📱 **下载 Android 测试版（GitHub Releases）**](https://github.com/ZAlan-dunk/Dawnsdew-WonderfulDrinking/releases/tag/v0.2-beta) · [🌐 **打开在线网页版**](https://zalan-dunk.github.io/Dawnsdew-WonderfulDrinking/)
+[🍎 iPhone 网页 App 安装指南](docs/iphone-pwa-guide.md) · [📱 Android v0.3 测试版](https://github.com/ZAlan-dunk/Dawnsdew-WonderfulDrinking/releases/tag/v0.3-test) · [🌐 在线网页版](https://zalan-dunk.github.io/Dawnsdew-WonderfulDrinking/) · [📋 原生 Android 迁移计划](docs/native-android-plan.md)
 
-朝露酒笺以“便利店材料也能调一杯”为核心方向，提供配方浏览、材料匹配、个人酒柜、今夜酒单、聚会推荐、收藏、自定义配方，以及酒精度与成本估算。网页版可直接离线打开，也可通过 Capacitor 封装为 Android APK。
+朝露酒笺以“便利店材料也能调一杯”为核心方向。网页版继续提供完整的本地优先功能；Android v0.3 已不再使用 Capacitor 或 WebView 加载 HTML，而是使用 Kotlin 与 Jetpack Compose 重写的原生应用。目前原生版处于 Alpha，适合开发验证和内部测试，尚未与 Web v0.2 完全功能对等。
 
-## v0.2 Beta 功能
+## 当前发行形态
 
-- 45 杯内置配方
-  - 25 杯个人酒单，保留原名称、个人评级与原始记录
-  - 15 杯经典鸡尾酒
-  - 5 杯便利店友好灵感配方
-- **今夜酒单**
-  - 从任意内置或自定义配方中加入
-  - 支持在配方卡片、配方详情和独立页面中添加或移除
-  - 首页展示最多 4 杯今夜候选
-  - 支持一键清空，并自动保存在本机
-- 中英文界面切换，个人酒名采用意境化英文译名
-- 名称、英文名及材料搜索
-- 按来源、基酒、口味、难度、收藏和可制作状态筛选
-- 配方详情、材料用量与双语制作步骤
-- 个人酒柜：已有材料、库存、购入价、包装容量和酒精度
-- 根据酒柜匹配“可制作 / 差一种 / 缺少多种材料”
-- 普通随机与聚会防重复随机推荐
-- 收藏、最近查看、创建及删除自定义配方
-- 本机自动保存，以及版本化 JSON 导入与导出
-- 自动迁移 v0.0.1 的酒柜、收藏、自定义配方和历史数据
-- 估算单杯酒精度、酒液体积和材料成本
-- 电脑与手机响应式布局
-- Android 返回键依次执行：关闭配方详情、返回首页、退出应用
-- 可安装 PWA：支持添加到 iPhone/Android/电脑桌面，首次完整载入后可离线使用内置功能
+### Web/PWA v0.2 Beta
+
+- 45 杯内置配方：25 杯个人酒单、15 杯经典鸡尾酒、5 杯便利店灵感配方。
+- 中英文界面、搜索、来源/基酒/口味/难度/收藏/可制作筛选。
+- 配方详情、酒柜匹配、今夜酒单、随机与聚会推荐、收藏、最近查看和自定义配方。
+- 酒精度、酒液体积和成本估算。
+- 版本化 JSON 导入导出及旧版数据迁移。
+- 可直接打开 `index.html`，也可作为 PWA 安装并在首次完整加载后离线使用。
+- 桌面、平板和手机响应式布局，并支持系统“减少动态效果”偏好。
+
+### Android 原生 v0.3.0-alpha01
+
+已实现：
+
+- Kotlin + Jetpack Compose 原生界面，不加载 HTML，不依赖 WebView 作为应用主体。
+- 首页、配方浏览、搜索、中英文切换、配方详情、收藏与今夜酒单。
+- 收藏、今夜酒单和语言设置通过 SharedPreferences 持久化。
+- `< 840dp` 使用底部导航，`≥ 840dp` 使用 Navigation Rail。
+- 配方区使用自适应网格，窄屏统计卡和详情操作区会自动重排。
+- 原生 Canvas 杯型、酒液渐变、黎明光晕、页面切换、卡片分批入场和按压反馈。
+- 系统关闭动画或启用减少动态效果时，应用会同步减少自定义动效。
+
+尚未实现或尚未完成对等：
+
+- 完整酒柜、可制作匹配、成本和 ABV 计算。
+- 自定义配方、随机/聚会推荐、最近查看。
+- JSON 文件导入导出和旧 Capacitor localStorage 数据迁移。
+- 正式 release 签名、AAB 发布配置、实体设备兼容性与升级验收。
 
 ## 使用方式
 
 ### 1. 普通网页版
 
-克隆或下载仓库后，双击根目录的 `index.html`。该方式无需安装依赖，也无需服务器。
+克隆或下载仓库后，双击根目录的 `index.html`。该方式无需安装运行时依赖，也无需服务器。
 
 为保证本地数据持续可用，建议不要频繁移动文件，并定期在“数据管理”中导出 JSON 备份。
 
-### 2. 可直接分享的单文件封装版
+### 2. 单文件封装版
 
-单文件封装版与 APK 一起通过 [v0.2 Beta 发布页](https://github.com/ZAlan-dunk/Dawnsdew-WonderfulDrinking/releases/tag/v0.2-beta) 提供下载。文件名为：
-
-```text
-DawnsDew-v0.2-Beta-Standalone.html
-```
-
-该文件已经内置全部样式、杯形美术、SVG 标志、配方数据和程序脚本，不依赖 `assets` 文件夹。
-
-微信等聊天软件的内置预览器、手机文件管理器的文档预览页可能不会执行 JavaScript，表现为按钮无响应。请先把文件下载到手机，再用 Chrome、Edge、Firefox 或 Safari 等完整浏览器打开；如需更稳定的手机体验，优先使用 APK 或 GitHub Pages 在线版。
-
-重新生成封装版时，建议将产物输出到仓库外的工作目录：
+运行：
 
 ```powershell
-$env:DAWNSDEW_ARTIFACT_ROOT="F:\AAAASMWORK\AgentProject\DawnsDewAndroid\artifacts"
 npm run build:standalone
 ```
 
-### 3. iPhone 网页 App（PWA，推荐）
+默认输出到工作区内的：
 
-无需下载 IPA，也无需 App Store。使用 iPhone 的 **Safari** 打开在线版：
+```text
+packages/DawnsDew-v0.2-Beta-Standalone/
+```
 
-<https://zalan-dunk.github.io/Dawnsdew-WonderfulDrinking/>
+聊天软件内置预览器或手机文件管理器的文档预览页可能不会执行 JavaScript。请先下载文件，再使用 Chrome、Edge、Firefox 或 Safari 等完整浏览器打开。
 
-然后依次执行：
+### 3. iPhone 网页 App（PWA）
 
-1. 点击 Safari 的“分享”按钮。
-2. 选择“添加到主屏幕”。
-3. 确认名称并点击“添加”。
-4. 从桌面图标全屏打开朝露酒笺。
+使用 Safari 打开在线网页版，依次选择“分享”与“添加到主屏幕”。详细步骤见 [iPhone 网页 App 安装指南](docs/iphone-pwa-guide.md)。
 
-首次完整载入后，内置配方、界面资源和主要功能可离线打开；酒柜、收藏、今夜酒单与自定义配方仍只保存在当前设备。详细说明见 [iPhone 网页 App 安装指南](docs/iphone-pwa-guide.md)。
+### 4. Android 原生 Alpha
 
-### 4. Android APK
+> [下载 Android v0.3 测试版](https://github.com/ZAlan-dunk/Dawnsdew-WonderfulDrinking/releases/tag/v0.3-test)
 
-> [前往 v0.2 Beta 发布页下载 APK](https://github.com/ZAlan-dunk/Dawnsdew-WonderfulDrinking/releases/tag/v0.2-beta)
-
-Android 应用信息：
+应用信息：
 
 ```text
 应用名称：朝露酒笺
 应用 ID：com.zalandunk.dawnsdew
-版本：0.2-beta
-versionCode：2
+版本：0.3.0-alpha01
+versionCode：3
 最低 Android 版本：Android 7.0（API 24）
 目标 SDK：Android 16 / API 36
 ```
 
-当前生成的是便于测试和直接分享的 **debug APK**。首次安装时，Android 可能要求为文件管理器或浏览器开启“允许安装未知来源应用”。debug APK 适合内部测试；正式对外发布时应使用私有签名密钥构建 release APK/AAB，并妥善保管密钥。
-
-## Android 构建
-
-环境要求：Node.js 22 或更高版本、JDK 21、Android SDK 36。
-
-```powershell
-npm install
-npm run android:sync
-cd android
-.\gradlew.bat assembleDebug
-```
-
-生成位置：
+当前调试包生成位置：
 
 ```text
 android/app/build/outputs/apk/debug/app-debug.apk
 ```
 
-项目不会提交 `node_modules`、`www`、Android 本地 SDK 路径和构建产物。
+Debug APK 仅适合内部测试。正式对外发布应使用受控的私有密钥签名 release APK/AAB，并完成数据迁移、设备兼容和覆盖升级测试。
 
-## 默认估算规则
+## 开发与验证
 
-- 默认杯容量：`300 ml`
-- 满冰时默认可容纳酒液：`150 ml`
-- “八分满 / 六分满 / 五分满”按当前有效酒液容量的 `80% / 60% / 50%` 计算
-- “补满”按配方顺序补至有效酒液容量
-- 酒精度：`Σ(材料体积 × 材料酒精度) ÷ 总酒液体积`
-- 成本：`购入价 ÷ 包装容量 × 本杯用量`
+环境要求：Node.js 22 或更高版本、JDK 21、Android SDK 36。
 
-酒精度、体积和成本均为估算值。冰块融水、实际杯型、品牌酒精度、倾倒误差及材料密度会影响结果；固定用量超过满冰容量时，软件会保留原始配方并提示更换杯具或减少冰量。
+### Web 数据和静态检查
 
-## 数据与隐私
+```powershell
+npm install
+npm test
+```
 
-- 没有账号、后端、统计脚本或云同步。
-- 酒柜、价格、收藏、今夜酒单、自定义配方和设置只保存在当前浏览器或 APK 的本地存储中。
-- 从 v0.0.1 或 v0.0.2 升级到 v0.2 时会自动迁移原有数据，并保留今夜酒单。
-- 清理应用数据、卸载 APK、清理浏览器数据或更换设备可能导致数据丢失。
-- 建议定期导出 JSON；v0.0.1 导出的 JSON 仍可导入 v0.2。
+### 同步 Web 配方目录到原生资源
+
+```powershell
+npm run sync:native-data
+```
+
+生成文件：
+
+```text
+android/app/src/main/assets/catalog.json
+```
+
+### 构建 Android Debug APK
+
+```powershell
+npm run android:apk
+```
+
+或分步执行：
+
+```powershell
+npm run sync:native-data
+cd android
+.\gradlew.bat assembleDebug
+```
+
+### 执行 Android 单元测试
+
+```powershell
+npm run android:test
+```
+
+项目不会提交依赖缓存、Android SDK 本地路径和构建产物。
+
+## 数据与升级说明
+
+- Web/PWA 数据保存在浏览器 localStorage；Android 原生 Alpha 数据保存在 SharedPreferences。
+- v0.3 Alpha 暂不能自动读取旧 Capacitor/WebView localStorage，不能视为可直接覆盖 v0.2 的正式升级包。
+- 正式覆盖升级前，至少应实现“Web 导出 JSON → Android 系统文件选择器导入 JSON”，或提供一次性的旧数据迁移器。
+- 要在 Android 上原地升级旧 APK，新包必须继续使用相同 applicationId，并使用与旧包一致的正式签名证书。
+- 卸载应用、清除应用数据、更换签名或清理浏览器数据都可能造成数据丢失。
+- 项目没有账号、后端、统计脚本或自动云同步。
+
+## 视觉、响应式与可访问性
+
+- 品牌主题为“朝露金夜”：暮色紫、酒红、黎明橙和金色高光。
+- Web 和 Android 都使用程序化杯型与渐变美术，避免依赖在线图片。
+- Web 断点覆盖桌面、平板、常见手机和超窄屏；移动表单字号避免 iOS 自动缩放。
+- Web 弹窗支持 Escape、焦点循环、关闭后焦点恢复和 `aria-hidden` 同步。
+- 触屏设备会减少无意义的 hover 效果；两端均尊重减少动态效果偏好。
+- 当前已完成代码级响应式与构建验证；像素级浏览器截图和 APK 模拟器视觉验收仍需单独执行。
 
 ## 项目结构
 
 ```text
 Dawnsdew-WonderfulDrinking/
 ├─ index.html
-├─ manifest.webmanifest          # PWA 安装信息
-├─ sw.js                         # 离线缓存
+├─ manifest.webmanifest
+├─ sw.js
 ├─ assets/
-│  ├─ icons/                     # PWA 与 iPhone 桌面图标
+│  ├─ icons/
 │  ├─ css/styles.css
 │  ├─ data/
 │  └─ js/
-│     ├─ i18n.js
-│     ├─ storage.js
-│     ├─ native.js
-│     ├─ calculators.js
-│     └─ app.js
-├─ android/                    # Capacitor Android 工程
-├─ packages/
-│  └─ README.md                 # 安装包从 Releases 下载
+├─ android/                       # Kotlin + Jetpack Compose 原生工程
+│  └─ app/src/main/
+│     ├─ assets/catalog.json
+│     └─ java/com/zalandunk/dawnsdew/
+│        ├─ data/
+│        └─ ui/
 ├─ tools/
-│  ├─ build-mobile.js
-│  └─ build-standalone.js
+│  ├─ build-standalone.js
+│  ├─ export-native-catalog.js
+│  └─ verify-project.js
 ├─ docs/
-├─ capacitor.config.json
+│  ├─ iphone-pwa-guide.md
+│  ├─ native-android-plan.md
+│  ├─ product-plan.md
+│  └─ recipe-schema.md
 ├─ package.json
 ├─ CHANGELOG.md
 └─ README.md
 ```
 
-## 已保留的未来酒单名称
+## 已知限制
 
-以下名称不作为当前应用主名称，保留给后续主题酒单、活动或配方合集使用：
-
-- 酌光
-- 浮光酒笺
-- 微醺拾光
-- 杯中晚霞
-- 饮风集
-- 暮色调
-- 雾饮
-- 一盏星河
-- 浮生一酌
-- 破晓酒笺
-
-## v0.2 Beta 已知限制
-
-- 数据仅在单个浏览器或 APK 本地保存，暂不支持账号和多设备自动同步。
-- 更换 APK 签名或卸载应用后，本机数据可能无法保留，请先导出备份。
-- 配方图片使用原创 CSS 图形，暂未提供照片上传。
-- 成本估算按容量比例计算；水果、装饰物和“份/个”材料暂不进行精细单价换算。
-- 库存暂用于“是否拥有”与展示，制作后不会自动扣减。
-- 自定义配方暂不支持编辑，只支持新建和删除。
+- Android v0.3 Alpha 与 Web v0.2 尚未功能完全对等，也没有旧数据自动迁移。
+- Web 数据仅保存在当前浏览器；原生 Alpha 数据仅保存在当前应用安装中。
+- 自定义配方在 Web v0.2 中暂不支持编辑，只支持新建和删除。
+- 成本估算按容量比例计算，水果、装饰物和“份/个”材料暂不进行精细单价换算。
+- 库存暂用于“是否拥有”和展示，制作后不会自动扣减。
 - 经典配方为家庭制作参考比例，不替代专业酒吧标准或特定品牌官方配方。
 
 ## 文档
 
+- [原生 Android 迁移计划](docs/native-android-plan.md)
 - [iPhone 网页 App 安装指南](docs/iphone-pwa-guide.md)
 - [产品详细方案](docs/product-plan.md)
 - [配方数据结构](docs/recipe-schema.md)

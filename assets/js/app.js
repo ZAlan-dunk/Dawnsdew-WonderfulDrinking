@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   "use strict";
 
   const data = window.DD_DATA;
@@ -14,6 +14,9 @@
   let state = storage.load();
   let featuredId = null;
   let activeView = "home";
+  let modalReturnFocus = null;
+  let modalCloseTimer = null;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   function t(key, values) { return i18n.t(key, state.settings.lang, values); }
   function langValue(value) {
@@ -51,6 +54,31 @@
     node.textContent = message;
     $("#toastRegion").appendChild(node);
     window.setTimeout(() => node.remove(), 2600);
+  }
+
+  function stageRecipeCards(container) {
+    if (reduceMotion.matches) return;
+    const cards = Array.from(container.querySelectorAll(".recipe-card"));
+    cards.forEach((card, index) => {
+      card.classList.add("motion-pending");
+      card.style.setProperty("--motion-delay", `${Math.min(index, 8) * 38}ms`);
+    });
+    window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
+      cards.forEach(card => card.classList.add("motion-ready"));
+      window.setTimeout(() => cards.forEach(card => {
+        card.classList.remove("motion-pending", "motion-ready");
+        card.style.removeProperty("--motion-delay");
+      }), 720);
+    }));
+  }
+
+  function renderRecipeCollection(selector, recipes, compact, emptyHtml) {
+    const container = $(selector);
+    const signature = recipes.map(recipe => recipe.id).join("|");
+    const shouldAnimate = container.dataset.recipeSignature !== signature;
+    container.innerHTML = recipes.length ? recipes.map(recipe => recipeCard(recipe, compact)).join("") : (emptyHtml || "");
+    container.dataset.recipeSignature = signature;
+    if (shouldAnimate && recipes.length) stageRecipeCards(container);
   }
 
   function renderArt(colors, className) {
@@ -105,16 +133,16 @@
     </article>`;
 
     const tonight = state.tonightMenu.map(recipeById).filter(Boolean).slice(0, 4);
-    $("#homeTonightMenu").innerHTML = tonight.length ? tonight.map(recipe => recipeCard(recipe, true)).join("") : `<div class="empty-state tonight-empty"><span>☾</span><p>${esc(t("tonightMenuEmptyHint"))}</p><button class="button ghost small" type="button" data-nav="recipes">${esc(t("browseRecipes"))}</button></div>`;
+    renderRecipeCollection("#homeTonightMenu", tonight, true, `<div class="empty-state tonight-empty"><span>☾</span><p>${esc(t("tonightMenuEmptyHint"))}</p><button class="button ghost small" type="button" data-nav="recipes">${esc(t("browseRecipes"))}</button></div>`);
     const recent = state.recent.map(recipeById).filter(Boolean).slice(0, 4);
-    $("#recentRecipes").innerHTML = recent.length ? recent.map(recipe => recipeCard(recipe, true)).join("") : `<div class="empty-state"><span>◇</span><p>${esc(t("noRecent"))}</p></div>`;
+    renderRecipeCollection("#recentRecipes", recent, true, `<div class="empty-state"><span>◇</span><p>${esc(t("noRecent"))}</p></div>`);
   }
 
   function renderTonightMenu() {
     state.tonightMenu = state.tonightMenu.filter(id => Boolean(recipeById(id)));
     const recipes = state.tonightMenu.map(recipeById).filter(Boolean);
     $("#tonightMenuCount").textContent = t("tonightMenuCount", { count: recipes.length });
-    $("#tonightMenuGrid").innerHTML = recipes.map(recipe => recipeCard(recipe, false)).join("");
+    renderRecipeCollection("#tonightMenuGrid", recipes, false, "");
     $("#tonightMenuEmpty").classList.toggle("hidden", recipes.length > 0);
     $("#clearTonightMenu").disabled = recipes.length === 0;
   }
@@ -153,7 +181,7 @@
     renderFilterOptions();
     const recipes = filteredRecipes();
     $("#recipeResultCount").textContent = t("searchResults", { count: recipes.length });
-    $("#recipeGrid").innerHTML = recipes.map(recipe => recipeCard(recipe, false)).join("");
+    renderRecipeCollection("#recipeGrid", recipes, false, "");
     $("#recipeEmpty").classList.toggle("hidden", recipes.length > 0);
   }
 
@@ -268,14 +296,35 @@
       ${recipe.sourceText ? `<div class="original-note"><b>${esc(t("originalFormula"))}</b><br>${esc(recipe.sourceText)}</div>` : ""}
       <p class="warning-note">${esc(t("estimateOnly"))}</p>${volume.exceedsCapacity ? `<p class="warning-note">${esc(t("capacityWarning"))}</p>` : ""}
       <div class="modal-actions"><button class="button primary" type="button" data-favorite="${esc(recipe.id)}">${isFavorite(recipe.id) ? "♥ " + esc(t("unfavorite")) : "♡ " + esc(t("favorite"))}</button><button class="button ghost ${isInTonightMenu(recipe.id) ? "tonight-active" : ""}" type="button" data-tonight-toggle="${esc(recipe.id)}">${isInTonightMenu(recipe.id) ? "✓ " + esc(t("removeFromTonight")) : "+ " + esc(t("addToTonight"))}</button>${missing.length ? `<button class="button ghost" type="button" data-add-missing="${esc(recipe.id)}">${esc(t("addToPantry"))}</button>` : ""}</div></div>`;
-    $("#recipeModal").classList.remove("hidden");
+    const modal = $("#recipeModal");
+    const opening = modal.classList.contains("hidden");
+    if (opening) modalReturnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    window.clearTimeout(modalCloseTimer);
+    modal.classList.remove("hidden", "is-closing");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("modal-open");
     document.body.style.overflow = "hidden";
+    if (opening) window.requestAnimationFrame(() => $("#modalClose").focus({ preventScroll: true }));
     renderHome();
   }
 
   function closeModal() {
-    $("#recipeModal").classList.add("hidden");
-    document.body.style.overflow = "";
+    const modal = $("#recipeModal");
+    if (modal.classList.contains("hidden")) return;
+    const finish = () => {
+      modal.classList.add("hidden");
+      modal.classList.remove("is-closing");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("modal-open");
+      document.body.style.overflow = "";
+      const returnTarget = modalReturnFocus && modalReturnFocus.isConnected ? modalReturnFocus : $("#mainContent");
+      modalReturnFocus = null;
+      if (returnTarget) returnTarget.focus({ preventScroll: true });
+    };
+    if (reduceMotion.matches) { finish(); return; }
+    modal.classList.add("is-closing");
+    window.clearTimeout(modalCloseTimer);
+    modalCloseTimer = window.setTimeout(finish, 190);
   }
 
   function toggleFavorite(id) {
@@ -303,7 +352,7 @@
     if (view === "tonight") renderTonightMenu();
     if (view === "pantry") renderPantry();
     $("#mainContent").focus({ preventScroll: true });
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: reduceMotion.matches ? "auto" : "smooth" });
   }
 
   function randomRecipe(party) {
@@ -383,7 +432,19 @@
 
   $("#modalClose").addEventListener("click", closeModal);
   $("#recipeModal").addEventListener("click", event => { if (event.target === $("#recipeModal")) closeModal(); });
-  document.addEventListener("keydown", event => { if (event.key === "Escape") closeModal(); });
+  document.addEventListener("keydown", event => {
+    const modal = $("#recipeModal");
+    if (modal.classList.contains("hidden")) return;
+    if (event.key === "Escape") { event.preventDefault(); closeModal(); return; }
+    if (event.key !== "Tab") return;
+    const focusable = $$("#recipeModal button:not([disabled]), #recipeModal [href], #recipeModal input:not([disabled]), #recipeModal select:not([disabled]), #recipeModal textarea:not([disabled]), #recipeModal [tabindex]:not([tabindex='-1'])")
+      .filter(element => element.offsetParent !== null);
+    if (!focusable.length) { event.preventDefault(); $(".recipe-modal").focus(); return; }
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+    else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+  });
   $("#languageToggle").addEventListener("click", () => { state.settings.lang = state.settings.lang === "zh" ? "en" : "zh"; save(); renderPantry(); renderAll(); toast(t("languageChanged")); });
   ["quickRandomButton", "heroRandomButton"].forEach(id => $(`#${id}`).addEventListener("click", () => randomRecipe(false)));
   $("#partyRandomButton").addEventListener("click", () => randomRecipe(true));
