@@ -42,7 +42,8 @@ data class Recipe(
     val steps: LocalizedList,
     val description: LocalizedText,
     val sourceText: String,
-    val aliases: List<String>
+    val aliases: List<String>,
+    val createdAt: String = ""
 )
 
 data class LocalizedList(
@@ -55,4 +56,30 @@ data class LocalizedList(
 data class Catalog(
     val ingredients: List<Ingredient>,
     val recipes: List<Recipe>
+)
+
+data class AppSettings(
+    val language: String = "zh",
+    val glassCapacity: Double = 300.0,
+    val icedLiquidCapacity: Double = 150.0,
+    val currency: String = "¥"
+)
+
+data class PantryEntry(
+    val owned: Boolean = false,
+    val stock: String = "",
+    val price: String = "",
+    val packSize: String = "",
+    val abv: String = ""
+)
+
+data class AppState(
+    val settings: AppSettings = AppSettings(),
+    val pantry: Map<String, PantryEntry> = emptyMap(),
+    val favoriteIds: Set<String> = emptySet(),
+    val customRecipes: List<Recipe> = emptyList(),
+    val tonightIds: List<String> = emptyList(),
+    val recentIds: List<String> = emptyList(),
+    val partyHistory: List<String> = emptyList(),
+    val savedAt: String = ""
 )

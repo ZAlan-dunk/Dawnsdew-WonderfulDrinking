@@ -1,16 +1,16 @@
 # 朝露酒笺 · Dawn's Dew
 
-> 面向家庭调酒爱好者的本地优先调酒助手。当前采用双轨发行：**Web/PWA v0.2 Beta** 与 **Android 原生 v0.3.0-alpha01**。
+> 面向家庭调酒爱好者的本地优先调酒助手。当前采用双轨发行：**Web/PWA v0.2 Beta** 与 **Android 原生 v0.3.1 Beta**。
 
-[🍎 iPhone 网页 App 安装指南](docs/iphone-pwa-guide.md) · [📱 Android v0.3 测试版](https://github.com/ZAlan-dunk/Dawnsdew-WonderfulDrinking/releases/tag/v0.3-test) · [🌐 在线网页版](https://zalan-dunk.github.io/Dawnsdew-WonderfulDrinking/) · [📋 原生 Android 迁移计划](docs/native-android-plan.md)
+[🍎 iPhone 网页 App 安装指南](docs/iphone-pwa-guide.md) · [📱 Android v0.3.1 Beta](https://github.com/ZAlan-dunk/Dawnsdew-WonderfulDrinking/releases/tag/v0.3.1-beta) · [🌐 在线网页版](https://zalan-dunk.github.io/Dawnsdew-WonderfulDrinking/) · [📋 原生 Android 迁移计划](docs/native-android-plan.md)
 
-朝露酒笺以“便利店材料也能调一杯”为核心方向。网页版继续提供完整的本地优先功能；Android v0.3 已不再使用 Capacitor 或 WebView 加载 HTML，而是使用 Kotlin 与 Jetpack Compose 重写的原生应用。目前原生版处于 Alpha，适合开发验证和内部测试，尚未与 Web v0.2 完全功能对等。
+朝露酒笺以“把今夜的心绪，斟成一杯”为核心叙事：收藏想喝的味道，排好今夜酒单，让每次举杯都有名字。网页版继续提供本地优先体验；Android v0.3.1 已不再使用 Capacitor 或 WebView 加载 HTML，而是使用 Kotlin 与 Jetpack Compose 实现完整的原生工作流。
 
 ## 当前发行形态
 
 ### Web/PWA v0.2 Beta
 
-- 45 杯内置配方：25 杯个人酒单、15 杯经典鸡尾酒、5 杯便利店灵感配方。
+- 45 杯内置配方：25 杯私人酒笺、15 杯经典鸡尾酒、5 杯灵感特调。
 - 中英文界面、搜索、来源/基酒/口味/难度/收藏/可制作筛选。
 - 配方详情、酒柜匹配、今夜酒单、随机与聚会推荐、收藏、最近查看和自定义配方。
 - 酒精度、酒液体积和成本估算。
@@ -18,24 +18,21 @@
 - 可直接打开 `index.html`，也可作为 PWA 安装并在首次完整加载后离线使用。
 - 桌面、平板和手机响应式布局，并支持系统“减少动态效果”偏好。
 
-### Android 原生 v0.3.0-alpha01
+### Android 原生 v0.3.1-beta01
 
 已实现：
 
 - Kotlin + Jetpack Compose 原生界面，不加载 HTML，不依赖 WebView 作为应用主体。
-- 首页、配方浏览、搜索、中英文切换、配方详情、收藏与今夜酒单。
-- 收藏、今夜酒单和语言设置通过 SharedPreferences 持久化。
+- 诗意首页、配方浏览、完整筛选、中英文切换、配方详情、收藏与今夜酒单。
+- 酒柜、可制作匹配、酒精度/容量/成本估算与缺少材料快速加入。
+- 自定义配方、最近查看、普通随机和聚会防重复推荐。
+- 通过 Android 系统文件选择器导入/导出 JSON，兼容 Web v0.2 备份。
+- 酒柜、设置、收藏、今夜酒单、自定义配方和历史通过 SharedPreferences 持久化。
 - `< 840dp` 使用底部导航，`≥ 840dp` 使用 Navigation Rail。
 - 配方区使用自适应网格，窄屏统计卡和详情操作区会自动重排。
-- 原生 Canvas 杯型、酒液渐变、黎明光晕、页面切换、卡片分批入场和按压反馈。
-- 系统关闭动画或启用减少动态效果时，应用会同步减少自定义动效。
-
-尚未实现或尚未完成对等：
-
-- 完整酒柜、可制作匹配、成本和 ABV 计算。
-- 自定义配方、随机/聚会推荐、最近查看。
-- JSON 文件导入导出和旧 Capacitor localStorage 数据迁移。
-- 正式 release 签名、AAB 发布配置、实体设备兼容性与升级验收。
+- 原生 Canvas 杯型、短促首屏入场、页面切换、卡片分批入场和按压/状态反馈。
+- 显式高对比文字角色；金色、珊瑚色与青绿色分别承担主操作、次操作和成功状态。
+- 系统关闭动画时禁用自定义动效；低内存设备自动关闭持续环境动画。
 
 ## 使用方式
 
@@ -65,17 +62,17 @@ packages/DawnsDew-v0.2-Beta-Standalone/
 
 使用 Safari 打开在线网页版，依次选择“分享”与“添加到主屏幕”。详细步骤见 [iPhone 网页 App 安装指南](docs/iphone-pwa-guide.md)。
 
-### 4. Android 原生 Alpha
+### 4. Android 原生 Beta
 
-> [下载 Android v0.3 测试版](https://github.com/ZAlan-dunk/Dawnsdew-WonderfulDrinking/releases/tag/v0.3-test)
+> [下载 Android v0.3.1 Beta](https://github.com/ZAlan-dunk/Dawnsdew-WonderfulDrinking/releases/tag/v0.3.1-beta)
 
 应用信息：
 
 ```text
 应用名称：朝露酒笺
 应用 ID：com.zalandunk.dawnsdew
-版本：0.3.0-alpha01
-versionCode：3
+版本：0.3.1-beta01
+versionCode：4
 最低 Android 版本：Android 7.0（API 24）
 目标 SDK：Android 16 / API 36
 ```
@@ -135,19 +132,20 @@ npm run android:test
 
 ## 数据与升级说明
 
-- Web/PWA 数据保存在浏览器 localStorage；Android 原生 Alpha 数据保存在 SharedPreferences。
-- v0.3 Alpha 暂不能自动读取旧 Capacitor/WebView localStorage，不能视为可直接覆盖 v0.2 的正式升级包。
-- 正式覆盖升级前，至少应实现“Web 导出 JSON → Android 系统文件选择器导入 JSON”，或提供一次性的旧数据迁移器。
+- Web/PWA 数据保存在浏览器 localStorage；Android 原生 Beta 数据保存在 SharedPreferences。
+- v0.3.1 已支持通过 Android 系统文件选择器导入 Web v0.2 JSON，也可导出 Web v0.2 兼容备份。
+- v0.3 测试包的语言、收藏与今夜酒单会自动迁移到新的统一状态；旧 Capacitor/WebView localStorage 仍需先在旧版导出 JSON，再由原生版导入。
 - 要在 Android 上原地升级旧 APK，新包必须继续使用相同 applicationId，并使用与旧包一致的正式签名证书。
 - 卸载应用、清除应用数据、更换签名或清理浏览器数据都可能造成数据丢失。
 - 项目没有账号、后端、统计脚本或自动云同步。
 
 ## 视觉、响应式与可访问性
 
-- 品牌主题为“朝露金夜”：暮色紫、酒红、黎明橙和金色高光。
+- 品牌主题为“朝露金夜”：墨色背景、酒红、黎明金、珊瑚色和月光青绿。
 - Web 和 Android 都使用程序化杯型与渐变美术，避免依赖在线图片。
 - Web 断点覆盖桌面、平板、常见手机和超窄屏；移动表单字号避免 iOS 自动缩放。
 - Web 弹窗支持 Escape、焦点循环、关闭后焦点恢复和 `aria-hidden` 同步。
+- 原生端使用明显的短入场与状态动效，持续环境动画只局限在小面积杯型画布；低内存设备自动降级。
 - 触屏设备会减少无意义的 hover 效果；两端均尊重减少动态效果偏好。
 - 当前已完成代码级响应式与构建验证；像素级浏览器截图和 APK 模拟器视觉验收仍需单独执行。
 
@@ -185,8 +183,9 @@ Dawnsdew-WonderfulDrinking/
 
 ## 已知限制
 
-- Android v0.3 Alpha 与 Web v0.2 尚未功能完全对等，也没有旧数据自动迁移。
-- Web 数据仅保存在当前浏览器；原生 Alpha 数据仅保存在当前应用安装中。
+- Web 数据仅保存在当前浏览器；原生 Beta 数据仅保存在当前应用安装中。
+- 旧 Capacitor localStorage 不会被原生代码直接读取，需要通过 JSON 手动迁移。
+- 当前 GitHub 安装包仍使用 Debug 签名；1.0 正式发布前需要固定 release 签名并完成覆盖升级验证。
 - 自定义配方在 Web v0.2 中暂不支持编辑，只支持新建和删除。
 - 成本估算按容量比例计算，水果、装饰物和“份/个”材料暂不进行精细单价换算。
 - 库存暂用于“是否拥有”和展示，制作后不会自动扣减。

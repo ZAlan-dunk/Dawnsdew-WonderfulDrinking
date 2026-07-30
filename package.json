@@ -1,6 +1,6 @@
 {
   "name": "dawnsdew-wonderful-drinking",
-  "version": "0.3.0-alpha.1",
+  "version": "0.3.1-beta.1",
   "description": "朝露酒笺 Dawn's Dew - 本地优先家庭调酒助手",
   "scripts": {
     "test": "node tools/verify-project.js",
