@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -151,6 +152,7 @@ private fun PoeticHero(controller: AppController, motion: MotionPolicy) {
         )
     ) {
         val compact = maxWidth < 600.dp
+        HeroParticleField(motion, Modifier.fillMaxSize())
         DawnGlassArt(
             modifier = Modifier
                 .align(if (compact) Alignment.TopEnd else Alignment.CenterEnd)

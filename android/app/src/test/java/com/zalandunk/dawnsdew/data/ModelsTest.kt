@@ -39,4 +39,15 @@ class ModelsTest {
 
         assertTrue(alcoholIds.all { BrandProfiles.forIngredient(it).isNotEmpty() })
     }
+
+    @Test
+    fun everyAlcoholicIngredientHasAStoryWithHistory() {
+        val alcoholIds = setOf(
+            "aperol", "baileys", "triple_sec", "dry_vermouth", "campari", "coffee_liqueur",
+            "blue_curacao", "sweet_vermouth", "jagermeister", "angostura", "brandy", "white_rum",
+            "bourbon", "vodka", "gin", "tequila", "prosecco", "whiskey"
+        )
+
+        assertTrue(alcoholIds.all { IngredientProfiles.find(it)?.milestones?.size?.let { count -> count >= 2 } == true })
+    }
 }

@@ -1,10 +1,10 @@
-# 朝露酒笺产品详细方案（Web/PWA Beta / Android v0.3.2 Beta）
+# 朝露酒笺产品详细方案（Web/PWA Beta / Android v0.3.3 Beta）
 
 ## 版本状态
 
-- Web/PWA v0.3.2 Beta 继续作为功能完整的本地优先版本。
-- Android v0.3.2-beta01 使用 Kotlin + Jetpack Compose 原生应用，不以 Capacitor/WebView 加载 HTML。
-- v0.3.2 增加主题、字体缩放、紧凑配方浏览和品牌风味资料，Web/PWA 同步核心外观设置供 iPhone 使用。
+- Web/PWA v0.3.3 Beta 继续作为功能完整的本地优先版本和 iPhone 主屏幕安装形态。
+- Android v0.3.3-beta01 使用 Kotlin + Jetpack Compose 原生应用，不以 Capacitor/WebView 加载 HTML。
+- v0.3.3 缩短配方页固定工具区，重构酒柜为品类浏览，并增加瓶型视觉、酒款故事、发展历史、相关配方和轻量粒子反馈。
 - 原生 Beta 已完成 Web v0.2 核心功能对等和 JSON 手动迁移；正式覆盖升级前仍需固定 release 签名和设备验收。
 
 ## 1. 产品定位

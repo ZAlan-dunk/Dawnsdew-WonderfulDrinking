@@ -5,12 +5,18 @@
   const i18n = window.DD_I18N;
   const storage = window.DD_STORAGE;
   const calc = window.DD_CALC;
+  const ingredientProfiles = window.DD_INGREDIENT_PROFILES;
   const native = window.DD_NATIVE || { isNative: () => false, shareJson: async () => false, onBackButton: () => {}, exitApp: () => {} };
   const $ = selector => document.querySelector(selector);
   const $$ = selector => Array.from(document.querySelectorAll(selector));
   const map = data.ingredientMap;
   const tasteKeys = ["sweet", "creamy", "fresh", "citrus", "fruity", "sparkling", "strong", "coconut", "bitter", "herbal", "dry", "spicy", "coffee"];
   const commonIngredients = ["white_rum", "vodka", "brandy", "baileys", "blue_curacao", "cola", "sprite", "soda_water", "orange_juice", "grape_juice", "lemon_juice", "lime_juice"];
+  const pantryCategories = [
+    ["spirit", "基酒", "Spirits"], ["liqueur", "利口酒", "Liqueurs"], ["sparkling", "起泡酒", "Sparkling"],
+    ["soda", "气泡饮料", "Sodas"], ["juice", "果汁", "Juices"], ["dairy", "乳品", "Dairy"],
+    ["tea", "茶饮", "Tea"], ["fruit", "鲜果与装饰", "Fruit & Garnish"], ["other", "其他", "Other"]
+  ];
   const brandProfiles = {
     vodka: [["Absolut", "原味伏特加", "干净、中性", "Clean and neutral"], ["Smirnoff", "No.21", "轻盈直接", "Light and direct"], ["Finlandia", "Classic", "干爽利落", "Dry and crisp"]],
     white_rum: [["Bacardi", "Carta Blanca", "清爽甘蔗香", "Light sugarcane"], ["Havana Club", "3 Años", "甘蔗与轻橡木", "Sugarcane and light oak"], ["Planteray", "3 Stars", "热带果香", "Tropical fruit"]],
@@ -30,10 +36,16 @@
   let activeView = "home";
   let modalReturnFocus = null;
   let modalCloseTimer = null;
+  let ingredientReturnFocus = null;
+  let searchReturnFocus = null;
+  let activePantryCategory = "spirit";
+  let activeSearchTarget = "recipe";
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const systemDark = window.matchMedia("(prefers-color-scheme: dark)");
+  const lowMotionDevice = Boolean((navigator.deviceMemory && navigator.deviceMemory <= 2) || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2) || (navigator.connection && navigator.connection.saveData));
 
   function t(key, values) { return i18n.t(key, state.settings.lang, values); }
+  function copy(zh, en) { return state.settings.lang === "en" ? en : zh; }
   function langValue(value) {
     if (!value) return "";
     if (typeof value === "string") return value;
@@ -199,6 +211,7 @@
   function renderRecipes() {
     renderFilterOptions();
     const recipes = filteredRecipes();
+    $("#recipeSearchButton").classList.toggle("active", $("#recipeSearch").value.trim().length > 0);
     $("#recipeResultCount").textContent = ` · ${recipes.length}`;
     const detailedCount = ["originFilter", "baseFilter", "tasteFilter", "difficultyFilter"].filter(id => $(`#${id}`).value).length;
     $("#activeFilterCount").textContent = detailedCount ? ` ${detailedCount}` : "";
@@ -212,32 +225,51 @@
     return state.pantry[id];
   }
 
+  function pantryCategory(item) {
+    return item.id === "prosecco" ? "sparkling" : item.category;
+  }
+
+  function pantryCategoryLabel(category) {
+    const item = pantryCategories.find(entry => entry[0] === category);
+    return item ? copy(item[1], item[2]) : category;
+  }
+
+  function relatedRecipes(ingredientId) {
+    return allRecipes().filter(recipe => (recipe.ingredients || []).some(item => item.id === ingredientId));
+  }
+
+  function bottleArt(item, profile, large) {
+    return `<span class="bottle-art ${large ? "large" : ""}" aria-hidden="true"><span class="bottle-shape bottle-${esc(profile.shape)}" style="--bottle-accent:${esc(profile.accent)}"><i></i><b>${esc(profile.monogram)}</b></span></span>`;
+  }
+
   function renderPantry() {
     const query = calc.normalizeSearch($("#pantrySearch").value);
-    const ingredients = data.ingredients.filter(item => !query || calc.normalizeSearch(`${item.zh} ${item.en}`).includes(query));
-    const groups = {};
-    ingredients.forEach(item => { (groups[item.category] = groups[item.category] || []).push(item); });
-    $("#pantryGroups").innerHTML = Object.keys(data.categories).filter(category => groups[category] && groups[category].length).map(category => {
-      const label = data.categories[category][state.settings.lang];
-      const rows = groups[category].map(item => {
-        const entry = pantryEntry(item.id);
-        return `<div class="pantry-row" data-pantry-row="${esc(item.id)}">
-          <label class="ingredient-check"><input type="checkbox" data-pantry-field="owned" data-id="${esc(item.id)}" ${entry.owned ? "checked" : ""}><span><b>${esc(item[state.settings.lang])}</b><small>${esc(state.settings.lang === "zh" ? item.en : item.zh)}</small></span></label>
-          <label class="pantry-field"><span>${esc(t("pantryStock"))}</span><input type="number" min="0" step="1" data-pantry-field="stock" data-id="${esc(item.id)}" value="${esc(entry.stock)}" aria-label="${esc(t("pantryStock"))}"></label>
-          <label class="pantry-field"><span>${esc(t("pantryPrice"))}</span><input type="number" min="0" step="0.01" data-pantry-field="price" data-id="${esc(item.id)}" value="${esc(entry.price)}" aria-label="${esc(t("pantryPrice"))}"></label>
-          <label class="pantry-field"><span>${esc(t("pantryPack"))}</span><input type="number" min="0.01" step="1" data-pantry-field="packSize" data-id="${esc(item.id)}" value="${esc(entry.packSize)}" aria-label="${esc(t("pantryPack"))}"></label>
-          <label class="pantry-field"><span>${esc(t("pantryAbv"))}</span><input type="number" min="0" max="100" step="0.1" data-pantry-field="abv" data-id="${esc(item.id)}" value="${esc(entry.abv)}" aria-label="${esc(t("pantryAbv"))}"></label>
-        </div>`;
-      }).join("");
-      return `<section class="pantry-group panel"><h2>${esc(label)}</h2><div class="pantry-head"><span>${esc(t("pantryIngredient"))}</span><span>${esc(t("pantryStock"))}</span><span>${esc(t("pantryPrice"))}</span><span>${esc(t("pantryPack"))}</span><span>${esc(t("pantryAbv"))}</span></div>${rows}</section>`;
-    }).join("");
+    document.querySelector('[data-search-target="pantry"]').classList.toggle("active", query.length > 0);
+    const matching = data.ingredients.filter(item => !query || calc.normalizeSearch(`${item.zh} ${item.en}`).includes(query));
+    if (!matching.some(item => pantryCategory(item) === activePantryCategory) && matching.length) activePantryCategory = pantryCategory(matching[0]);
+    const counts = Object.fromEntries(pantryCategories.map(category => [category[0], data.ingredients.filter(item => pantryCategory(item) === category[0]).length]));
+    $("#pantryCategoryTabs").innerHTML = pantryCategories.filter(category => counts[category[0]]).map(category => `<button type="button" role="tab" aria-selected="${category[0] === activePantryCategory}" class="${category[0] === activePantryCategory ? "active" : ""}" data-pantry-category="${esc(category[0])}">${esc(copy(category[1], category[2]))}<small>${counts[category[0]]}</small></button>`).join("");
+    const ingredients = matching.filter(item => pantryCategory(item) === activePantryCategory);
+    $("#pantryGroups").innerHTML = ingredients.length ? `<div class="pantry-list" aria-label="${esc(pantryCategoryLabel(activePantryCategory))}">${ingredients.map(item => {
+      const entry = pantryEntry(item.id);
+      const profile = ingredientProfiles.get(item);
+      const recipeCount = relatedRecipes(item.id).length;
+      return `<article class="pantry-item" data-pantry-row="${esc(item.id)}">
+        <button class="pantry-item-main" type="button" data-open-ingredient="${esc(item.id)}">
+          ${bottleArt(item, profile, false)}
+          <span class="pantry-item-copy"><b>${esc(item[state.settings.lang])}</b><small>${esc(state.settings.lang === "zh" ? item.en : item.zh)}</small><span>${esc(copy(`${recipeCount} 杯相关配方`, `${recipeCount} recipes`))}${Number(entry.abv || item.abv) ? ` · ${formatNumber(entry.abv || item.abv, 1)}% ABV` : ""}</span></span>
+          <span class="pantry-item-arrow" aria-hidden="true">›</span>
+        </button>
+        <label class="pantry-switch"><input type="checkbox" data-pantry-field="owned" data-id="${esc(item.id)}" ${entry.owned ? "checked" : ""}><span></span><em>${esc(entry.owned ? copy("已有", "Owned") : copy("未有", "Missing"))}</em></label>
+      </article>`;
+    }).join("")}</div>` : `<div class="empty-state pantry-empty"><span>⌕</span><p>${esc(copy("当前品类没有匹配材料", "No matching ingredients in this category"))}</p></div>`;
     renderPantrySummary();
   }
 
   function renderPantrySummary() {
     const owned = Object.values(state.pantry).filter(entry => entry && entry.owned).length;
     const makeable = allRecipes().filter(recipe => calc.matchRecipe(recipe, state.pantry).status === "makeable").length;
-    $("#pantrySummary").innerHTML = `<div class="summary-tile"><strong>${owned}</strong><span>${esc(t("pantryOwnedCount", { count: owned }))}</span></div><div class="summary-tile"><strong>${makeable}</strong><span>${esc(t("pantryMakeableCount", { count: makeable }))}</span></div>`;
+    $("#pantrySummary").innerHTML = `<strong>${esc(copy(`已有 ${owned} 种`, `${owned} owned`))}</strong><span aria-hidden="true">·</span><strong>${esc(copy(`可调 ${makeable} 杯`, `${makeable} makeable`))}</strong>`;
   }
 
   function ingredientOptions(selected) {
@@ -292,6 +324,101 @@
     if (item.unit === "fill") return t("fillRatio", { ratio: Math.round(Number(item.fillTo) * 10) });
     if (item.unit === "top") return t("topUp");
     return estimate ? `${formatNumber(estimate, 1)} ml` : "";
+  }
+
+  function openIngredient(id) {
+    const item = map[id];
+    if (!item) return;
+    const profile = ingredientProfiles.get(item);
+    const entry = pantryEntry(id);
+    const recipes = relatedRecipes(id).slice(0, 5);
+    const brands = (brandProfiles[id] || []).slice(0, 3);
+    const timeline = profile.milestones.map(milestone => `<li><b>${esc(milestone.year)}</b><span>${esc(state.settings.lang === "en" ? milestone.en : milestone.zh)}</span></li>`).join("");
+    const recipeLinks = recipes.length ? recipes.map(recipe => `<button type="button" data-open-related-recipe="${esc(recipe.id)}"><span>${esc(langValue(recipe.name))}</span><small>${esc(difficultyName(recipe.difficulty))} · ${formatNumber(calc.estimateAbv(recipe, state.settings, state.pantry).abv, 1)}% ABV</small><i aria-hidden="true">›</i></button>`).join("") : `<p class="ingredient-empty-copy">${esc(copy("暂无关联配方", "No related recipes yet"))}</p>`;
+    const brandHtml = brands.length ? `<div class="ingredient-brand-row">${brands.map(brand => `<span><b>${esc(brand[0])}</b><small>${esc(brand[1])}</small></span>`).join("")}</div>` : "";
+    $("#ingredientModalContent").innerHTML = `<header class="ingredient-hero" style="--ingredient-accent:${esc(profile.accent)}">
+      ${bottleArt(item, profile, true)}
+      <div><p>${esc(pantryCategoryLabel(pantryCategory(item)))}</p><h2 id="ingredientModalTitle">${esc(item[state.settings.lang])}</h2><span>${esc(state.settings.lang === "zh" ? item.en : item.zh)}</span></div>
+    </header>
+    <div class="ingredient-detail-body">
+      <p class="ingredient-lead">${esc(langValue(profile.intro))}</p>
+      ${brandHtml}
+      <section class="ingredient-inventory"><div><h3>${esc(copy("我的库存", "My inventory"))}</h3><label class="detail-owned"><input type="checkbox" data-ingredient-field="owned" data-id="${esc(id)}" ${entry.owned ? "checked" : ""}><span></span>${esc(copy("酒柜里有这款材料", "This ingredient is in my pantry"))}</label></div><div class="ingredient-fields">
+        <label><span>${esc(t("pantryStock"))}</span><input type="number" min="0" step="1" data-ingredient-field="stock" data-id="${esc(id)}" value="${esc(entry.stock)}"></label>
+        <label><span>${esc(t("pantryPrice"))}</span><input type="number" min="0" step="0.01" data-ingredient-field="price" data-id="${esc(id)}" value="${esc(entry.price)}"></label>
+        <label><span>${esc(t("pantryPack"))}</span><input type="number" min="0.01" step="1" data-ingredient-field="packSize" data-id="${esc(id)}" value="${esc(entry.packSize)}"></label>
+        <label><span>${esc(t("pantryAbv"))}</span><input type="number" min="0" max="100" step="0.1" data-ingredient-field="abv" data-id="${esc(id)}" value="${esc(entry.abv)}"></label>
+      </div></section>
+      <section class="ingredient-story"><p class="eyebrow">ORIGIN</p><h3>${esc(copy("起源与脉络", "Origin & context"))}</h3><p>${esc(langValue(profile.origin))}</p><ol>${timeline}</ol></section>
+      <section class="ingredient-recipes"><p class="eyebrow">CLASSIC SERVES</p><h3>${esc(copy("常见配方", "Familiar recipes"))}</h3><div>${recipeLinks}</div></section>
+    </div>`;
+    const modal = $("#ingredientModal");
+    ingredientReturnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    modal.classList.remove("hidden");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("modal-open");
+    window.requestAnimationFrame(() => $("#ingredientModalClose").focus({ preventScroll: true }));
+  }
+
+  function closeIngredientModal(restoreFocus) {
+    const modal = $("#ingredientModal");
+    if (modal.classList.contains("hidden")) return;
+    modal.classList.add("hidden");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("modal-open");
+    if (restoreFocus !== false && ingredientReturnFocus && ingredientReturnFocus.isConnected) ingredientReturnFocus.focus({ preventScroll: true });
+    ingredientReturnFocus = null;
+  }
+
+  function openFloatingSearch(target, trigger) {
+    activeSearchTarget = target;
+    searchReturnFocus = trigger || document.activeElement;
+    const source = target === "pantry" ? $("#pantrySearch") : $("#recipeSearch");
+    const input = $("#floatingSearchInput");
+    $("#floatingSearchLabel").textContent = target === "pantry" ? copy("搜索酒柜材料", "Search ingredients") : copy("搜索配方", "Search recipes");
+    input.placeholder = target === "pantry" ? t("searchIngredient") : t("searchPlaceholder");
+    input.value = source.value;
+    $("#floatingSearch").classList.remove("hidden");
+    $("#floatingSearch").setAttribute("aria-hidden", "false");
+    document.body.classList.add("modal-open");
+    window.requestAnimationFrame(() => { input.focus({ preventScroll: true }); input.select(); });
+  }
+
+  function closeFloatingSearch() {
+    const overlay = $("#floatingSearch");
+    if (overlay.classList.contains("hidden")) return;
+    overlay.classList.add("hidden");
+    overlay.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("modal-open");
+    if (searchReturnFocus && searchReturnFocus.isConnected) searchReturnFocus.focus({ preventScroll: true });
+    searchReturnFocus = null;
+  }
+
+  function applyFloatingSearch(value) {
+    const source = activeSearchTarget === "pantry" ? $("#pantrySearch") : $("#recipeSearch");
+    source.value = value;
+    if (activeSearchTarget === "pantry") renderPantry(); else renderRecipes();
+  }
+
+  function initializeParticles() {
+    if (reduceMotion.matches || lowMotionDevice) { document.body.classList.add("motion-lite"); return; }
+    const field = $("#heroParticles");
+    const fragments = Array.from({ length: 16 }, (_, index) => `<i style="--x:${7 + (index * 37) % 88}%;--y:${8 + (index * 53) % 78}%;--size:${index % 4 === 0 ? 4 : 2}px;--delay:-${(index * 0.73).toFixed(2)}s;--duration:${7 + index % 6}s"></i>`);
+    field.innerHTML = fragments.join("");
+  }
+
+  function burstParticles(event) {
+    if (reduceMotion.matches || lowMotionDevice || !event.clientX || !event.clientY) return;
+    const layer = $("#clickParticleLayer");
+    const colors = ["var(--gold)", "var(--orange)", "var(--green)"];
+    Array.from({ length: 6 }, (_, index) => {
+      const particle = document.createElement("i");
+      const angle = (Math.PI * 2 * index) / 6 + 0.25;
+      const distance = 14 + (index % 3) * 5;
+      particle.style.cssText = `left:${event.clientX}px;top:${event.clientY}px;--dx:${Math.cos(angle) * distance}px;--dy:${Math.sin(angle) * distance}px;--particle-color:${colors[index % colors.length]}`;
+      layer.appendChild(particle);
+      window.setTimeout(() => particle.remove(), 520);
+    });
   }
 
   function openRecipe(id) {
@@ -441,12 +568,24 @@
   }
 
   document.addEventListener("click", event => {
+    if (event.target.closest("button:not([disabled])")) burstParticles(event);
+  }, { capture: true });
+
+  document.addEventListener("click", event => {
     const accentChoice = event.target.closest("[data-accent-choice]");
     if (accentChoice) {
       state.settings.accent = accentChoice.dataset.accentChoice;
       save(); applyAppearance(); renderStorageStatus();
       return;
     }
+    const searchTrigger = event.target.closest("[data-search-target]");
+    if (searchTrigger) { openFloatingSearch(searchTrigger.dataset.searchTarget, searchTrigger); return; }
+    const category = event.target.closest("[data-pantry-category]");
+    if (category) { activePantryCategory = category.dataset.pantryCategory; renderPantry(); return; }
+    const ingredient = event.target.closest("[data-open-ingredient]");
+    if (ingredient) { openIngredient(ingredient.dataset.openIngredient); return; }
+    const relatedRecipe = event.target.closest("[data-open-related-recipe]");
+    if (relatedRecipe) { const id = relatedRecipe.dataset.openRelatedRecipe; closeIngredientModal(false); openRecipe(id); return; }
     const nav = event.target.closest("[data-nav]");
     if (nav) { navigate(nav.dataset.nav, nav.dataset.filterMode); return; }
     const open = event.target.closest("[data-open-recipe]");
@@ -475,14 +614,27 @@
 
   $("#modalClose").addEventListener("click", closeModal);
   $("#recipeModal").addEventListener("click", event => { if (event.target === $("#recipeModal")) closeModal(); });
+  $("#ingredientModalClose").addEventListener("click", () => closeIngredientModal(true));
+  $("#ingredientModal").addEventListener("click", event => { if (event.target === $("#ingredientModal")) closeIngredientModal(true); });
+  $("#floatingSearchClose").addEventListener("click", closeFloatingSearch);
+  $("#floatingSearch").addEventListener("click", event => { if (event.target === $("#floatingSearch")) closeFloatingSearch(); });
+  $("#floatingSearchInput").addEventListener("input", event => applyFloatingSearch(event.target.value));
+  $("#floatingSearchForm").addEventListener("submit", event => { event.preventDefault(); closeFloatingSearch(); });
   document.addEventListener("keydown", event => {
-    const modal = $("#recipeModal");
-    if (modal.classList.contains("hidden")) return;
-    if (event.key === "Escape") { event.preventDefault(); closeModal(); return; }
+    const search = $("#floatingSearch");
+    const ingredient = $("#ingredientModal");
+    const recipe = $("#recipeModal");
+    let modal = null;
+    let close = null;
+    if (!search.classList.contains("hidden")) { modal = search; close = closeFloatingSearch; }
+    else if (!ingredient.classList.contains("hidden")) { modal = ingredient; close = () => closeIngredientModal(true); }
+    else if (!recipe.classList.contains("hidden")) { modal = recipe; close = closeModal; }
+    if (!modal) return;
+    if (event.key === "Escape") { event.preventDefault(); close(); return; }
     if (event.key !== "Tab") return;
-    const focusable = $$("#recipeModal button:not([disabled]), #recipeModal [href], #recipeModal input:not([disabled]), #recipeModal select:not([disabled]), #recipeModal textarea:not([disabled]), #recipeModal [tabindex]:not([tabindex='-1'])")
+    const focusable = Array.from(modal.querySelectorAll("button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex='-1'])"))
       .filter(element => element.offsetParent !== null);
-    if (!focusable.length) { event.preventDefault(); $(".recipe-modal").focus(); return; }
+    if (!focusable.length) { event.preventDefault(); modal.focus(); return; }
     const first = focusable[0];
     const last = focusable[focusable.length - 1];
     if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
@@ -522,7 +674,21 @@
   });
   $("#pantryGroups").addEventListener("change", event => {
     if (!event.target.dataset.pantryField) return;
-    renderPantrySummary(); renderHome(); renderRecipes(); toast(t("pantrySaved"));
+    renderPantry(); renderHome(); renderRecipes(); toast(t("pantrySaved"));
+  });
+  $("#ingredientModalContent").addEventListener("input", event => {
+    const field = event.target.dataset.ingredientField;
+    const id = event.target.dataset.id;
+    if (!field || !id) return;
+    pantryEntry(id)[field] = field === "owned" ? event.target.checked : event.target.value;
+    save();
+  });
+  $("#ingredientModalContent").addEventListener("change", event => {
+    const field = event.target.dataset.ingredientField;
+    const id = event.target.dataset.id;
+    if (!field || !id) return;
+    renderPantry(); renderHome(); renderRecipes();
+    toast(t("pantrySaved"));
   });
   $("#selectCommonIngredients").addEventListener("click", () => {
     commonIngredients.forEach(id => { pantryEntry(id).owned = true; });
@@ -558,7 +724,7 @@
 
   $("#exportButton").addEventListener("click", async () => {
     const payload = JSON.stringify(storage.exportData(state), null, 2);
-    const fileName = `dawnsdew-v0.2-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    const fileName = `dawnsdew-v0.3.3-backup-${new Date().toISOString().slice(0, 10)}.json`;
     try { if (await native.shareJson(fileName, payload)) { toast(t("exportSuccess")); return; } } catch (error) { console.warn("Native export failed, using browser download", error); }
     const blob = new Blob([payload], { type: "application/json;charset=utf-8" });
     const link = document.createElement("a");
@@ -599,12 +765,15 @@
   });
 
   native.onBackButton(() => {
+    if (!$("#floatingSearch").classList.contains("hidden")) { closeFloatingSearch(); return; }
+    if (!$("#ingredientModal").classList.contains("hidden")) { closeIngredientModal(true); return; }
     if (!$("#recipeModal").classList.contains("hidden")) { closeModal(); return; }
     if (activeView !== "home") { navigate("home"); return; }
     native.exitApp();
   });
 
   addCustomIngredientRow();
+  initializeParticles();
   renderPantry();
   renderAll();
   if (window.DD_COMPAT) window.DD_COMPAT.markReady();

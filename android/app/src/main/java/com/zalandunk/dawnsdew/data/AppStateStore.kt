@@ -157,13 +157,13 @@ class AppStateStore(context: Context) {
             recipe.ingredients.isNotEmpty() && recipe.steps.zh.isNotEmpty() && recipe.steps.en.isNotEmpty()
 
     companion object {
-        const val SCHEMA_VERSION = "0.3.2"
+        const val SCHEMA_VERSION = "0.3.3"
         private const val WEB_COMPAT_SCHEMA_VERSION = "0.2"
         private const val PREFERENCES = "dawnsdew.native.preferences"
-        private const val STATE_KEY = "state.v0.3.2"
+        private const val STATE_KEY = "state.v0.3.3"
         private const val BACKUP_KEY = "state.backup"
-        private val LEGACY_STATE_KEYS = listOf("state.v0.3.1")
-        private val SUPPORTED_IMPORT_VERSIONS = setOf("0.0.1", "0.0.2", "0.2", "0.3", "0.3.1", SCHEMA_VERSION)
+        private val LEGACY_STATE_KEYS = listOf("state.v0.3.2", "state.v0.3.1")
+        private val SUPPORTED_IMPORT_VERSIONS = setOf("0.0.1", "0.0.2", "0.2", "0.3", "0.3.1", "0.3.2", SCHEMA_VERSION)
     }
 }
 

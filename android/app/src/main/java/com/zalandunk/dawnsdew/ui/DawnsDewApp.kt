@@ -42,6 +42,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -91,6 +92,8 @@ private fun DawnsDewThemedApp(controller: AppController, motion: MotionPolicy) {
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+    var particleSequence by remember { mutableLongStateOf(0L) }
+    var particleBurst by remember { mutableStateOf<TapParticleBurst?>(null) }
     fun message(value: String) {
         scope.launch { snackbarHostState.showSnackbar(value) }
     }
@@ -130,7 +133,15 @@ private fun DawnsDewThemedApp(controller: AppController, motion: MotionPolicy) {
         if (controller.selectedRecipe != null) controller.closeRecipe() else controller.navigate(Destination.Home)
     }
 
-    Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+    Box(
+        Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .tapParticleEmitter(motion.ambientEnabled) { position ->
+                particleSequence += 1
+                particleBurst = TapParticleBurst(particleSequence, position)
+            }
+    ) {
         AmbientBackdrop()
         BoxWithConstraints(Modifier.fillMaxSize()) {
             val expanded = maxWidth >= 840.dp
@@ -214,7 +225,7 @@ private fun DawnsDewThemedApp(controller: AppController, motion: MotionPolicy) {
                             onExport = {
                                 pendingExport = controller.exportJson()
                                 val date = SimpleDateFormat("yyyy-MM-dd", Locale.ROOT).format(Date())
-                                exportLauncher.launch("dawnsdew-v0.3.2-backup-$date.json")
+                                exportLauncher.launch("dawnsdew-v0.3.3-backup-$date.json")
                             },
                             onImport = { importLauncher.launch(arrayOf("application/json", "text/plain")) }
                         )
@@ -222,6 +233,7 @@ private fun DawnsDewThemedApp(controller: AppController, motion: MotionPolicy) {
                 }
             }
         }
+        TapParticleOverlay(particleBurst, Modifier.fillMaxSize())
     }
 
     controller.selectedRecipe?.let { recipe ->
@@ -262,7 +274,7 @@ private fun AppContent(
         Destination.Home -> HomeScreen(controller, motion, onMessage)
         Destination.Recipes, Destination.Tonight, Destination.Favorites, Destination.Recent ->
             RecipeCollectionScreen(controller, motion, destination, onMessage)
-        Destination.Pantry -> PantryScreen(controller, onMessage)
+        Destination.Pantry -> PantryScreen(controller, motion, onMessage)
         Destination.More -> MoreScreen(controller, onMessage)
         Destination.Custom -> CustomRecipeScreen(controller, motion, onMessage)
         Destination.Data -> DataScreen(controller, onExport, onImport, onMessage)

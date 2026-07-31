@@ -45,6 +45,7 @@ for (const token of ['data-theme="dark"', 'data-accent="coral"', "--font-scale"]
 }
 
 const appSource = fs.readFileSync(path.join(root, "assets", "js", "app.js"), "utf8");
+const ingredientProfileSource = fs.readFileSync(path.join(root, "assets", "js", "ingredient-profiles.js"), "utf8");
 const brandedAlcoholIds = [
   "aperol", "baileys", "triple_sec", "dry_vermouth", "campari", "coffee_liqueur",
   "blue_curacao", "sweet_vermouth", "jagermeister", "angostura", "brandy", "white_rum",
@@ -52,6 +53,7 @@ const brandedAlcoholIds = [
 ];
 for (const id of brandedAlcoholIds) {
   if (!new RegExp(`\\b${id}\\s*:`).test(appSource)) failures.push(`Missing web brand profile: ${id}`);
+  if (!new RegExp(`\\b${id}\\s*:`).test(ingredientProfileSource)) failures.push(`Missing web ingredient story: ${id}`);
 }
 
 if (failures.length) {

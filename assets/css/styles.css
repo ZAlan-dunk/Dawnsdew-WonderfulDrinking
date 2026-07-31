@@ -585,3 +585,157 @@ body.modal-open { overflow: hidden; }
   .ambient, .hero-glass, .glass-liquid, .modal-hero .art-glass { animation: none !important; }
   .recipe-card.motion-pending, .recipe-card.motion-pending.motion-ready { opacity: 1; translate: none; scale: 1; }
 }
+
+/* v0.3.3 — compact discovery, bottle stories and restrained particles */
+.visually-hidden { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0,0,0,0) !important; white-space: nowrap !important; border: 0 !important; }
+.compact-page-heading { min-height: 44px; display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 12px; }
+.compact-page-heading h1 { margin: 0; font-size: 1.55rem; line-height: 1.2; }
+.compact-page-heading .eyebrow { margin-bottom: 4px; }
+.compact-page-heading .result-count { color: var(--muted); font-size: .72rem; }
+.recipe-control-strip, .pantry-tools { display: flex; align-items: center; gap: 8px; }
+.recipe-control-strip { min-height: 48px; margin-bottom: 10px; overflow-x: auto; padding: 2px 0 5px; scrollbar-width: none; }
+.recipe-control-strip::-webkit-scrollbar, .pantry-category-tabs::-webkit-scrollbar { display: none; }
+.circle-tool { position: relative; flex: 0 0 40px; width: 40px; height: 40px; display: grid; place-items: center; padding: 0; border: 1px solid var(--line); border-radius: 50%; color: var(--text); background: var(--panel); font-size: 1.15rem; transition: transform .16s ease, border-color .2s ease, background .2s ease; }
+.circle-tool:hover { border-color: color-mix(in srgb, var(--gold) 52%, var(--line)); background: color-mix(in srgb, var(--gold) 9%, var(--panel)); }
+.circle-tool.active { color: var(--on-accent); border-color: var(--gold); background: var(--gold); }
+.circle-tool:active { transform: scale(.95); }
+.circle-tool small { position: absolute; right: -3px; top: -3px; min-width: 17px; height: 17px; display: grid; place-items: center; padding: 0 4px; border-radius: 9px; color: var(--on-accent); background: var(--gold); font-size: .58rem; }
+.circle-tool small:empty { display: none; }
+.circle-tool.filter-toggle { min-width: 40px; width: 40px; height: 40px; padding: 0; border-radius: 50%; }
+.recipe-control-strip .check-filter { flex: 0 0 auto; min-height: 40px; display: inline-flex; align-items: center; gap: 7px; padding: 0 13px; border: 1px solid var(--line); border-radius: 20px; background: var(--panel); color: var(--muted); font-size: .72rem; }
+.recipe-control-strip .check-filter:has(input:checked) { color: var(--text); border-color: color-mix(in srgb, var(--gold) 55%, var(--line)); background: color-mix(in srgb, var(--gold) 11%, var(--panel)); }
+.recipe-control-strip .check-filter input { accent-color: var(--gold); }
+.text-tool { flex: 0 0 auto; min-height: 40px; padding: 0 8px; border: 0; color: var(--gold); background: transparent; font-size: .7rem; font-weight: 750; }
+.recipe-heading + .recipe-control-strip + .filters { margin: 0 0 14px; }
+
+.search-backdrop { position: fixed; inset: 0; z-index: 135; padding: calc(env(safe-area-inset-top) + 76px) 16px 16px; background: rgba(12,11,13,.44); backdrop-filter: blur(7px); animation: modalBackdropIn .18s ease-out both; }
+.floating-search-panel { width: min(620px, 100%); margin: 0 auto; padding: 12px; border: 1px solid var(--line); border-radius: 18px; background: var(--floating); box-shadow: 0 24px 70px rgba(0,0,0,.3); animation: searchDropIn .22s cubic-bezier(.2,.8,.2,1) both; }
+.floating-search-panel > label { display: block; padding: 0 8px 8px; color: var(--muted); font-size: .68rem; font-weight: 700; }
+.floating-search-panel > div { min-height: 48px; display: grid; grid-template-columns: 30px 1fr 40px; align-items: center; gap: 4px; padding-left: 10px; border: 1px solid var(--line); border-radius: 13px; background: var(--panel-light); }
+.floating-search-panel > div > span { color: var(--gold); font-size: 1.2rem; text-align: center; }
+.floating-search-panel input { min-width: 0; width: 100%; height: 46px; border: 0; outline: 0; color: var(--text); background: transparent; }
+.floating-search-panel button { width: 36px; height: 36px; border: 0; border-radius: 50%; color: var(--muted); background: transparent; font-size: 1.05rem; }
+@keyframes searchDropIn { from { opacity: 0; translate: 0 -12px; scale: .99; } }
+
+.pantry-heading { align-items: end; }
+.pantry-status { display: flex; align-items: center; gap: 9px; min-height: 30px; color: var(--muted); font-size: .72rem; }
+.pantry-status strong { color: var(--text); font-weight: 700; }
+.pantry-category-tabs { display: flex; gap: 7px; overflow-x: auto; margin: 8px 0 12px; padding: 2px 0 7px; scroll-snap-type: x proximity; scrollbar-width: none; }
+.pantry-category-tabs button { flex: 0 0 auto; min-height: 38px; display: inline-flex; align-items: center; gap: 7px; padding: 0 13px; border: 1px solid var(--line); border-radius: 19px; color: var(--muted); background: transparent; font-size: .72rem; scroll-snap-align: start; }
+.pantry-category-tabs button small { min-width: 18px; height: 18px; display: grid; place-items: center; border-radius: 9px; color: var(--muted); background: var(--panel); font-size: .58rem; }
+.pantry-category-tabs button.active { color: var(--on-accent); border-color: var(--gold); background: var(--gold); }
+.pantry-category-tabs button.active small { color: var(--on-accent); background: rgba(255,255,255,.2); }
+.pantry-list { overflow: hidden; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+.pantry-item { min-height: 76px; display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; border-bottom: 1px solid var(--line); }
+.pantry-item:last-child { border-bottom: 0; }
+.pantry-item-main { min-width: 0; min-height: 76px; display: grid; grid-template-columns: 58px minmax(0,1fr) 24px; align-items: center; gap: 10px; padding: 6px 8px 6px 10px; border: 0; color: inherit; background: transparent; text-align: left; }
+.pantry-item-main:hover { background: color-mix(in srgb, var(--gold) 5%, transparent); }
+.pantry-item-copy { min-width: 0; display: grid; gap: 2px; }
+.pantry-item-copy b, .pantry-item-copy small, .pantry-item-copy span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pantry-item-copy b { font-size: .82rem; }
+.pantry-item-copy small { color: var(--muted); font-size: .65rem; }
+.pantry-item-copy > span { color: var(--gold); font-size: .62rem; }
+.pantry-item-arrow { color: var(--muted); font-size: 1.35rem; }
+.pantry-switch { min-width: 78px; min-height: 58px; display: grid; place-items: center; align-content: center; gap: 4px; padding: 4px 12px; cursor: pointer; }
+.pantry-switch input, .detail-owned input { position: absolute; opacity: 0; pointer-events: none; }
+.pantry-switch > span, .detail-owned > span { position: relative; width: 34px; height: 20px; border-radius: 10px; background: color-mix(in srgb, var(--muted) 32%, transparent); transition: background .2s ease; }
+.pantry-switch > span::after, .detail-owned > span::after { content: ""; position: absolute; left: 3px; top: 3px; width: 14px; height: 14px; border-radius: 50%; background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,.2); transition: translate .2s ease; }
+.pantry-switch input:checked + span, .detail-owned input:checked + span { background: var(--gold); }
+.pantry-switch input:checked + span::after, .detail-owned input:checked + span::after { translate: 14px 0; }
+.pantry-switch em { color: var(--muted); font-size: .58rem; font-style: normal; }
+.pantry-empty { border: 1px solid var(--line); border-radius: 8px; }
+
+.bottle-art { width: 54px; height: 62px; display: grid; place-items: end center; position: relative; }
+.bottle-art.large { width: 126px; height: 170px; place-items: end center; }
+.bottle-shape { position: relative; width: 31px; height: 43px; display: grid; place-items: center; border: 1px solid color-mix(in srgb, var(--bottle-accent) 74%, #202024); border-radius: 7px 7px 9px 9px; color: #fff; background: linear-gradient(100deg, color-mix(in srgb, var(--bottle-accent) 76%, #17171a), var(--bottle-accent) 56%, color-mix(in srgb, var(--bottle-accent) 60%, #fff)); box-shadow: inset 4px 0 7px rgba(255,255,255,.12), 0 7px 12px rgba(0,0,0,.16); }
+.bottle-shape::before { content: ""; position: absolute; left: 50%; bottom: calc(100% - 1px); translate: -50% 0; width: 11px; height: 13px; border: 1px solid color-mix(in srgb, var(--bottle-accent) 70%, #202024); border-bottom: 0; border-radius: 3px 3px 0 0; background: color-mix(in srgb, var(--bottle-accent) 72%, #27272b); }
+.bottle-shape::after { content: ""; position: absolute; left: 50%; bottom: calc(100% + 11px); translate: -50% 0; width: 13px; height: 4px; border-radius: 2px; background: color-mix(in srgb, var(--bottle-accent) 42%, #202024); }
+.bottle-shape i { position: absolute; inset: 9px 4px 5px; border: 1px solid rgba(255,255,255,.28); border-radius: 3px; background: rgba(255,255,255,.08); }
+.bottle-shape b { position: relative; z-index: 1; font-size: .56rem; text-shadow: 0 1px 2px rgba(0,0,0,.35); }
+.bottle-round { width: 36px; height: 39px; border-radius: 13px 13px 10px 10px; }
+.bottle-square { width: 35px; border-radius: 4px; }
+.bottle-tall { width: 26px; height: 48px; border-radius: 5px 5px 7px 7px; }
+.bottle-apothecary { width: 34px; height: 40px; border-radius: 14px 14px 7px 7px; }
+.bottle-champagne { width: 29px; height: 50px; border-radius: 8px 8px 11px 11px; }
+.bottle-champagne::before { width: 9px; height: 17px; }
+.bottle-bitters { width: 28px; height: 43px; border-radius: 4px; }
+.bottle-bitters i { inset: 5px -3px 4px; background: rgba(246,237,207,.82); border-color: rgba(72,52,36,.26); }
+.bottle-bitters b { color: #432e26; }
+.bottle-decanter { width: 39px; height: 36px; border-radius: 16px 16px 7px 7px; }
+.bottle-art.large .bottle-shape { width: 70px; height: 105px; border-width: 2px; border-radius: 14px 14px 18px 18px; box-shadow: inset 10px 0 16px rgba(255,255,255,.12), 0 20px 30px rgba(0,0,0,.22); }
+.bottle-art.large .bottle-shape::before { width: 25px; height: 30px; border-width: 2px; }
+.bottle-art.large .bottle-shape::after { bottom: calc(100% + 28px); width: 29px; height: 7px; }
+.bottle-art.large .bottle-shape i { inset: 22px 9px 12px; border-radius: 6px; }
+.bottle-art.large .bottle-shape b { font-size: 1rem; }
+.bottle-art.large .bottle-round { width: 84px; height: 95px; border-radius: 27px 27px 18px 18px; }
+.bottle-art.large .bottle-square { width: 82px; border-radius: 8px; }
+.bottle-art.large .bottle-tall { width: 60px; height: 116px; }
+.bottle-art.large .bottle-apothecary { width: 80px; height: 98px; border-radius: 31px 31px 14px 14px; }
+.bottle-art.large .bottle-champagne { width: 66px; height: 120px; }
+.bottle-art.large .bottle-bitters { width: 66px; height: 105px; border-radius: 8px; }
+.bottle-art.large .bottle-decanter { width: 92px; height: 88px; border-radius: 35px 35px 14px 14px; }
+
+.ingredient-modal { width: min(820px, 100%); max-height: min(900px, 92dvh); overflow: auto; position: relative; border: 1px solid var(--line); border-radius: 20px; background: var(--floating); box-shadow: 0 40px 120px rgba(0,0,0,.36); animation: modalPanelIn .26s cubic-bezier(.2,.82,.2,1) both; }
+.ingredient-hero { min-height: 220px; display: grid; grid-template-columns: 160px 1fr; align-items: center; gap: 28px; padding: 28px 70px 28px 34px; color: #fff; background: linear-gradient(130deg, color-mix(in srgb, var(--ingredient-accent) 54%, #262329), color-mix(in srgb, var(--ingredient-accent) 24%, #111115)); }
+.ingredient-hero p { margin: 0 0 7px; color: rgba(255,255,255,.72); font-size: .68rem; font-weight: 800; text-transform: uppercase; }
+.ingredient-hero h2 { margin: 0; font-size: 2rem; line-height: 1.15; }
+.ingredient-hero div > span { display: block; margin-top: 7px; color: rgba(255,255,255,.7); font-size: .78rem; }
+.ingredient-detail-body { padding: 28px 34px 40px; }
+.ingredient-lead { margin: 0; color: var(--text); font-size: 1rem; line-height: 1.8; }
+.ingredient-brand-row { display: flex; gap: 8px; overflow-x: auto; margin-top: 17px; padding-bottom: 3px; }
+.ingredient-brand-row > span { flex: 0 0 auto; min-width: 128px; display: grid; gap: 3px; padding: 10px 12px; border-left: 2px solid var(--gold); background: color-mix(in srgb, var(--gold) 6%, var(--panel)); }
+.ingredient-brand-row b { font-size: .72rem; }
+.ingredient-brand-row small { color: var(--muted); font-size: .62rem; }
+.ingredient-inventory { margin: 26px 0; padding: 20px; border-block: 1px solid var(--line); }
+.ingredient-inventory h3, .ingredient-story h3, .ingredient-recipes h3 { margin: 0 0 12px; font-size: 1rem; }
+.detail-owned { display: flex; align-items: center; gap: 10px; min-height: 34px; color: var(--muted); font-size: .7rem; cursor: pointer; }
+.ingredient-fields { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 9px; margin-top: 15px; }
+.ingredient-fields label { min-width: 0; display: grid; gap: 5px; color: var(--muted); font-size: .62rem; }
+.ingredient-fields input { min-width: 0; width: 100%; height: 38px; padding: 0 8px; }
+.ingredient-story > p:not(.eyebrow) { color: var(--muted); font-size: .78rem; line-height: 1.75; }
+.ingredient-story ol { display: grid; gap: 0; margin: 15px 0 28px; padding: 0; list-style: none; }
+.ingredient-story li { display: grid; grid-template-columns: 88px 1fr; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.ingredient-story li b { color: var(--gold); font-size: .7rem; }
+.ingredient-story li span { color: var(--muted); font-size: .73rem; line-height: 1.55; }
+.ingredient-recipes > div { overflow: hidden; border: 1px solid var(--line); border-radius: 8px; }
+.ingredient-recipes button { width: 100%; min-height: 58px; display: grid; grid-template-columns: 1fr 26px; align-content: center; gap: 2px 10px; padding: 9px 12px; border: 0; border-bottom: 1px solid var(--line); color: inherit; background: transparent; text-align: left; }
+.ingredient-recipes button:last-child { border-bottom: 0; }
+.ingredient-recipes button:hover { background: color-mix(in srgb, var(--gold) 6%, transparent); }
+.ingredient-recipes button span { font-size: .77rem; font-weight: 750; }
+.ingredient-recipes button small { color: var(--muted); font-size: .62rem; }
+.ingredient-recipes button i { grid-column: 2; grid-row: 1 / 3; align-self: center; color: var(--muted); font-size: 1.2rem; font-style: normal; }
+.ingredient-empty-copy { margin: 0; padding: 18px; color: var(--muted); font-size: .7rem; }
+
+.hero-particles { position: absolute; inset: 0; z-index: 1; overflow: hidden; pointer-events: none; }
+.hero-particles i { position: absolute; left: var(--x); top: var(--y); width: var(--size); height: var(--size); border-radius: 50%; opacity: .44; background: var(--gold); box-shadow: 0 0 8px color-mix(in srgb, var(--gold) 38%, transparent); animation: heroParticleDrift var(--duration) ease-in-out var(--delay) infinite alternate; }
+.hero-particles i:nth-child(3n) { background: var(--orange); }
+.hero-particles i:nth-child(4n) { background: var(--green); }
+.click-particle-layer { position: fixed; inset: 0; z-index: 220; overflow: hidden; pointer-events: none; }
+.click-particle-layer i { position: absolute; width: 4px; height: 4px; margin: -2px; border-radius: 50%; background: var(--particle-color); animation: clickParticle .5s cubic-bezier(.16,.8,.3,1) forwards; }
+@keyframes heroParticleDrift { 0% { translate: -4px 8px; opacity: .18; } 55% { opacity: .58; } 100% { translate: 8px -13px; opacity: .25; } }
+@keyframes clickParticle { 0% { scale: .5; opacity: .9; } 100% { translate: var(--dx) var(--dy); scale: 0; opacity: 0; } }
+
+@media (max-width: 560px) {
+  .compact-page-heading { align-items: center; }
+  .compact-page-heading h1 { font-size: 1.35rem; }
+  .pantry-heading .eyebrow { display: none; }
+  .pantry-item { grid-template-columns: minmax(0,1fr) 70px; }
+  .pantry-item-main { grid-template-columns: 50px minmax(0,1fr) 18px; gap: 7px; padding-left: 7px; }
+  .pantry-switch { min-width: 68px; padding-inline: 8px; }
+  .ingredient-backdrop { padding: 0; align-items: end; }
+  .ingredient-modal { max-height: 94dvh; border-radius: 22px 22px 0 0; }
+  .ingredient-hero { min-height: 190px; grid-template-columns: 110px 1fr; gap: 16px; padding: 22px 58px 20px 16px; }
+  .ingredient-hero h2 { font-size: 1.55rem; }
+  .bottle-art.large { width: 104px; transform: scale(.8); transform-origin: bottom center; }
+  .ingredient-detail-body { padding: 22px 16px max(32px, env(safe-area-inset-bottom)); }
+  .ingredient-inventory { padding-inline: 0; }
+  .ingredient-fields { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .ingredient-story li { grid-template-columns: 76px 1fr; gap: 10px; }
+  .search-backdrop { padding-top: calc(env(safe-area-inset-top) + 66px); }
+}
+
+.motion-lite .hero-particles { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-particles, .click-particle-layer { display: none !important; }
+  .floating-search-panel, .ingredient-modal { animation: none !important; }
+}

@@ -1,14 +1,14 @@
 # 朝露酒笺 · Dawn's Dew
 
-> 面向家庭调酒爱好者的本地优先调酒助手。当前采用双轨发行：**Web/PWA Beta** 与 **Android 原生 v0.3.2 Beta（开发中）**。
+> 面向家庭调酒爱好者的本地优先调酒助手。当前采用双轨发行：**Web/PWA Beta** 与 **Android 原生 v0.3.3 Beta**。
 
-[🍎 iPhone 网页 App 安装指南](docs/iphone-pwa-guide.md) · [📱 最新已发布 Android v0.3.1 Beta](https://github.com/ZAlan-dunk/Dawnsdew-WonderfulDrinking/releases/tag/v0.3.1-beta) · [🌐 在线网页版](https://zalan-dunk.github.io/Dawnsdew-WonderfulDrinking/) · [📋 原生 Android 迁移计划](docs/native-android-plan.md)
+[🍎 iPhone 网页 App 安装指南](docs/iphone-pwa-guide.md) · [📱 Android v0.3.3 Beta](https://github.com/ZAlan-dunk/Dawnsdew-WonderfulDrinking/releases/tag/v0.3.3-beta) · [🌐 在线网页版](https://zalan-dunk.github.io/Dawnsdew-WonderfulDrinking/) · [📋 原生 Android 迁移计划](docs/native-android-plan.md)
 
-朝露酒笺以“把今夜的心绪，斟成一杯”为核心叙事：收藏想喝的味道，排好今夜酒单，让每次举杯都有名字。网页版继续提供本地优先体验；Android v0.3.2 不使用 Capacitor 或 WebView 加载 HTML，而是使用 Kotlin 与 Jetpack Compose 实现完整的原生工作流。
+朝露酒笺以“把今夜的心绪，斟成一杯”为核心叙事：收藏想喝的味道，排好今夜酒单，让每次举杯都有名字。网页版继续提供本地优先体验；Android v0.3.3 不使用 Capacitor 或 WebView 加载 HTML，而是使用 Kotlin 与 Jetpack Compose 实现完整的原生工作流。
 
 ## 当前发行形态
 
-### Web/PWA v0.3.2 Beta
+### Web/PWA v0.3.3 Beta
 
 - 45 杯内置配方：25 杯私人酒笺、15 杯经典鸡尾酒、5 杯灵感特调。
 - 中英文界面、搜索、来源/基酒/口味/难度/收藏/可制作筛选。
@@ -17,8 +17,11 @@
 - 版本化 JSON 导入导出及旧版数据迁移。
 - 可直接打开 `index.html`，也可作为 PWA 安装并在首次完整加载后离线使用。
 - 桌面、平板和手机响应式布局，并支持系统“减少动态效果”偏好。
+- 配方使用图标触发的悬浮搜索，酒柜使用横向品类滑栏和紧凑材料列表。
+- 材料详情包含原创瓶型、介绍、起源、发展节点、常见品牌线索与相关配方。
+- 首页文字粒子和按钮粒子在低性能设备、减少动态效果或省流量模式下自动降级。
 
-### Android 原生 v0.3.2-beta01（开发中）
+### Android 原生 v0.3.3-beta01
 
 已实现：
 
@@ -35,6 +38,9 @@
 - 系统关闭动画时禁用自定义动效；低内存设备自动关闭持续环境动画。
 - 朝露白、夜酿墨、跟随系统三种模式，三种强调色和 90%–130% 字体缩放。
 - 紧凑双列配方浏览、底部筛选抽屉、手机全屏详情和基酒品牌风味建议。
+- 配方图标搜索、单行筛选工具区、酒柜品类滑栏和紧凑瓶型条目。
+- 18 种含酒精材料的原创瓶型、酒款介绍、起源、发展历史和相关配方入口。
+- 首页低密度粒子与全局轻量点击粒子，低端设备自动关闭持续效果。
 
 ## 使用方式
 
@@ -66,15 +72,15 @@ packages/DawnsDew-v0.2-Beta-Standalone/
 
 ### 4. Android 原生 Beta
 
-> 当前公开下载仍为 [Android v0.3.1 Beta](https://github.com/ZAlan-dunk/Dawnsdew-WonderfulDrinking/releases/tag/v0.3.1-beta)；v0.3.2 完成验收后再新增发布，不覆盖旧版本。
+> [Android v0.3.3 Beta](https://github.com/ZAlan-dunk/Dawnsdew-WonderfulDrinking/releases/tag/v0.3.3-beta) 作为独立 Pre-release 保留；旧版 Release 不删除、不覆盖。
 
 应用信息：
 
 ```text
 应用名称：朝露酒笺
 应用 ID：com.zalandunk.dawnsdew
-版本：0.3.2-beta01
-versionCode：5
+版本：0.3.3-beta01
+versionCode：6
 最低 Android 版本：Android 7.0（API 24）
 目标 SDK：Android 16 / API 36
 ```

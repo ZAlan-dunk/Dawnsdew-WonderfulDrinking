@@ -28,9 +28,9 @@ internal fun tasteLabel(value: String, language: String): String {
 
 internal fun categoryLabel(value: String, language: String): String = if (language == "zh") {
     mapOf(
-        "spirit" to "基酒", "liqueur" to "利口酒", "wine" to "葡萄酒与气泡酒", "beer" to "啤酒",
-        "mixer" to "饮料与苏打", "juice" to "果汁", "dairy" to "乳制品", "syrup" to "糖浆",
-        "fruit" to "水果与装饰", "other" to "其他"
+        "spirit" to "基酒", "liqueur" to "利口酒", "wine" to "起泡酒", "beer" to "啤酒",
+        "mixer" to "饮料与苏打", "soda" to "气泡饮料", "juice" to "果汁", "dairy" to "乳品",
+        "tea" to "茶饮", "syrup" to "糖浆", "fruit" to "鲜果与装饰", "other" to "调味与其他"
     )[value] ?: "其他"
 } else {
     value.replaceFirstChar { it.uppercase() }

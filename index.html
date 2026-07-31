@@ -34,7 +34,7 @@
       <span class="brand-mark" aria-hidden="true">
         <svg viewBox="0 0 64 64"><path d="M32 5c7 11 17 22 17 35a17 17 0 1 1-34 0C15 27 25 16 32 5Z"/><path d="M23 42c2 6 8 9 14 7"/></svg>
       </span>
-      <span><strong data-i18n="appName">朝露酒笺</strong><small>Dawn's Dew · v0.3.2 Beta</small></span>
+      <span><strong data-i18n="appName">朝露酒笺</strong><small>Dawn's Dew · v0.3.3 Beta</small></span>
     </button>
     <div class="top-actions">
       <button class="icon-button" id="quickRandomButton" type="button" data-tooltip="随机推荐" aria-label="Random recipe">✦</button>
@@ -58,6 +58,7 @@
     <main id="mainContent" tabindex="-1">
       <section class="view active" id="view-home" aria-labelledby="homeTitle">
         <div class="hero">
+          <div class="hero-particles" id="heroParticles" aria-hidden="true"></div>
           <div class="hero-copy">
             <p class="eyebrow" data-i18n="heroEyebrow">HOME MIXOLOGY · LOCAL FIRST</p>
             <h1 id="homeTitle"><span data-i18n="heroTitleA">在破晓之前，</span><br><em data-i18n="heroTitleB">调一杯属于自己的微醺。</em></h1>
@@ -107,30 +108,29 @@
       </section>
 
       <section class="view" id="view-recipes" aria-labelledby="recipesTitle">
-        <div class="page-heading recipe-heading"><h1 id="recipesTitle"><span data-i18n="recipeLibrary">配方库</span><small id="recipeResultCount"></small></h1></div>
-        <div class="toolbar recipe-toolbar">
-          <label class="search-box"><span>⌕</span><input id="recipeSearch" type="search" data-i18n-placeholder="searchPlaceholder" placeholder="搜索中文名、英文名或材料"></label>
-          <button class="button ghost filter-toggle" id="webFilterToggle" type="button" aria-expanded="false" aria-controls="recipeFilters"><span>≡</span><b data-i18n="filters">筛选</b><small id="activeFilterCount"></small></button>
-        </div>
-        <div class="quick-filter-row">
+        <div class="compact-page-heading recipe-heading"><h1 id="recipesTitle" data-i18n="recipeLibrary">配方库</h1><span class="result-count" id="recipeResultCount"></span></div>
+        <div class="recipe-control-strip">
+          <input class="visually-hidden" id="recipeSearch" type="search" tabindex="-1" aria-hidden="true">
+          <button class="circle-tool" id="recipeSearchButton" type="button" data-search-target="recipe" aria-label="搜索配方" title="搜索配方"><span aria-hidden="true">⌕</span></button>
           <label class="check-filter"><input id="makeableFilter" type="checkbox"><span data-i18n="onlyMakeable">只看可制作</span></label>
           <label class="check-filter"><input id="favoriteFilter" type="checkbox"><span data-i18n="onlyFavorites">只看收藏</span></label>
+          <button class="circle-tool filter-toggle" id="webFilterToggle" type="button" aria-expanded="false" aria-controls="recipeFilters" aria-label="详细筛选" title="详细筛选"><span aria-hidden="true">≡</span><small id="activeFilterCount"></small></button>
+          <button class="text-tool" id="clearFilters" type="button" data-i18n="clearFilters">清除筛选</button>
         </div>
         <div class="filters hidden" id="recipeFilters">
           <label><span data-i18n="filterOrigin">分类</span><select id="originFilter"></select></label>
           <label><span data-i18n="filterBase">基酒</span><select id="baseFilter"></select></label>
           <label><span data-i18n="filterTaste">口味</span><select id="tasteFilter"></select></label>
           <label><span data-i18n="filterDifficulty">难度</span><select id="difficultyFilter"></select></label>
-          <button class="button ghost small" id="clearFilters" type="button" data-i18n="clearFilters">清除筛选</button>
         </div>
         <div class="recipe-grid" id="recipeGrid"></div>
         <div class="empty-state hidden" id="recipeEmpty"><span>◇</span><h3 data-i18n="noRecipes">没有找到符合条件的配方</h3><p data-i18n="tryFilters">试试更换关键词或清除筛选。</p></div>
       </section>
 
       <section class="view" id="view-pantry" aria-labelledby="pantryTitle">
-        <div class="page-heading"><div><p class="eyebrow">MY HOME BAR</p><h1 id="pantryTitle" data-i18n="myPantry">我的酒柜</h1><p data-i18n="pantrySubtitle">勾选已有材料，填写价格后即可匹配配方与估算成本。</p></div><button class="button primary" type="button" data-nav="recipes" data-filter-mode="makeable" data-i18n="findMakeable">查看可制作配方</button></div>
-        <div class="pantry-summary" id="pantrySummary"></div>
-        <div class="toolbar pantry-toolbar"><label class="search-box"><span>⌕</span><input id="pantrySearch" type="search" data-i18n-placeholder="searchIngredient" placeholder="搜索材料"></label><button class="button ghost small" id="selectCommonIngredients" type="button" data-i18n="selectCommon">勾选常用材料</button></div>
+        <div class="compact-page-heading pantry-heading"><div><p class="eyebrow">MY HOME BAR</p><h1 id="pantryTitle" data-i18n="myPantry">我的酒柜</h1></div><div class="pantry-tools"><input class="visually-hidden" id="pantrySearch" type="search" tabindex="-1" aria-hidden="true"><button class="circle-tool" type="button" data-search-target="pantry" aria-label="搜索材料" title="搜索材料"><span aria-hidden="true">⌕</span></button><button class="circle-tool" id="selectCommonIngredients" type="button" aria-label="加入常用材料" title="加入常用材料"><span aria-hidden="true">＋</span></button><button class="circle-tool" type="button" data-nav="recipes" data-filter-mode="makeable" aria-label="查看可制作配方" title="查看可制作配方"><span aria-hidden="true">✓</span></button></div></div>
+        <div class="pantry-status" id="pantrySummary"></div>
+        <div class="pantry-category-tabs" id="pantryCategoryTabs" role="tablist" aria-label="酒柜品类"></div>
         <div id="pantryGroups"></div>
       </section>
 
@@ -184,6 +184,16 @@
   <div class="modal-backdrop hidden" id="recipeModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modalTitle">
     <article class="recipe-modal" tabindex="-1"><button class="modal-close" id="modalClose" type="button" aria-label="Close">×</button><div id="modalContent"></div></article>
   </div>
+  <div class="modal-backdrop ingredient-backdrop hidden" id="ingredientModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="ingredientModalTitle">
+    <article class="ingredient-modal" tabindex="-1"><button class="modal-close" id="ingredientModalClose" type="button" aria-label="Close">×</button><div id="ingredientModalContent"></div></article>
+  </div>
+  <div class="search-backdrop hidden" id="floatingSearch" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="floatingSearchLabel">
+    <form class="floating-search-panel" id="floatingSearchForm" role="search">
+      <label id="floatingSearchLabel" for="floatingSearchInput">搜索</label>
+      <div><span aria-hidden="true">⌕</span><input id="floatingSearchInput" type="search" autocomplete="off"><button id="floatingSearchClose" type="button" aria-label="关闭搜索">×</button></div>
+    </form>
+  </div>
+  <div class="click-particle-layer" id="clickParticleLayer" aria-hidden="true"></div>
   <div class="toast-region" id="toastRegion" aria-live="polite"></div>
 
   <!-- PWA_ONLY_START -->
@@ -206,6 +216,7 @@
 
   <script src="assets/js/compat.js"></script>
   <script src="assets/data/ingredients.js"></script>
+  <script src="assets/js/ingredient-profiles.js"></script>
   <script src="assets/data/personal-recipes.js"></script>
   <script src="assets/data/classic-recipes.js"></script>
   <script src="assets/js/i18n.js"></script>
